@@ -1,0 +1,208 @@
+.container-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+}
+
+.flex-grow-1 {
+    height: auto;
+    width: auto;
+}
+
+.card {
+    margin: 10px;
+}
+
+.sidebar {
+    width: 175px;
+    height: auto;
+    background-color: #003262;
+    color: white;
+    display: none;
+}
+
+.sidebar.active {
+    display: block;
+}
+/* Página LOGIN   */
+#cloud-logo {
+    margin-left: 55px;
+}
+
+.logoLogin{
+    margin-left: 20px ;
+}
+
+.loginTittle{
+    color:#003262;
+}
+
+.custom-border{
+    border: 1px solid #6c757d;
+}
+
+#btn-login {
+    background-color: #003262;
+
+}
+
+#btn-login > i {
+    margin-right: 15px;
+}
+
+#inputId {
+    margin-right: 10px;
+    color: #003262;
+}
+
+body {
+
+    background: hsla(0, 0%, 100%, 1);
+
+    background: linear-gradient(270deg, hsla(0, 0%, 100%, 1) 0%, hsla(210, 50%, 80%, 1) 100%);
+    
+    background: -moz-linear-gradient(270deg, hsla(0, 0%, 100%, 1) 0%, hsla(210, 50%, 80%, 1) 100%);
+    
+    background: -webkit-linear-gradient(270deg, hsla(0, 0%, 100%, 1) 0%, #b3cce6 100%);
+    
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff", endColorstr="#a8c8e0", GradientType=1);
+    
+
+    /*background: linear-gradient(to top, #a4d8e1, #ffffff);*/
+}
+
+
+body.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+.navbar-dark-mode {
+    background-color: #333333;
+}
+
+/*.login-container {
+    width: 100%;
+    max-width: 400px;
+    padding: 15px;
+    background-color: #ffffff;
+    color:#003262;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}*/
+
+.indi {
+    color: #003262;
+}
+
+body.dark-mode .login-container {
+    background-color: #333333;
+    color: #ffffff;
+}
+
+/*.botonInv {
+    background-color: #003262;
+} */
+.dash{
+    padding: 0;
+    margin-left: 14.8em;
+    width: 200px;
+    text-align: left;
+}
+
+html, body {
+    height: 100%; /* Asegúrate de que el body ocupe toda la altura */
+    margin: 0;
+}
+/*.super{
+    margin-top: ;
+}*/
+
+/* ESTILO NOTIFICACIONES NOTYF */
+.notyf > .notyf__toast {
+    transform: translateY(35px) !important;  /* Desplaza las notificaciones 20px hacia abajo */
+  }
+
+/*ESTILOS DATABLES  PRODUCTOS*/
+
+/* Ajustar el tamaño del texto de las filas de la tabla */
+.custom-table-size {
+    font-size: 0.9rem; /* Ajusta el tamaño según lo necesites */
+}
+
+/* Evitamos que desborde la tabla y si lo necesita crea un scroll */
+#contenedorDataTable {
+    max-height: 710px; /* Ajusta la altura máxima */
+    overflow-y: auto; /* Agrega una barra de desplazamiento vertical si es necesario */
+    overflow-x: hidden; /* Oculta el desbordamiento horizontal */
+    margin-top: -55px;
+}
+
+.pagination {
+    margin-left:  25px !important;
+}
+
+
+.pagination > li > a > .btn{
+    color:#ffffff;
+    outline: none; /* Elimina el borde */
+    box-shadow: none; /* Elimina la sombra */
+    border: none; /* Asegúrate de que no haya borde aplicado */
+}
+
+.pagination,#tablaProductos_filter,#tablaProductos_info{
+    color:#003262  !important;
+}
+
+#tablaProductos_paginate > .pagination > #tablaProductos_previous > .page-link{
+    background-color:#003262 !important;
+    color:#ffffff !important; 
+}
+
+.pagination > li > .page-link {
+    background-color: #003262 !important;
+    border: 1px solid !important;
+    border-radius: 5px !important;
+    border-color: #003262 !important;
+    margin-right: 10px !important;
+    color: #ffffff !important;
+}
+.cabecera{
+    color:#003262 !important;
+}
+/*.centered {
+    text-align: center !important;
+    vertical-align: middle !important;
+}*/
+
+/* Input busqueda de la tabla Datatables Productos  */
+.dataTables_filter input {
+    border: 2px solid #003262; /* Cambia el color según lo necesites */
+    border-radius: 4px; /* Opcional: añade esquinas redondeadas */
+    padding: 5px; /* Espaciado interno */
+    transition: border-color 0.3s; /* Suaviza el cambio de color */
+}
+
+.dataTables_filter input:focus {
+    /*border-color: #0091ea; /* Color al enfocar */
+    outline: none; /* Elimina el contorno por defecto */
+}
+
+#tablaProductos{
+    border: 1px solid !important;
+    border-radius: 5px !important;
+    border-color: #ffffff !important;
+}
+ /* Footer dashboard*/
+ .foot{
+    height: 0.5px;
+
+   }
+
+/* Ajustar posición de donde se muestran los SweeAlerts */
+  /* Ajusta la posición del modal */
+  .swal2-popup {
+    margin-top: -90px !important; /* Cambia este valor para ajustar la altura */
+}
+
