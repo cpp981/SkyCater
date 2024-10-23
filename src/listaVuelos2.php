@@ -1,0 +1,20 @@
+<?php
+require_once './include/Vuelo.php';
+header('Content-Type: application/json');
+//session_start();
+
+try{
+    $vuelo = new Vuelo();
+    $result = $vuelo->ObtenerVuelos();
+    //var_dump($result);
+
+    // Nuevo array para almacenar los valores y enviarlos a la tabla
+    $vuelos_tabla = [];
+
+    foreach ($result as $vuelo) {
+        $vuelos_tabla[] = array_values($vuelo);
+    }
+    echo json_encode($vuelos_tabla);
+}catch(Exception $e){
+    echo json_encode($e->getMessage());
+}
