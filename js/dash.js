@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
             text: "Se cerrará tu sesión!",
             icon: "warning",
             showCancelButton: true,
-            confirmButtonColor: "#003262",
+            confirmButtonColor: "#5cb85c",
             cancelButtonColor: "#d33",
             cancelButtonText: 'Cancelar',
             confirmButtonText: "Aceptar"

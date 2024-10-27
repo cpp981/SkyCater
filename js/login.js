@@ -29,7 +29,7 @@ $(document).ready(function() {
                         text: 'Usuario o contraseña incorrectos',
                         icon: 'error',
                         confirmButtonText: 'Aceptar',
-                        confirmButtonColor: '#003262'
+                        confirmButtonColor: '#5cb85c'
                       })
                 }
             },

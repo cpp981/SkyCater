@@ -63,7 +63,7 @@ if (!isset($_SESSION['nombre'])) {
                             class="fas fa-lg fa-bars"></i> Menú</button>
                 </div>
                 <div id="session" class="ms-auto d-flex justify-content-center align-items-center">
-                    <p class="mr-2" style="color:#003262; line-height: 2.5; margin-bottom: 0;">Bienvenido,</p>
+                    <p class="mx-2" style="color:#003262; line-height: 2.5; margin-bottom: 0;">Bienvenido,</p>
                     <input type="text" class="form-control d-inline-block w-25" id="inputId"
                         value="<?php echo $_SESSION['nombre']; ?>" disabled>
                     <button id="close" class="btn text-white" style="background-color: #003262;">

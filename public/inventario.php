@@ -62,7 +62,7 @@ if (!isset($_SESSION['nombre'])) {
                             class="fas fa-lg fa-bars"></i> Menú</button>
                 </div>
                 <div id="session" class="ms-auto d-flex justify-content-center align-items-center">
-                    <p class="mr-3" style="color:#003262; margin-bottom: 0;">Bienvenido,</p>
+                    <p class="mx-2" style="color:#003262; margin-bottom: 0;">Bienvenido,</p>
                     <input type="text" class="form-control d-inline-block w-25" id="inputId"
                         value="<?php echo $_SESSION['nombre']; ?>" disabled>
                     <button id="close" class="btn text-white shadow" style="background-color: #003262;">
@@ -82,13 +82,13 @@ if (!isset($_SESSION['nombre'])) {
                         <table id="tablaProductos" class="table table-striped rounded shadow" style="width: 100%;">
                             <thead>
                                 <tr>
-                                    <th class="centered cabecera">Nombre</th>
-                                    <th class="centered cabecera">Categoría</th>
-                                    <th class="centered cabecera">Alergenos</th>
-                                    <th class="centered cabecera">Stock Actual</th>
-                                    <th class="centered cabecera">Fecha última actualización</th>
-                                    <th class="centered cabecera">Valor Nutricional</th>
-                                    <th class="centered cabecera">Descripción</th>
+                                    <th class="centered cabecera"></th>
+                                    <th class="centered cabecera"></th>
+                                    <th class="centered cabecera"></th>
+                                    <th class="centered cabecera"></th>
+                                    <th class="centered cabecera"></th>
+                                    <th class="centered cabecera"></th>
+                                    <th class="centered cabecera"></th>
                                 </tr>
                             </thead>
                             <tbody id="tBodyProductos">
