@@ -15,14 +15,22 @@ $(document).ready(function () {
                 fila += '</tr>';
                 tablaBody.append(fila);
             });
-            //Opciones de la tabla Datatable
+            // Configuración Datatables
             const tableOptions = {
                 columnDefs: [
-                    { className: "centered", targets: [0, 1, 2, 3, 4, 5, 6],
-                      targets: 6,searchable: false, orderable: false
-                     },
-
-
+                    {
+                        className: "centered", targets: [0, 1, 2, 3, 4, 5, 6],
+                        targets: 6, searchable: false, orderable: false
+                    },
+                ],
+                "columns": [
+                    { title: "Nombre" },
+                    { title: "Categoría" },
+                    { title: "Alérgenos" },
+                    { title: "Stock" },
+                    { title: "Fecha última actualización" },
+                    { title: "Valor Nutricional" },
+                    { title: "Descripción" }
                 ],
                 lengthChange: false,
                 destroy: true,
@@ -43,11 +51,6 @@ $(document).ready(function () {
 
             $(document).ready(function () {
                 var table = $('#tablaProductos').DataTable(tableOptions);
-                // Al hacer click en una fila de la tabla muestra un alert con datos de esa fila.
-                /*$('#tablaProductos tbody').on('click', 'tr', function() {
-                 //Indicar en data la posición/es a mostrar la info
-                 Swal.fire(table.row(this).data()[6]);
-               })*/
             });
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -83,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function () {
             text: "Se cerrará tu sesión!",
             icon: "warning",
             showCancelButton: true,
-            confirmButtonColor: "#003262",
+            confirmButtonColor: "#5cb85c",
             cancelButtonColor: "#d33",
             cancelButtonText: 'Cancelar',
             confirmButtonText: "Aceptar"

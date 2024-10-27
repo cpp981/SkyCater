@@ -9,7 +9,7 @@ if (!isset($_SESSION['nombre'])) {
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width class="centered cabecera"=device-width class="centered cabecera", initial-scale=1.0">
     <title>Gestión de Catering de Aerolínea</title>
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.js"
@@ -56,21 +56,14 @@ if (!isset($_SESSION['nombre'])) {
                 <a class="nav-link text-white"><i class="fas fa-lg fa-moon"></i> Modo Oscuro</a>
             </div>
         </div>
-        <div class="flex-grow-1">
+        <div class="flex-grow-1 d-flex flex-column">
             <nav class="navbar navbar-light bg-light">
                 <div class="">
                     <button class="btn border-light" id="sidebarToggle" style="color: #003262"><i
                             class="fas fa-lg fa-bars"></i> Menú</button>
                 </div>
-                <!--<div id="session" class="ms-auto d-flex justify-content-center ">
-                    <p class="mr-2 " style="color:#003262;">Bienvenido,</p>
-                    <input type="text" class="form-control d-inline-block w-25" id="inputId"
-                        value=" disabled>
-                    <button id="close" class="btn text-white" style="background-color: #003262;"><i
-                            class="fas fa-sign-out-alt"></i> Cerrar Sesión</button>
-                </div>-->
                 <div id="session" class="ms-auto d-flex justify-content-center align-items-center">
-                    <p class="mr-2" style="color:#003262; line-height: 2.5; margin-bottom: 0;">Bienvenido,</p>
+                    <p class="mx-2" style="color:#003262; line-height: 2.5; margin-bottom: 0;">Bienvenido,</p>
                     <input type="text" class="form-control d-inline-block w-25" id="inputId"
                         value="<?php echo $_SESSION['nombre']; ?>" disabled>
                     <button id="close" class="btn text-white" style="background-color: #003262;">
@@ -78,28 +71,32 @@ if (!isset($_SESSION['nombre'])) {
                     </button>
                 </div>
             </nav>
-            <div class="container-flex mt-5">
-                <div class="d-flex flex-wrap" style="width: 900px">
-                    <div class="d-flex flex-column align-items-baseline mb-5 text-center shadow rounded">
-                        <table id="tablaVuelos" class="display table" style="width:100%">
+            <div id="containerTablaVuelos"
+                class="container-fluid flex-grow-1 d-flex flex-column justify-content-center mt-4 w-75">
+                <div class="text-center mt-5 mb-5" style="color: #003262;">
+                    <h2>Gestión de Vuelos</h2>
+                </div>
+                <div id="contenedorDataTable" class="flex-grow-1">
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 ">
+                        <table id="tablaVuelos" class="table table-striped rounded shadow" style="100%;">
                             <thead>
                                 <tr>
-                                    <th>Vuelo</th>
-                                    <th>Origen</th>
-                                    <th>Destino</th>
-                                    <th>Salida</th>
-                                    <th>Llegada</th>
-                                    <th>Estado</th>
-                                    <th>Gestionar</th>
+                                    <th class="centered cabecera"></th>
+                                    <th class="centered cabecera"></th>
+                                    <th class="centered cabecera"></th>
+                                    <th class="centered cabecera"></th>
+                                    <th class="centered cabecera"></th>
+                                    <th class="centered cabecera"></th>
+                                    <th class="centered cabecera"></th>
+                                    <th class="centered cabecera"></th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="tBodyVuelos">
                                 <!-- Datos de ejemplo -->
                             </tbody>
                         </table>
                     </div>
                 </div>
-
             </div>
         </div>
         <div class="foot d-flex justify-content-center align-items-end mt-5">
