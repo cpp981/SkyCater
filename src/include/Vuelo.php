@@ -19,10 +19,13 @@ class Vuelo {
         INNER JOIN Vuelo_Pasajero vp ON v.Id_Vuelo = vp.Id_Vuelo 
         INNER JOIN Estado_Vuelo ev ON v.Id_Estado = ev.Id_Estado 
         GROUP BY v.Numero_Vuelo, vp.Origen, vp.Destino, ev.Estado";
-
-        $stmt = $this->pdo->prepare($query);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        try{
+            $stmt = $this->pdo->prepare($query);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }catch(PDOException $e){
+            die($e->getMessage());
+        }
     }
 
 }
