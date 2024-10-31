@@ -34,7 +34,7 @@ $(document).ready(function() {
                 }
             },
             error: function() {
-                alert('Error en la solicitud. Inténtalo de nuevo.');
+                alert(error.message);
             }
         });
     });

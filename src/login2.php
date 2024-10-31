@@ -1,8 +1,5 @@
 <?php
-// Mostrar errores
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+require_once './include/Messages.php';
 
 // Incluir el archivo de la clase Usuario
 require_once './include/Usuario.php';
@@ -16,7 +13,7 @@ $password = $_POST['password']; //?? ''
 
 try{
     if (empty($username) || empty($password)) {
-        throw new Exception('Username or password is empty');
+        throw new Exception(Messages::USER_OR_PASS_EMPTY);
     }
     $valid_user = new Usuario($username,$password);
     $resultado = $valid_user->comprobarCredenciales();
@@ -28,9 +25,9 @@ try{
     }else{
         //Credenciales erróneas
         //Aquí hay que contemplar devolver un error personalizado por si el JS está desactivado en el Front.
-        echo json_encode(['status' => 'error']);
+        echo json_encode(['status' => Messages::UNAUTHORIZED_ACCESS]);
     }
-}catch(Exception $e){
+}catch(PDOException $e){
     //Aquí hay que contemplar devolver un error personalizado por si el JS está desactivado en el Front.
-    echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+    echo json_encode(['status' => 'error', 'message' => Messages::CONNECTION_FAILED]);
 }
