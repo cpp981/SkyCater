@@ -18,6 +18,5 @@ foreach($result as $item){
 }
 echo json_encode($data);
 }catch(Exception $e){
-    //Aquí hay que contemplar devolver un error personalizado por si el JS está desactivado en el Front.
-    echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+    echo json_encode(['status' => 'error', 'message' => Messages::LOAD_DATA_ERROR]);
 }

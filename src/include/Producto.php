@@ -27,7 +27,7 @@ class Producto
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            die($e->getMessage());
+            die('Error: ' . Messages::INTERNAL_ERROR);
         }
     }
 

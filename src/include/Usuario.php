@@ -33,7 +33,7 @@ class Usuario
                 return false;
             }
         } catch (PDOException $e) {
-            die($e->getMessage());
+            die(Messages::INTERNAL_ERROR);
         }
     }
 }

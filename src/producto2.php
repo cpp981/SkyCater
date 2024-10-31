@@ -16,6 +16,5 @@ try{
     }
     echo json_encode($platos_tabla);
 }catch(Exception $e){
-    //Aquí hay que contemplar devolver un error personalizado por si el JS está desactivado en el Front.
-    echo json_encode($e->getMessage());
+    echo json_encode(['status' => 'error', 'message' => Messages::LOAD_DATA_ERROR]);
 }
