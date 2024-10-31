@@ -11,9 +11,13 @@ class Dashboard{
     public function ObtenerProductos(){
         $query = "SELECT Nombre,Descripcion,Categoria,Alergenos,Stock_Disponible,Fecha_Actualizacion,Valor_Nutricional
                     FROM Producto";
-        $stmt = $this->pdo->prepare($query);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        try{
+            $stmt = $this->pdo->prepare($query);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }catch(PDOException $e){
+            die($e->getMessage());
+        }
     }
     // Métodos
     public function ContadorPrimeraClase(){
