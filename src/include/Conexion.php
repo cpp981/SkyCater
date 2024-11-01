@@ -32,13 +32,16 @@ class Conexion {
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
             PDO::ATTR_EMULATE_PREPARES   => false,
         ];
-        try {
+        try 
+        {
             $dsn = "mysql:host={$this->host};dbname={$this->db};charset={$this->charset}";
             $this->pdo = new PDO($dsn, $this->user, $this->pass,$options);
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         
-        } catch (PDOException $e) {
-            die(Messages::CONNECTION_FAILED);
+        } catch (Exception $e) 
+        {
+            $e->__construct(Messages::CONNECTION_FAILED);
+            die($e->getMessage());
         }
     }
 
