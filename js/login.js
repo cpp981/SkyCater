@@ -33,8 +33,12 @@ $(document).ready(function() {
                       })
                 }
             },
-            error: function() {
-                alert('Error en la solicitud. Inténtalo de nuevo.');
+            error: function(response) {
+                // Hay que mirar como mostrar aquí el error del BACK.
+                if(response.status == 'error')
+                {
+                    alert(response.message);
+                }
             }
         });
     });

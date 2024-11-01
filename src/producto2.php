@@ -16,5 +16,5 @@ try{
     }
     echo json_encode($platos_tabla);
 }catch(Exception $e){
-    echo json_encode($e->getMessage());
+    echo json_encode(['status' => 'error', 'message' => Messages::LOAD_DATA_ERROR]);
 }

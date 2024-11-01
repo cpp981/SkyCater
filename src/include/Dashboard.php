@@ -1,5 +1,6 @@
 <?php
 require_once 'Conexion.php';
+require_once 'Messages.php';
 class Dashboard{
     private $pdo;
     //Constructor
@@ -11,9 +12,13 @@ class Dashboard{
     public function ObtenerProductos(){
         $query = "SELECT Nombre,Descripcion,Categoria,Alergenos,Stock_Disponible,Fecha_Actualizacion,Valor_Nutricional
                     FROM Producto";
-        $stmt = $this->pdo->prepare($query);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        try{
+            $stmt = $this->pdo->prepare($query);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }catch(PDOException $e){
+            die('Error: ' . Messages::INTERNAL_ERROR);
+        }
     }
     // Métodos
     public function ContadorPrimeraClase(){
@@ -22,7 +27,7 @@ class Dashboard{
             $stmt = $this->pdo->prepare($query);
             $stmt->execute();
         }catch(PDOException $e){
-            die('Error: ' . $e->getMessage());
+            die('Error: ' . Messages::INTERNAL_ERROR);
         }
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -33,7 +38,7 @@ class Dashboard{
             $stmt = $this->pdo->prepare($query);
             $stmt->execute();    
         }catch(PDOException $e){
-            die('Error: ' . $e->getMessage());
+            die('Error: ' . Messages::INTERNAL_ERROR);
         }
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

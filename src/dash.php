@@ -18,5 +18,5 @@ foreach($result as $item){
 }
 echo json_encode($data);
 }catch(Exception $e){
-    echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+    echo json_encode(['status' => 'error', 'message' => Messages::LOAD_DATA_ERROR]);
 }

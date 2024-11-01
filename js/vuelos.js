@@ -1,9 +1,10 @@
-// Configuración Datatables
+// Configuración Datatables para Vuelos
 const tableOptions = {
     columnDefs: [
-        { className: "centered", targets: [0, 1, 2, 3, 4, 5, 6, 7],
-          targets: [6, 7],searchable: false, orderable: false
-         },
+        {
+            className: "centered", targets: [0, 1, 2, 3, 4, 5, 6, 7],
+            targets: [6, 7], searchable: false, orderable: false
+        },
     ],
     "columns": [
         { title: "Vuelo" },
@@ -13,7 +14,7 @@ const tableOptions = {
         { title: "Llegada" },
         { title: "Estado" },
         { title: "Detalles" },
-        { title: "Gestionar"}
+        { title: "Gestionar" }
     ],
     lengthChange: false,
     destroy: true,
@@ -32,6 +33,7 @@ const tableOptions = {
     },
 };
 
+// Cargar la lista de vuelos pendientes de gestionar
 $(document).ready(function () {
     var tabla = $('#tablaVuelos').DataTable(tableOptions);
 
@@ -65,48 +67,73 @@ $(document).ready(function () {
         }
     });
 
-    // Manejador de clic para el botón "details"
-    $('#tablaVuelos tbody').on('click', 'button.details', function() {
-        var tr = $(this).closest('tr'); // Obtener la fila actual
-        var row = tabla.row(tr); // Obtener la instancia de la fila
+    // Manejador de clic para el botón "detalles del vuelo"
+    $('#tablaVuelos tbody').on('click', 'button.details', function () {
+        // Obtener la fila actual
+        var tr = $(this).closest('tr');
+        // Obtener la instancia de la fila
+        var row = tabla.row(tr);
+        // Obtener los datos de la fila
+        var dataRow = tabla.row(row).data();
+        // Almacenar el valor de la columna "Vuelo"
+        var numVuelo = dataRow[0];
 
         if (row.child.isShown()) {
-            // Si ya está desplegada, la colapsamos
+            // Si ya está desplegada, ocultamos
             row.child.hide();
             tr.removeClass('shown');
         } else {
             // Si no está desplegada, la mostramos
-            row.child(format(row.data())).show();
+            row.child(format(dataRow)).show();
             tr.addClass('shown');
+
+            // Realizar la consulta AJAX
+            $.ajax({
+                url: '../src/detalleVuelos.php',
+                method: 'POST',
+                data: {
+                    vuelo: numVuelo,
+                },
+                success: function (data) {
+                    // Procesar y mostrar la data recibida
+                    // Actualiza el contenido en la fila desplegada
+                    var content = format(dataRow) + '<div class="mb-2"><p> Total pasajeros: ' + JSON.stringify(data['pasajeros'], null, 2) + ' <br>Pasajeros con intolerancias: ' + JSON.stringify(data['intolerancias'], null, 2) + '</p></div>';
+                    row.child(content).show();
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error en la solicitud AJAX:', error);
+                }
+            });
         }
     });
-
-    // Función para formatear el contenido que se mostrará
-    function format(data) {
-        return '<div>Información adicional para: ' + data[0] + '</div>';
-    }
 });
 
-document.addEventListener('DOMContentLoaded', function () {
-    //jQuery para menú desplegable
-    $('#sidebarToggle').click(function () {
-        $('#sidebar').toggle(350, 'linear');
-    });
-    //Antes de cerrar la sesión, pide confirmación.
-    $('#close').click(function () {
-        Swal.fire({
-            title: "Estás seguro?",
-            text: "Se cerrará tu sesión!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#5cb85c",
-            cancelButtonColor: "#d33",
-            cancelButtonText: 'Cancelar',
-            confirmButtonText: "Aceptar"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = '../src/cerrar.php';
-            }
+    // Función para formatear el título del contenido que se mostrará al desplegar la fila
+    function format(dataRow) {
+        return '<div><strong>Información adicional para el vuelo ' + dataRow[0] + '</strong></div>';
+    }
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+        //jQuery para menú desplegable
+        $('#sidebarToggle').click(function () {
+            $('#sidebar').toggle(350, 'linear');
+        });
+        //Antes de cerrar la sesión, pide confirmación.
+        $('#close').click(function () {
+            Swal.fire({
+                title: "Estás seguro?",
+                text: "Se cerrará tu sesión!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#5cb85c",
+                cancelButtonColor: "#d33",
+                cancelButtonText: 'Cancelar',
+                confirmButtonText: "Aceptar"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '../src/cerrar.php';
+                }
+            });
         });
     });
-});
