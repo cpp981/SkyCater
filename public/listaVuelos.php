@@ -9,7 +9,7 @@ if (!isset($_SESSION['nombre'])) {
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width class="centered cabecera"=device-width class="centered cabecera", initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Catering de Aerolínea</title>
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.js"
@@ -74,7 +74,7 @@ if (!isset($_SESSION['nombre'])) {
             <div id="containerTablaVuelos"
                 class="container-fluid flex-grow-1 d-flex flex-column justify-content-center mt-4 w-75">
                 <div class="text-center mt-5 mb-5" style="color: #003262;">
-                    <h2>Gestión de Vuelos</h2>
+                    <h2>Listado de Vuelos</h2>
                 </div>
                 <div id="contenedorDataTable" class="flex-grow-1">
                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 ">

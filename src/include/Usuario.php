@@ -32,8 +32,9 @@ class Usuario
             } else {
                 return false;
             }
-        } catch (PDOException $e) {
-            die(Messages::INTERNAL_ERROR);
+        } catch (Exception $e) {
+            $e->__construct(Messages::LOAD_DATA_ERROR);
+            die($e->getMessage());
         }
     }
 }

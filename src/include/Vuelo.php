@@ -24,8 +24,40 @@ class Vuelo {
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }catch(PDOException $e){
-            die('Error: ' . Messages::INTERNAL_ERROR);
+            die('Error: ' . Messages::LOAD_DATA_ERROR);
         }
     }
 
+    public function contadorPasajerosVuelo($numVuelo)
+    {
+        $query = "SELECT COUNT(Id_Pasajero) AS 'Num_Pasajeros' FROM Vuelo_Pasajero AS vp 
+                    INNER JOIN Vuelo AS v ON vp.Id_Vuelo = v.Id_Vuelo 
+                    WHERE v.Numero_Vuelo = ? ";
+        try
+        {
+            $stmt = $this->pdo->prepare($query);
+            $stmt->bindParam(1, $numVuelo);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }catch(PDOException $e)
+        {
+            die('Error: ' . Messages::LOAD_DATA_ERROR);
+        }
+    }
+
+    public function contadorPasajerosIntolerancias($numVuelo)
+    {
+        $query = "SELECT COUNT(vp.Id_Pasajero) AS Intolerancias FROM Vuelo_Pasajero AS vp 
+                    INNER JOIN Vuelo AS v ON vp.Id_Vuelo = v.Id_Vuelo 
+                    INNER JOIN Pasajero AS p ON vp.Id_Pasajero = p.Id_Pasajero 
+                    WHERE v.Numero_Vuelo = ? AND p.Intolerancias != 'Ninguna'";
+        try{
+            $stmt = $this->pdo->prepare($query);
+            $stmt->bindParam(1, $numVuelo);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }catch(PDOException $e){
+            die('Error: ' . Messages::LOAD_DATA_ERROR);
+        }
+    }
 }
