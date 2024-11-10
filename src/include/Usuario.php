@@ -22,19 +22,23 @@ class Usuario
     {
         //Preparar la consulta con parámetros
         $query = "SELECT pass FROM Usuario_Registrado WHERE nombre = ? ";
-        try {
+        try 
+        {
             $stmt = $this->pdo->prepare($query);
             $stmt->bindParam(1, $this->usuario);
             $stmt->execute();
             $resul = $stmt->fetch(PDO::FETCH_ASSOC);
             if ($resul && password_verify($this->password, $resul['pass'])) {
                 return true;
-            } else {
+            } 
+            else 
+            {
                 return false;
             }
-        } catch (Exception $e) {
-            $e->__construct(Messages::LOAD_DATA_ERROR);
-            die($e->getMessage());
+        } 
+        catch (Exception $e) 
+        {
+            throw new Exception(Messages::LOAD_DATA_ERROR);
         }
     }
 }

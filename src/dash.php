@@ -2,8 +2,7 @@
 require_once './include/Conexion.php';
 require_once './include/Dashboard.php';
 header('Content-Type: application/json');
-session_start();
-
+require_once '../src/session.php';
 
 //Enviamos datos de las Clases en las que viajan los pasajeros
 //Se envia al JS para que lo muestre en la gráfica del dashboard

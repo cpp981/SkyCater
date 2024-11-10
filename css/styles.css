@@ -196,6 +196,12 @@ html, body {
 
    }
 
+/* Estilo Modales  */
+.modal-title {
+    color: #003262;
+}
+
+
 /* Ajustar posición de donde se muestran los SweeAlerts */
   /* Ajusta la posición del modal */
   .swal2-popup {
