@@ -5,7 +5,8 @@ require '../vendor/autoload.php';
 
 use Dotenv\Dotenv;
 
-class Conexion {
+class Conexion 
+{
     private $host;
     private $db;
     private $user;
@@ -13,7 +14,8 @@ class Conexion {
     private $charset;
     private $pdo;
 
-    public function __construct() {
+    public function __construct() 
+    {
         $dotenv = Dotenv::createImmutable(dirname(  __DIR__));
         $dotenv->load();
 
@@ -26,7 +28,8 @@ class Conexion {
         $this->connect();
     }
 
-    private function connect() {
+    private function connect() 
+    {
         $options = [
             PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
@@ -38,14 +41,16 @@ class Conexion {
             $this->pdo = new PDO($dsn, $this->user, $this->pass,$options);
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         
-        } catch (Exception $e) 
+        } catch (PDOException $e) 
         {
-            $e->__construct(Messages::CONNECTION_FAILED);
-            die($e->getMessage());
+            //$e->__construct(Messages::CONNECTION_FAILED);
+            throw new Exception(Messages::CONNECTION_FAILED);
+            //die($e->getMessage());
         }
     }
 
-    public function getPdo() {
+    public function getPdo() 
+    {
         return $this->pdo;
     }
 }
