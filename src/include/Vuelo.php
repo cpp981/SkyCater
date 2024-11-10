@@ -6,13 +6,15 @@ class Vuelo {
     private $estado;
     private $pdo;
     //Constructor
-    public  function __construct(){
+    public  function __construct()
+    {
         $conexion = new Conexion();
         $this->pdo = $conexion->getPdo();
     }
 
     //Obtener los Vuelo
-    public function ObtenerVuelos(){
+    public function ObtenerVuelos()
+    {
         $query = "SELECT v.Numero_Vuelo, vp.Origen, vp.Destino, MAX(vp.Fecha_Salida) AS Fecha_Salida, 
         MAX(vp.Fecha_Llegada) AS Fecha_Llegada, ev.Estado 
         FROM Vuelo v 
@@ -23,8 +25,10 @@ class Vuelo {
             $stmt = $this->pdo->prepare($query);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        }catch(PDOException $e){
-            die('Error: ' . Messages::LOAD_DATA_ERROR);
+        }
+        catch(PDOException $e)
+        {
+            throw new Exception(Messages::LOAD_DATA_ERROR);
         }
     }
 
@@ -39,9 +43,10 @@ class Vuelo {
             $stmt->bindParam(1, $numVuelo);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        }catch(PDOException $e)
+        }
+        catch(PDOException $e)
         {
-            die('Error: ' . Messages::LOAD_DATA_ERROR);
+           throw new Exception(Messages::LOAD_DATA_ERROR);
         }
     }
 
@@ -51,13 +56,16 @@ class Vuelo {
                     INNER JOIN Vuelo AS v ON vp.Id_Vuelo = v.Id_Vuelo 
                     INNER JOIN Pasajero AS p ON vp.Id_Pasajero = p.Id_Pasajero 
                     WHERE v.Numero_Vuelo = ? AND p.Intolerancias != 'Ninguna'";
-        try{
+        try
+        {
             $stmt = $this->pdo->prepare($query);
             $stmt->bindParam(1, $numVuelo);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        }catch(PDOException $e){
-            die('Error: ' . Messages::LOAD_DATA_ERROR);
+        }
+        catch(PDOException $e)
+        {
+            throw new Exception(Messages::LOAD_DATA_ERROR);
         }
     }
 }

@@ -1,7 +1,8 @@
 <?php
-session_start();
+require_once '../src/session.php';
 if (!isset($_SESSION['nombre'])) {
-    header('Location:login.php');
+    header('Location:login.html');
+    exit();
 }
 ?>
 <!DOCTYPE html>
@@ -48,7 +49,7 @@ if (!isset($_SESSION['nombre'])) {
                         Inventario</a>
                 </li>
                 <li class="nav-item mt-3"></li>
-                <a class="nav-link text-white" href="#"><i class="fas fa-truck-fast"></i> Pedidos</a>
+                <a class="nav-link text-white" href="pedido.php"><i class="fas fa-truck-fast"></i> Pedidos</a>
                 </li>
                 <!-- Añadir más elementos del menú aquí -->
             </ul>
