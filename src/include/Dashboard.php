@@ -53,4 +53,18 @@ class Dashboard
         }
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function getProductosSinAlergenos()
+    {
+        $query = "SELECT count(*) FROM Producto WHERE Alergenos = 'Ninguno'";
+        try
+        {
+            $stmt = $this->pdo->prepare($query);
+            $stmt->execute();    
+        }catch(PDOException $e)
+        {
+            throw new Exception(Messages::LOAD_DATA_ERROR);
+        }
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

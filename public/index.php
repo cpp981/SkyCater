@@ -82,8 +82,8 @@ if (!isset($_SESSION['nombre'])) {
                     <div class="card shadow"
                             style="height: 184px; width: 334px; margin-top: -27px;"> <!-- background-color:#29AB87; -->
                             <div class="indi card-body">
-                                <p class="text-center">Personas a bordo con intolerancias<br>este año</p>
-                                <h1 class="text-center" style="font-size: 4em;">1111121</h1>
+                                <p class="text-center">Productos sin alérgenos en stock</p>
+                                <h1 class="text-center" id="prodNoAlergenos" style="font-size: 4.5em;"></h1>
                             </div>
                         </div>
                         <div class="card shadow" style="height: 334px;">
@@ -130,7 +130,7 @@ if (!isset($_SESSION['nombre'])) {
                         <div class="card shadow" style="height: 184px; width: 334px; margin-top: -27px;">
                             <div class="indi card-body ">
                                 <p class="text-center">Personas a bordo con intolerancias<br>este mes</p>
-                                <h1 class="text-center" style="font-size: 4em;">21</h1>
+                                <h1 class="text-center" id="intolerancias" style="font-size: 4.5em;">21</h1>
                             </div>
                         </div>
                         <div class="card shadow mb-5" style="height: 334px;">
