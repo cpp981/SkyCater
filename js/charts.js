@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }]
         }
     });
+
     //Enviamos petición mediante AJAX para traer los datos de las reversas (Clases).
     $.ajax({
         type: 'POST',
@@ -34,6 +35,40 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 }
             });
+        }
+    });
+
+      //Petición Ajax para el indicador 1
+      $.ajax({
+        url: '../src/indicadores.php',
+        type: 'POST',
+        dataType: 'json',
+        success: function(data) 
+        {
+            $('#prodNoAlergenos').html(data['prod']);
+            if(data['prod'] <= 25)
+            {
+                $('#prodNoAlergenos').addClass('text-success');
+            }
+            else
+            {
+                $('#prodNoAlergenos').addClass('text-danger');
+            }
+
+            $('intolerancias').html(data['intolerancias']);
+            if(data['intolerancias'] <= 50)
+            {
+                $('#intolerancias').addClass('text-success');
+            }
+            else
+            {
+                $('#intolerancias').addClass('text-danger');
+            }
+        },
+        error: function(xhr, status, error) {
+            // Si ocurre un error con la petición AJAX
+            console.error('Error al hacer la petición:', error);
+            
         }
     });
 
