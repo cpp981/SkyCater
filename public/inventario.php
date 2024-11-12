@@ -1,7 +1,8 @@
 <?php
-session_start();
+require_once '../src/session.php';
 if (!isset($_SESSION['nombre'])) {
-    header('Location:login.php');
+    header('Location:login.html');
+    exit();
 }
 ?>
 <!DOCTYPE html>
@@ -48,7 +49,7 @@ if (!isset($_SESSION['nombre'])) {
                         Inventario</a>
                 </li>
                 <li class="nav-item mt-3">
-                    <a class="nav-link text-white" href="#"><i class="fas fa-truck-fast"></i> Pedidos</a>
+                    <a class="nav-link text-white" href="pedido.php"><i class="fas fa-truck-fast"></i> Pedidos</a>
                 </li>
             </ul>
             <div class="d-flex justify-content-center align-items-end mt-5">
@@ -62,7 +63,7 @@ if (!isset($_SESSION['nombre'])) {
                             class="fas fa-lg fa-bars"></i> Menú</button>
                 </div>
                 <div id="session" class="ms-auto d-flex justify-content-center align-items-center">
-                    <p class="mr-3" style="color:#003262; margin-bottom: 0;">Bienvenido,</p>
+                    <p class="mx-2" style="color:#003262; margin-bottom: 0;">Bienvenido,</p>
                     <input type="text" class="form-control d-inline-block w-25" id="inputId"
                         value="<?php echo $_SESSION['nombre']; ?>" disabled>
                     <button id="close" class="btn text-white shadow" style="background-color: #003262;">
@@ -76,23 +77,100 @@ if (!isset($_SESSION['nombre'])) {
                     <h2>Gestión de Productos</h2>
                 </div>
                 <div id="contenedorDataTable" class="flex-grow-1">
-                    <a id="addProd" class="btn btn-success shadow rounded" href="#"><i class="fas fa-plus"></i> Añadir
-                        Producto</a>
+                    <a id="addProd" class="btn btn-success shadow rounded" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal">
+                        <i class="fas fa-plus"></i> Añadir Producto
+                    </a>
+                    <a id="refrescarTabla" class="btn btn-primary shadow rounded">
+                        <i class="fas fa-redo"></i></a>
+                    <!-- Modal -->
+                    <div class="modal fade shadow" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Añadir Producto</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- Formulario para añadir producto -->
+                                    <form id="formularioProducto">
+                                        <!-- Nombre del producto (Obligatorio) -->
+                                        <div class="mb-3">
+                                            <label for="nombreProducto" class="form-label">Nombre del Producto <span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control border border-secondary"
+                                                id="nombreProducto" required>
+                                        </div>
+                                        <!-- Descripción del producto (Opcional) -->
+                                        <div class="mb-3">
+                                            <label for="descripcionProducto" class="form-label">Descripción del
+                                                Producto</label>
+                                            <textarea class="form-control border border-secondary"
+                                                id="descripcionProducto" rows="2" style="resize: none;"></textarea>
+                                        </div>
+                                        <!-- Categoría del producto (Obligatorio) -->
+                                        <div class="mb-3">
+                                            <label for="categoriaProducto" class="form-label">Categoría <span
+                                                    class="text-danger">*</span></label>
+                                            <select class="form-select border border-secondary" id="categoriaProducto"
+                                                required>
+                                                <option value="">Seleccione una categoría</option>
+                                                <option value="Bebida">Bebida</option>
+                                                <option value="Entrante">Entrante</option>
+                                                <option value="Primer Plato">Primer Plato</option>
+                                                <option value="Segundo Plato">Segundo Plato</option>
+                                                <option value="Postre">Postre</option>
+                                            </select>
+                                        </div>
+                                        <!-- Alérgenos (Obligatorio) -->
+                                        <div class="mb-3">
+                                            <label for="alergenosProducto" class="form-label">Alérgenos <span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control border border-secondary"
+                                                id="alergenosProducto" required>
+                                        </div>
+                                        <!-- Valor Nutricional (Opcional) -->
+                                        <div class="mb-3">
+                                            <label for="valorNutricional" class="form-label">Valor Nutricional(kcal)</label>
+                                            <input type="number" class="form-control border border-secondary"
+                                                id="valorNutricional" rows="2" style="resize: none;"></input>
+                                        </div>
+                                        <!-- Id Proveedor (Opcional) -->
+                                        <div class="mb-3">
+                                            <label for="idProveedor" class="form-label">Id Proveedor</label>
+                                            <input type="number" class="form-control border border-secondary"
+                                                id="idProveedor" rows="2" style="resize: none;" disabled></input>
+                                        </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger"
+                                        data-bs-dismiss="modal"></i>Cerrar</button>
+                                    <button type="submit" id="guardarProducto" form="formularioProducto"
+                                        class="btn btn-success"><i class="fas fa-save me-1"></i>Grabar
+                                        Producto</button>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- DataTables para productos -->
                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 ">
                         <table id="tablaProductos" class="table table-striped rounded shadow" style="width: 100%;">
                             <thead>
                                 <tr>
-                                    <th class="centered cabecera">Nombre</th>
-                                    <th class="centered cabecera">Categoría</th>
-                                    <th class="centered cabecera">Alergenos</th>
-                                    <th class="centered cabecera">Stock Actual</th>
-                                    <th class="centered cabecera">Fecha última actualización</th>
-                                    <th class="centered cabecera">Valor Nutricional</th>
-                                    <th class="centered cabecera">Descripción</th>
+                                    <th class="centered cabecera"></th>
+                                    <th class="centered cabecera"></th>
+                                    <th class="centered cabecera"></th>
+                                    <th class="centered cabecera"></th>
+                                    <th class="centered cabecera"></th>
+                                    <th class="centered cabecera"></th>
+                                    <th class="centered cabecera"></th>
                                 </tr>
                             </thead>
                             <tbody id="tBodyProductos">
-                                <!-- Datos de ejemplo -->
                             </tbody>
                         </table>
                     </div>

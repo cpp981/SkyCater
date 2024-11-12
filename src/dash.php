@@ -2,8 +2,7 @@
 require_once './include/Conexion.php';
 require_once './include/Dashboard.php';
 header('Content-Type: application/json');
-session_start();
-
+require_once '../src/session.php';
 
 //Enviamos datos de las Clases en las que viajan los pasajeros
 //Se envia al JS para que lo muestre en la gráfica del dashboard
@@ -18,5 +17,5 @@ foreach($result as $item){
 }
 echo json_encode($data);
 }catch(Exception $e){
-    echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+    echo json_encode(['status' => 'error', 'message' => Messages::LOAD_DATA_ERROR]);
 }

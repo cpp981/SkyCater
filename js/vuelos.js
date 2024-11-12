@@ -1,127 +1,41 @@
-//PETICION AJAX PARA TABLA VUELOS
-/*$(document).ready(function () {
-    var tabla = $('#tablaVuelos').DataTable({
-        "pagingType": "full_numbers",
-        "language": {
-            "paginate": {
-                "first": "Primero",
-                "previous": "Anterior",
-                "next": "Siguiente",
-                "last": "Último"
-            }
+// Configuración Datatables para Vuelos
+const tableOptions = {
+    columnDefs: [
+        {
+            className: "centered", targets: [0, 1, 2, 3, 4, 5, 6, 7],
+            targets: [6, 7], searchable: false, orderable: false
         },
-        "columns": [
-            { title: "Vuelo" }, // Reemplaza con nombres reales
-            { title: "Origen" },
-            { title: "Destino" },
-            { title: "Salida" },
-            { title: "Llegada" },
-            { title: "Estado" },
-            { title: "Gestionar" } // La columna del botón
-        ]
-    });
-    $('#tablaVuelos tbody').on('click', 'tr', function () {
-        var tr = $(this);
-        var row = table.row(tr);
-
-        if (row.child.isShown()) {
-            row.child.hide();
-            tr.removeClass('shown');
-        } else {
-            table.rows().every(function() {
-                if (this.child.isShown()) {
-                    this.child.hide();
-                    $(this.node()).removeClass('shown');
-                }
-            });
-
-            row.child('<div>Detalles adicionales sobre ' + tr.children('td').first().text() + '</div>').show();
-            tr.addClass('shown');
-        }
-    });
-
-    $.ajax({
-        url: '../src/listaVuelos2.php', // URL del archivo PHP
-        method: 'GET',
-        dataType: 'json',
-        success: function (data) {
-            console.log(data); // Verifica la estructura de los datos
-            data.forEach(function (vuelo) {
-                console.log(vuelo); // Verifica cada fila
-
-
-                if (vuelo.length === 6) { // Asegúrate de que hay 7 elementos
-                    tabla.row.add([
-                        vuelo[0], // Columna 1
-                        vuelo[1], // Columna 2
-                        vuelo[2], // Columna 3
-                        vuelo[3], // Columna 4
-                        vuelo[4], // Columna 5
-                        vuelo[5], // Columna 6
-                        //vuelo[6], // Columna 7
-                        '<button class="botonInv btn btn-sm btn-warning text-white" data-id="' + vuelo[0] + '"><i class="fas fa-plane-departure"></i> Gestionar</button>' // Botón
-                    ]).draw(false); // 'false' para no reiniciar la paginación
-                } else {
-                    console.warn("Fila incompleta: ", vuelo); // Mensaje de advertencia si hay una fila incompleta
-                }
-            });
+    ],
+    "columns": [
+        { title: "Vuelo" },
+        { title: "Origen" },
+        { title: "Destino" },
+        { title: "Salida" },
+        { title: "Llegada" },
+        { title: "Estado" },
+        { title: "Detalles" },
+        { title: "Gestionar" }
+    ],
+    lengthChange: false,
+    destroy: true,
+    language: {
+        paginate: {
+            first: '<button class="btn btn-sm">Primero</button>',
+            previous: '<button class="btn btn-sm">Anterior</button>',
+            next: '<button class="btn btn-sm">Siguiente</button>',
+            last: '<button class="btn btn-sm">Último</button>'
         },
-        error: function (xhr, status, error) {
-            console.error("Error al cargar los datos: " + error);
-        }
-    });
+        search: "Buscar: ",
+        zeroRecords: "Ningún producto encontrado",
+        info: "Mostrando de _START_ a _END_ de un total de _TOTAL_ registros",
+        infoFiltered: "(filtrados desde _MAX_ registros totales)",
 
-    /*$('#tablaVuelos tbody').on('click', '.btn-accion', function () {
-        var id = $(this).data('id');
-        alert('Botón clicado para ID: ' + id);
-    });
-});*/
+    },
+};
 
+// Cargar la lista de vuelos pendientes de gestionar
 $(document).ready(function () {
-    var tabla = $('#tablaVuelos').DataTable({
-        "pagingType": "full_numbers",
-        "language": {
-            "paginate": {
-                "first": "Primero",
-                "previous": "Anterior",
-                "next": "Siguiente",
-                "last": "Último"
-            }
-        },
-        "columns": [
-            { title: "Vuelo" },
-            { title: "Origen" },
-            { title: "Destino" },
-            { title: "Salida" },
-            { title: "Llegada" },
-            { title: "Estado" },
-            { title: "Gestionar" }
-        ]
-    });
-
-    // Manejo de clic en filas para desplegar
-    $('#tablaVuelos tbody').on('click', 'tr', function () {
-        var tr = $(this);
-        var row = tabla.row(tr);
-
-        if (row.child.isShown()) {
-            // Si la fila ya está desplegada, la ocultamos
-            row.child.hide();
-            tr.removeClass('shown');
-        } else {
-            // Ocultar cualquier fila que esté desplegada
-            tabla.rows().every(function() {
-                if (this.child.isShown()) {
-                    this.child.hide();
-                    $(this.node()).removeClass('shown');
-                }
-            });
-
-            // Mostrar la información adicional de la fila seleccionada
-            row.child('<div>Detalles adicionales sobre ' + tr.children('td').first().text() + '</div>').show();
-            tr.addClass('shown');
-        }
-    });
+    var tabla = $('#tablaVuelos').DataTable(tableOptions);
 
     $.ajax({
         url: '../src/listaVuelos2.php',
@@ -140,7 +54,8 @@ $(document).ready(function () {
                         vuelo[3],
                         vuelo[4],
                         vuelo[5],
-                        '<button class="botonInv btn btn-sm btn-warning text-white" data-id="' + vuelo[0] + '"><i class="fas fa-plane-departure"></i> Gestionar</button>'
+                        '<button class="details btn btn-sm btn-primary text-white" data-id="' + vuelo[0] + '"><i class="fas fa-circle-info"></i> Detalles Vuelo</button>',
+                        '<button class="btn btn-sm btn-success text-white" data-id="' + vuelo[0] + '"><i class="fas fa-plane-departure"></i> Gestionar Vuelo</button>'
                     ]).draw(false);
                 } else {
                     console.warn("Fila incompleta: ", vuelo);
@@ -151,31 +66,74 @@ $(document).ready(function () {
             console.error("Error al cargar los datos: " + error);
         }
     });
+
+    // Manejador de clic para el botón "detalles del vuelo"
+    $('#tablaVuelos tbody').on('click', 'button.details', function () {
+        // Obtener la fila actual
+        var tr = $(this).closest('tr');
+        // Obtener la instancia de la fila
+        var row = tabla.row(tr);
+        // Obtener los datos de la fila
+        var dataRow = tabla.row(row).data();
+        // Almacenar el valor de la columna "Vuelo"
+        var numVuelo = dataRow[0];
+
+        if (row.child.isShown()) {
+            // Si ya está desplegada, ocultamos
+            row.child.hide();
+            tr.removeClass('shown');
+        } else {
+            // Si no está desplegada, la mostramos
+            row.child(format(dataRow)).show();
+            tr.addClass('shown');
+
+            // Realizar la consulta AJAX
+            $.ajax({
+                url: '../src/detalleVuelos.php',
+                method: 'POST',
+                data: {
+                    vuelo: numVuelo,
+                },
+                success: function (data) {
+                    // Procesar y mostrar la data recibida
+                    // Actualiza el contenido en la fila desplegada
+                    var content = format(dataRow) + '<div class="mb-2"><p> Total pasajeros: ' + JSON.stringify(data['pasajeros'], null, 2) + ' <br>Pasajeros con intolerancias: ' + JSON.stringify(data['intolerancias'], null, 2) + '</p></div>';
+                    row.child(content).show();
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error en la solicitud AJAX:', error);
+                }
+            });
+        }
+    });
 });
 
+    // Función para formatear el título del contenido que se mostrará al desplegar la fila
+    function format(dataRow) {
+        return '<div><strong>Información adicional para el vuelo ' + dataRow[0] + '</strong></div>';
+    }
 
 
-
-document.addEventListener('DOMContentLoaded', function () {
-    //jQuery para menú desplegable
-    $('#sidebarToggle').click(function () {
-        $('#sidebar').toggle(350, 'linear');
-    });
-    //Antes de cerrar la sesión, pide confirmación.
-    $('#close').click(function () {
-        Swal.fire({
-            title: "Estás seguro?",
-            text: "Se cerrará tu sesión!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#003262",
-            cancelButtonColor: "#d33",
-            cancelButtonText: 'Cancelar',
-            confirmButtonText: "Aceptar"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = '../src/cerrar.php';
-            }
+    document.addEventListener('DOMContentLoaded', function () {
+        //jQuery para menú desplegable
+        $('#sidebarToggle').click(function () {
+            $('#sidebar').toggle(350, 'linear');
+        });
+        //Antes de cerrar la sesión, pide confirmación.
+        $('#close').click(function () {
+            Swal.fire({
+                title: "Estás seguro?",
+                text: "Se cerrará tu sesión!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#5cb85c",
+                cancelButtonColor: "#d33",
+                cancelButtonText: 'Cancelar',
+                confirmButtonText: "Aceptar"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '../src/cerrar.php';
+                }
+            });
         });
     });
-});

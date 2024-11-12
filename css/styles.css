@@ -82,15 +82,6 @@ body.dark-mode {
     background-color: #333333;
 }
 
-/*.login-container {
-    width: 100%;
-    max-width: 400px;
-    padding: 15px;
-    background-color: #ffffff;
-    color:#003262;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}*/
 
 .indi {
     color: #003262;
@@ -101,9 +92,6 @@ body.dark-mode .login-container {
     color: #ffffff;
 }
 
-/*.botonInv {
-    background-color: #003262;
-} */
 .dash{
     padding: 0;
     margin-left: 14.8em;
@@ -115,16 +103,13 @@ html, body {
     height: 100%; /* Asegúrate de que el body ocupe toda la altura */
     margin: 0;
 }
-/*.super{
-    margin-top: ;
-}*/
 
 /* ESTILO NOTIFICACIONES NOTYF */
 .notyf > .notyf__toast {
     transform: translateY(35px) !important;  /* Desplaza las notificaciones 20px hacia abajo */
   }
 
-/*ESTILOS DATABLES  PRODUCTOS*/
+/*ESTILOS DATABLES */
 
 /* Ajustar el tamaño del texto de las filas de la tabla */
 .custom-table-size {
@@ -160,6 +145,15 @@ html, body {
     color:#ffffff !important; 
 }
 
+.pagination,#tablaVuelos_filter,#tablaVuelos_info{
+    color:#003262  !important;
+}
+
+#tablaVuelos_paginate > .pagination > #tablaVuelos_previous > .page-link{
+    background-color:#003262 !important;
+    color:#ffffff !important; 
+}
+
 .pagination > li > .page-link {
     background-color: #003262 !important;
     border: 1px solid !important;
@@ -171,12 +165,8 @@ html, body {
 .cabecera{
     color:#003262 !important;
 }
-/*.centered {
-    text-align: center !important;
-    vertical-align: middle !important;
-}*/
 
-/* Input busqueda de la tabla Datatables Productos  */
+/* Input busqueda de la tabla Datatables */
 .dataTables_filter input {
     border: 2px solid #003262; /* Cambia el color según lo necesites */
     border-radius: 4px; /* Opcional: añade esquinas redondeadas */
@@ -194,11 +184,23 @@ html, body {
     border-radius: 5px !important;
     border-color: #ffffff !important;
 }
+
+#tablaVuelos{
+    border: 1px solid !important;
+    border-radius: 5px !important;
+    border-color: #ffffff !important;
+}
  /* Footer dashboard*/
  .foot{
     height: 0.5px;
 
    }
+
+/* Estilo Modales  */
+.modal-title {
+    color: #003262;
+}
+
 
 /* Ajustar posición de donde se muestran los SweeAlerts */
   /* Ajusta la posición del modal */

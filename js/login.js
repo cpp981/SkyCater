@@ -19,33 +19,37 @@ $(document).ready(function() {
                         text: 'Serás redirigido en breve...',
                         icon: 'success',
                         showConfirmButton: false,
-                        timer: 2000
+                        timer: 2000 // Redirige después de 2 segundos
                     }).then(() => {
-                        window.location.href = '../public/index.php'; // Redirige después de 3 segundos
+                        window.location.href = '../public/index.php';
                     });
                 } else {
                     Swal.fire({
                         title: 'Error!',
-                        text: 'Usuario o contraseña incorrectos',
+                        text: response.message,
                         icon: 'error',
                         confirmButtonText: 'Aceptar',
-                        confirmButtonColor: '#003262'
+                        confirmButtonColor: '#5cb85c'
                       })
                 }
             },
-            error: function() {
-                alert('Error en la solicitud. Inténtalo de nuevo.');
+            error: function(response) {
+                // Hay que mirar como mostrar aquí el error del BACK.
+                if(response.status == 'error')
+                {
+                    alert(response.message);
+                }
             }
+            });
         });
     });
-});
         // Modo oscuro/claro
-        $('#toggle-dark-mode').click(function() {
+        /*$('#toggle-dark-mode').click(function() {
             $('body').toggleClass('dark-mode');
             $(this).text(function(i, text) {
                 return text === "Modo Oscuro" ? "Modo Claro" : "Modo Oscuro";
             });
-        });
+        });*/
 
 
 

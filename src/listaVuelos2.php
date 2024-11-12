@@ -16,5 +16,6 @@ try{
     }
     echo json_encode($vuelos_tabla);
 }catch(Exception $e){
-    echo json_encode($e->getMessage());
+    //Aquí hay que contemplar devolver un error personalizado por si el JS está desactivado en el Front.
+    echo json_encode(['status' => 'error', 'message' => Messages::LOAD_DATA_ERROR]);
 }

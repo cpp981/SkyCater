@@ -1,8 +1,5 @@
 <?php
-// Mostrar errores
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+require_once './include/Messages.php';
 
 // Incluir el archivo de la clase Usuario
 require_once './include/Usuario.php';
@@ -10,60 +7,44 @@ require_once './include/Usuario.php';
 // Establecer la cabecera para JSON
 header('Content-Type: application/json');
 
-// Recoger datos del formulario
-$username = $_POST['username']; //?? ''
-$password = $_POST['password']; //?? ''
+// Recoger datos del formulario sanitizando para evitar ataques.
+$username = htmlspecialchars(trim($_POST['username'])); //?? ''
+$password = htmlspecialchars(trim($_POST['password'])); //?? ''
 
-try{
-    if (empty($username) || empty($password)) {
-        throw new Exception('Username or password is empty');
+try 
+{
+    if (empty($username) || empty($password)) 
+    {
+        echo json_encode(['status' => 'error', 'message' => Messages::USER_OR_PASS_EMPTY]);
+        exit();
     }
-    $valid_user = new Usuario($username,$password);
+    $valid_user = new Usuario($username, $password);
     $resultado = $valid_user->comprobarCredenciales();
-    if($resultado){
+    if ($resultado) 
+    {
         //Credenciales correctas
         echo json_encode(['status' => 'success']);
-        session_start();
+        session_start([
+            'cookie_lifetime' => 86400,  // Duración de la cookie en segundos
+            'cookie_secure' => true,     // Solo se enviará la cookie por HTTPS
+            'cookie_httponly' => true,   // No accesible mediante JavaScript (protege contra XSS)
+            'cookie_samesite' => 'Strict', // Previene CSRF
+        ]);
         $_SESSION['nombre'] = $username;
-    }else{
+        // Regenerar el ID de sesión después de que el usuario inicie sesión
+        if (isset($_SESSION['nombre']) && !isset($_SESSION['session_regenerated'])) {
+            session_regenerate_id(true); // Regenerar el ID de sesión
+            $_SESSION['session_regenerated'] = true; // Marca la sesión como regenerada
+        }
+    } 
+    else 
+    {
         //Credenciales erróneas
-        echo json_encode(['status' => 'error']);
+        //Aquí hay que contemplar devolver un error personalizado por si el JS está desactivado en el Front.
+        echo json_encode(['status' => 'error', 'message' => Messages::INVALID_CREDENTIALS]);
     }
-}catch(Exception $e){
-    echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+} 
+catch (Exception $e) 
+{
+    echo json_encode(['status' => 'error', 'message' => Messages::CONNECTION_FAILED]);
 }
-
-/*try {
-    // Crear una instancia de la clase Conexion y obtener el objeto PDO
-    $conexion = new Conexion();
-    $pdo = $conexion->getPDO();
-
-    // Recoger datos del formulario
-    $username = $_POST['username']; //?? ''
-    $password = $_POST['password']; //?? ''
-
-    if (empty($username) || empty($password)) {
-        throw new Exception('Username or password is empty');
-    }
-
-    // Preparar y ejecutar la consulta
-    $stmt = $pdo->prepare("SELECT pass FROM Usuario WHERE nombre = :username");
-    $stmt->bindParam(':username', $username);
-    $stmt->execute();
-
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if ($result && password_verify($password, $result['pass'])) {
-        // Credenciales correctas
-        echo json_encode(['status' => 'success']);
-        session_start();
-        $_SESSION['nombre'] = $username;
-    } else {
-        // Credenciales incorrectas
-        echo json_encode(['status' => 'error']);
-    }
-} catch (PDOException $e) {
-    echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
-} catch (Exception $e) {
-    echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
-}*/
