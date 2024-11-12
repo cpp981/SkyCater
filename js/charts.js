@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-      //Petición Ajax para el indicador 1
+      //Petición Ajax para los indicadores
       $.ajax({
         url: '../src/indicadores.php',
         type: 'POST',

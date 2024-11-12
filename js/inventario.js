@@ -60,7 +60,7 @@ $(document).ready(function () {
     });
 
     $("#guardarProducto").click(function (event) {
-        //console.log('CLICK GUARDAR PRODUCTO');
+        console.log('CLICK GUARDAR PRODUCTO');
         event.preventDefault();
         // Recoger los datos del formulario
         var nombre = $("#nombreProducto").val();
@@ -76,7 +76,7 @@ $(document).ready(function () {
             descripcion: descripcion,
             categoria: categoria,
             alergenos: alergenos,
-            valorNutricional: valorNutricional + " kcal"
+            valorNutricional: valorNutricional
         };
 
         // Enviar los datos al servidor mediante AJAX

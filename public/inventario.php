@@ -133,7 +133,7 @@ if (!isset($_SESSION['nombre'])) {
                                         </div>
                                         <!-- Valor Nutricional (Opcional) -->
                                         <div class="mb-3">
-                                            <label for="valorNutricional" class="form-label">Valor Nutricional(kcal)</label>
+                                            <label for="valorNutricional" class="form-label">Valor Nutricional</label>
                                             <input type="number" class="form-control border border-secondary"
                                                 id="valorNutricional" rows="2" style="resize: none;"></input>
                                         </div>
