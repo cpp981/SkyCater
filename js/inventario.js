@@ -76,7 +76,7 @@ $(document).ready(function () {
             descripcion: descripcion,
             categoria: categoria,
             alergenos: alergenos,
-            valorNutricional: valorNutricional
+            valorNutricional: valorNutricional + " kcal"
         };
 
         // Enviar los datos al servidor mediante AJAX
