@@ -18,14 +18,14 @@ class Conexion
     public function __construct() 
     {
         // Cargamos el archivo .env
-        $dotenv = Dotenv::createImmutable(__DIR__);  // O también dirname(__DIR__) si está en la raíz
+        $dotenv = Dotenv::createImmutable(__DIR__);
         $dotenv->load();
 
         // Cargamos las variables de entorno desde el archivo .env
-        $this->host = $_ENV['DB_HOST'] ?? 'localhost';  // Valor por defecto si no está en .env
-        $this->db = $_ENV['DB_DATABASE'] ?? 'test_db';
-        $this->user = $_ENV['DB_USERNAME'] ?? 'root';
-        $this->pass = $_ENV['DB_PASSWORD'] ?? '';
+        $this->host = $_ENV['DB_HOST'];
+        $this->db = $_ENV['DB_DATABASE'];
+        $this->user = $_ENV['DB_USERNAME'];
+        $this->pass = $_ENV['DB_PASSWORD'];
         $this->charset = 'utf8mb4';
 
         // Intentamos realizar la conexión

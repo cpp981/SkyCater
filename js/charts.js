@@ -45,6 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
         dataType: 'json',
         success: function(data) 
         {
+            // Data indicador productos sin alérgenos
             $('#prodNoAlergenos').html(data['prod']);
             if(data['prod'] <= 25)
             {
@@ -54,8 +55,8 @@ document.addEventListener('DOMContentLoaded', function () {
             {
                 $('#prodNoAlergenos').addClass('text-danger');
             }
-
-            $('intolerancias').html(data['intolerancias']);
+            // Data indicador personas con intolerancias
+            $('#intolerancias').html(data['intolerancias']);
             if(data['intolerancias'] <= 50)
             {
                 $('#intolerancias').addClass('text-success');
