@@ -1,5 +1,6 @@
 <?php
 require_once '../src/session.php';
+setlocale(LC_TIME, 'es_ES.UTF-8');
 
 if (!isset($_SESSION['nombre'])) {
     header('Location: login.html');
@@ -80,17 +81,15 @@ if (!isset($_SESSION['nombre'])) {
                     <div class="d-flex flex-column" style="margin-top: 37px;" id="indicativo1">
 
                     <div class="card shadow"
-                            style="height: 184px; width: 334px; margin-top: -27px;"> <!-- background-color:#29AB87; -->
+                            style="height: 184px; width: 334px; margin-top: -27px;">
                             <div class="indi card-body">
-                                <p class="text-center">Productos sin alérgenos en stock</p>
+                                <p class="text-center"><i class="fas fa-utensils me-2"></i></i>Productos sin alérgenos en stock</p>
                                 <h1 class="text-center" id="prodNoAlergenos" style="font-size: 4.5em;"></h1>
+                                <p class="text-end"><?php echo strftime('%d %b %Y');?></p>
                             </div>
                         </div>
                         <div class="card shadow" style="height: 334px;">
                             <div class="card-body">
-                                <!--<p class="text-center">Vuelos pendientes hoy</p>
-                                <h1 class="text-center" style="font-size: 4em;">5</h1>
-                                <p class="text-danger"><i class="fas fa-2x fa-arrow-trend-down"></i></p>-->
                                 <canvas id="chart5" style="height: 300px; width: 300px;"></canvas>
                             </div>
                         </div>
@@ -129,15 +128,13 @@ if (!isset($_SESSION['nombre'])) {
                     <div class="d-flex flex-column mb-5" style="margin-top: 37px;">
                         <div class="card shadow" style="height: 184px; width: 334px; margin-top: -27px;">
                             <div class="indi card-body ">
-                                <p class="text-center">Personas a bordo con intolerancias<br>este mes</p>
-                                <h1 class="text-center" id="intolerancias" style="font-size: 4.5em;">21</h1>
+                                <p class="text-center"><i class="fas fa-users me-2"></i>Personas a bordo con intolerancias</p>
+                                <h1 class="text-center" id="intolerancias" style="font-size: 4.5em;"></h1>
+                                <p class="text-end"><?php echo date('d M Y');?></p>
                             </div>
                         </div>
                         <div class="card shadow mb-5" style="height: 334px;">
                             <div class="card-body" style="margin-top: -5px;">
-                                <!--<p class="text-center">Vuelos pendientes hoy</p>
-                                <h1 class="text-center" style="font-size: 4em;">5</h1>
-                                <p class="text-success"><i class="fas fa-2x fa-arrow-trend-up"></i></p>-->
                                 <canvas id="chart6" style="height: 280px; width: 275px;"></canvas>
                             </div>
                         </div>
