@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function () {
         {
             // Data indicador productos sin alérgenos
             $('#prodNoAlergenos').html(data['prod']);
-            if(data['prod'] <= 25)
+            if(data['prod'] >= 15)
             {
                 $('#prodNoAlergenos').addClass('text-success');
             }
