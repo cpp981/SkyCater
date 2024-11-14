@@ -34,8 +34,13 @@ if (!isset($_SESSION['nombre'])) {
 <body style="background-color: #EDEAE0;">
     <div class="d-flex">
         <div class="sidebar rounded-bottom shadow" id="sidebar">
-            <i id="cloud-logo" class="fas fa-2x fa-cloud mt-3"></i>
-            <h4 class="text-white text-center mt-2">SkyCater</h4>
+        <div class="d-flex justify-content-center mt-3">
+                <!-- Logo de la aplicación -->
+                <a  class="navbar-brand">
+                    <img src="../img/LogoMenu.png" alt="Logo" class="rounded img-fluid logo-menu">
+                    <p class="text-white text-center mt-2"><i class="fas fa-user text-white me-1"></i><?php echo $_SESSION['nombre']?></p>
+                </a>
+            </div>
             <ul class="nav flex-column mt-5 justify-content-center align-content-between">
                 <li class="nav-item mt-5"></li>
                 <a class="nav-link text-white" href="index.php"><i class="fas fa-dashboard"></i> Dashboard</a>
@@ -54,7 +59,7 @@ if (!isset($_SESSION['nombre'])) {
                 <!-- Añadir más elementos del menú aquí -->
             </ul>
             <div class="d-flex justify-content-center align-items-end mt-5" style="height: 270px; margin-left: -25px;">
-                <a class="nav-link text-white"><i class="fas fa-lg fa-moon"></i> Modo Oscuro</a>
+               <!-- <a class="nav-link text-white"><i class="fas fa-lg fa-moon"></i> Modo Oscuro</a>-->
             </div>
         </div>
         <div class="flex-grow-1 d-flex flex-column">
@@ -67,7 +72,7 @@ if (!isset($_SESSION['nombre'])) {
                     <p class="mx-2" style="color:#003262; line-height: 2.5; margin-bottom: 0;">Bienvenido,</p>
                     <input type="text" class="form-control d-inline-block w-25" id="inputId"
                         value="<?php echo $_SESSION['nombre']; ?>" disabled>
-                    <button id="close" class="btn text-white" style="background-color: #003262;">
+                    <button id="close" class="btn text-white btn-danger">
                         <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
                     </button>
                 </div>

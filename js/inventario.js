@@ -1,6 +1,27 @@
 $(document).ready(function () {
     // Configuración de DataTable con AJAX
     const tableOptions = {
+        dom: 'frtip', // Esto define la estructura y dónde se mostrarán los botones
+        buttons: [
+            {
+                extend: 'pdfHtml5',  // Definimos el tipo de exportación como PDF
+                text: 'Exportar a PDF', // Este texto no se usará porque lo controlamos manualmente
+                className: 'btn btn-danger',  // Estilo del botón
+                orientation: 'landscape',  // Orientación del PDF
+                pageSize: 'A4',  // Tamaño de página
+                exportOptions: {
+                    columns: ':visible',  // Exporta solo las columnas visibles
+                },
+                customize: function(doc) {
+                    // Personaliza el PDF aquí (opcional)
+                    doc.content[1].table.widths = ['*', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'];
+                    doc.styles.tableHeader.fontSize = 12;
+                },
+                // No mostramos este botón
+                visible: false
+            }
+        ],
+        responsive: true, // Habilita la respuesta a diferentes tamaños de pantalla
         "ajax": {
             "url": "../src/producto2.php",  // URL del archivo PHP que devuelve los datos en JSON
             "type": "GET",
@@ -8,10 +29,10 @@ $(document).ready(function () {
         },
         "columnDefs": [
             {
-                className: "centered", 
+                className: "centered",
                 targets: [0, 1, 2, 3, 4, 5, 6],
-                targets: 6, 
-                searchable: false, 
+                targets: 6,
+                searchable: false,
                 orderable: false
             },
         ],
@@ -43,6 +64,11 @@ $(document).ready(function () {
     // Inicializar DataTable con la configuración definida
     var table = $('#tablaProductos').DataTable(tableOptions);
 
+     // Vincular botón de Exportar PDF al Datatables
+     $('#exportPdf').on('click', function () {
+        console.log("Exportando a PDF...");
+        table.button(0).trigger(); // Usa el índice del botón PDF configurado en el array de botones
+    });
     // Event listener para el botón de refresco
     $('#refrescarTabla').click(function () {
         table.ajax.reload(); // Refrescar la tabla al hacer clic en el botón
