@@ -139,20 +139,30 @@ document.addEventListener('DOMContentLoaded', function () {
     $('#sidebarToggle').click(function () {
         $('#sidebar').toggle(350, 'linear');
     });
-    //Alerta en la parte superior cuando se añade producto
-    // Inicializa Notyf
-    /*$(document).ready(function () {
-        const notyf = new Notyf({
-            position: {
-                x: 'right',  // Alineación horizontal
-                y: 'top'      // Alineación vertical en la parte superior
-            },
+    
+    $(document).ready(function() {
+        // Detectamos la URL actual de la página
+        var currentPath = window.location.pathname;
+    
+        // Recorremos todos los enlaces del menú
+        $('.nav-item .nav-link').each(function() {
+            var linkPath = $(this).attr('href');  // Obtenemos el href del enlace
+    
+            // Si la URL actual coincide con el enlace, agregamos la clase 'active' al item
+            if (currentPath.indexOf(linkPath) !== -1) {
+                $(this).parent('.nav-item').addClass('active'); // Añadimos 'active' al elemento <li> correspondiente
+            }
         });
-        $('#addProd').click(function () {
-            // Muestra una notificación de éxito
-            notyf.success('Producto añadido correctamente');
+    
+        // Cuando el usuario haga clic en un enlace del menú
+        $('.nav-item .nav-link').click(function() {
+            // Eliminamos la clase 'active' de todos los elementos
+            $('.nav-item').removeClass('active');
+    
+            // Agregamos la clase 'active' solo al item que fue clickeado
+            $(this).parent('.nav-item').addClass('active');
         });
-    });*/
+    }); 
 
     //Antes de cerrar la sesión, pide confirmación.
     $('#close').click(function () {
