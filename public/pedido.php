@@ -31,35 +31,33 @@ if (!isset($_SESSION['nombre'])) {
     <script type="text/javascript" src="../js/pedido.js"></script>
 </head>
 
-<body style="background-color: #EDEAE0;">
-    <div class="d-flex">
+<body class="d-flex flex-column">
+    <div class="super d-flex flex-grow-1">
         <div class="sidebar rounded-bottom shadow" id="sidebar">
-        <div class="d-flex justify-content-center mt-3">
+            <div class="d-flex justify-content-center mt-3">
                 <!-- Logo de la aplicación -->
-                <a  class="navbar-brand">
+                <a class="navbar-brand">
                     <img src="../img/LogoMenu.png" alt="Logo" class="rounded img-fluid logo-menu">
-                    <p class="text-white text-center mt-2"><i class="fas fa-user text-white me-1"></i><?php echo $_SESSION['nombre']?></p>
+                    <p class="text-white text-center mt-2"><i
+                            class="fas fa-user text-white me-1"></i><?php echo $_SESSION['nombre'] ?></p>
                 </a>
             </div>
             <ul class="nav flex-column mt-5 justify-content-center align-content-between">
-                <li class="nav-item mt-5"></li>
-                <a class="nav-link text-white" href="index.php"><i class="fas fa-dashboard"></i> Dashboard</a>
+                <li class="nav-item mt-5">
+                    <a class="nav-link" href="index.php"><i class="fas fa-dashboard"></i> Dashboard</a>
                 </li>
                 <li class="nav-item mt-3">
-                    <a class="nav-link text-white" href="listaVuelos.php"><i class="fas fa-plane-departure"></i>
-                        Vuelos</a>
+                    <a class="nav-link" href="listaVuelos.php"><i class="fas fa-plane-departure"></i> Vuelos</a>
                 </li>
                 <li class="nav-item mt-3">
-                    <a class="nav-link text-white" href="inventario.php"><i class="fas fa-clipboard-list"></i>
-                        Inventario</a>
+                    <a class="nav-link" href="inventario.php"><i class="fas fa-clipboard-list"></i> Inventario</a>
                 </li>
-                <li class="nav-item mt-3"></li>
-                <a class="nav-link text-white" href="#"><i class="fas fa-truck-fast"></i> Pedidos</a>
+                <li class="nav-item mt-3">
+                    <a class="nav-link" href="pedido.php"><i class="fas fa-truck-fast"></i> Pedidos</a>
                 </li>
-                <!-- Añadir más elementos del menú aquí -->
             </ul>
-            <div class="d-flex justify-content-center align-items-end mt-5" style="height: 270px; margin-left: -25px;">
-               <!-- <a class="nav-link text-white"><i class="fas fa-lg fa-moon"></i> Modo Oscuro</a>-->
+            <div class="d-flex justify-content-center align-items-end mt-5">
+                <!-- <a class="nav-link text-white"><i class="fas fa-lg fa-moon"></i> Modo Oscuro</a>-->
             </div>
         </div>
         <div class="flex-grow-1 d-flex flex-column">
@@ -77,20 +75,67 @@ if (!isset($_SESSION['nombre'])) {
                     </button>
                 </div>
             </nav>
+            <div class="d-flex flex-column">
+                <!-- Título principal -->
+                <div class="text-center mb-5" style="color: #003262;">
+                    <h2>Gestión de Pedidos</h2>
+                </div>
 
+                <!-- Primer contenedor de tarjetas (pedidos completados y pendientes) -->
+                <div class="d-flex align-items-center justify-content-center mb-4">
+                    <div class="card bg-success me-2 p-3 mb-5 h-50 indi text-center rounded shadow"
+                        style="max-width: 250px;">
+                        Total Pedidos Completados
+                        <p class="text-center" style="font-size: 2.5em;">50</p>
+                    </div>
+                    <div class="card bg-warning p-3 me-2 mb-5 h-50 indi text-center rounded shadow"
+                        style="max-width: 250px;">
+                        Total Pedidos Pendientes
+                        <p class="text-center" style="font-size: 2.5em;">20</p>
+                    </div>
+                </div>
 
-            <div class="foot d-flex justify-content-center align-items-end mt-5">
+                <!-- Botones encima de las cards (se colocan fuera de las tarjetas) -->
+                <div class="d-flex justify-content-center mb-4">
+                    <!-- Botón "Refrescar" para la card de "Listado Pedidos Completados" -->
+                    <button class="btn btn-primary me-5" style="max-width: 250px;"><i class="fas fa-redo me-1"></i>Refrescar</button>
+
+                    <!-- Botones "Añadir Pedido" y "Exportar PDF" para la card de "Listado Pedidos Pendientes" -->
+                    <div>
+                        <button class="btn btn-success  me-3" style="max-width: 250px;"><i class="fas fa-plus me-1"></i>Añadir Pedido</button>
+                        <button class="btn btn-danger" style="max-width: 250px;"><i class="fas fa-file-pdf me-1"></i>Exportar PDF</button>
+                    </div>
+                </div>
+
+                <!-- Segundo contenedor de tarjetas (listados de pedidos completados y pendientes) -->
+                <div class="d-flex justify-content-center mb-4">
+                    <!-- Tarjeta "Listado Pedidos Completados" -->
+                    <div class="card me-3 p-2 text-center rounded shadow" style="max-width: 250px;">
+                        Listado Pedidos Completados
+                    </div>
+
+                    <!-- Tarjeta "Listado Pedidos Pendientes" -->
+                    <div class="card p-2 text-center rounded shadow" style="max-width: 250px;">
+                        Listado Pedidos Pendientes
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="foot d-flex justify-content-center align-items-end mt-5">
             <footer class="fixed-bottom text-center">
                 <p>© 2024 SkyCater. Todos los derechos reservados.</p>
             </footer>
         </div>
         <!-- JS Bootstrap CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
-    <!-- JS DataTables CDN -->
-    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+        <!-- JS DataTables CDN -->
+        <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
 </body>
 
 </html>

@@ -42,21 +42,18 @@ if (!isset($_SESSION['nombre'])) {
                 </a>
             </div>
             <ul class="nav flex-column mt-5 justify-content-center align-content-between">
-                <li class="nav-item mt-5"></li>
-                <a class="nav-link text-white" href="index.php"><i class="fas fa-dashboard"></i> Dashboard</a>
+                <li class="nav-item mt-5">
+                    <a class="nav-link" href="index.php"><i class="fas fa-dashboard"></i> Dashboard</a>
                 </li>
                 <li class="nav-item mt-3">
-                    <a class="nav-link text-white" href="listaVuelos.php"><i class="fas fa-plane-departure"></i>
-                        Vuelos</a>
+                    <a class="nav-link" href="listaVuelos.php"><i class="fas fa-plane-departure"></i> Vuelos</a>
                 </li>
                 <li class="nav-item mt-3">
-                    <a class="nav-link text-white" href="inventario.php"><i class="fas fa-clipboard-list"></i>
-                        Inventario</a>
+                    <a class="nav-link" href="inventario.php"><i class="fas fa-clipboard-list"></i> Inventario</a>
                 </li>
-                <li class="nav-item mt-3"></li>
-                <a class="nav-link text-white" href="pedido.php"><i class="fas fa-truck-fast"></i> Pedidos</a>
+                <li class="nav-item mt-3">
+                    <a class="nav-link" href="pedido.php"><i class="fas fa-truck-fast"></i> Pedidos</a>
                 </li>
-                <!-- Añadir más elementos del menú aquí -->
             </ul>
             <div class="d-flex justify-content-center align-items-end mt-5" style="height: 270px; margin-left: -25px;">
                <!-- <a class="nav-link text-white"><i class="fas fa-lg fa-moon"></i> Modo Oscuro</a>-->
