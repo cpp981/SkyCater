@@ -10,11 +10,12 @@ $(document).ready(function () {
                 orientation: 'landscape',  // Orientación del PDF
                 pageSize: 'A4',  // Tamaño de página
                 exportOptions: {
-                    columns: ':visible',  // Exporta solo las columnas visibles
+                    columns: ':not(:last-child)', // Excluye la última columna
+                    columns: [0, 1, 2, 3, 4, 5, 6]
                 },
                 customize: function(doc) {
                     // Personaliza el PDF aquí
-                    doc.content[1].table.widths = ['*', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'];
+                    doc.content[1].table.widths = ['*', 'auto', 'auto', 'auto', 'auto', 'auto', '*'];  // Ajusta la cantidad de columnas exportadas
                     doc.styles.tableHeader.fontSize = 12;
                 },
                 // No mostramos este botón
@@ -33,7 +34,7 @@ $(document).ready(function () {
                 targets: [0, 1, 2, 3, 4, 5, 6],
                 targets: 6,
                 searchable: false,
-                orderable: false
+                orderable: false,
             },
         ],
         "columns": [
