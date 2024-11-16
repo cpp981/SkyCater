@@ -1,5 +1,6 @@
 <?php
 require_once '../src/session.php';
+
 setlocale(LC_TIME, 'es_ES.UTF-8');
 
 if (!isset($_SESSION['nombre'])) {
@@ -13,23 +14,24 @@ if (!isset($_SESSION['nombre'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../img/favicon.ico" type="image/x-icon">
     <title>Dashboard - SkyCater</title>
-    <script src="https://code.jquery.com/jquery-3.7.1.js"
-        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-    <!-- css Bootstrap CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- css Font Awesome CDN -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- jQuery -->
+    <script src="js/jquery.min.js"></script>
+    <!-- Chart.js -->
+    <script src="js/chart.umd.js"></script>
+    <!--JSDelivr SweetAlert2 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- css Font Awesome -->
+    <link href="css/all.min.css" rel="stylesheet">
+    <!-- CSS de Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- JavaScript de Bootstrap -->
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <!--Js y Css -->
     <script src="../js/charts.js"></script>
     <script src="../js/dash.js"></script>
     <link rel="stylesheet" href="../css/styles.css">
-    <!-- Bootstrap CDN-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Chart.js CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!--JSDelivr CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 </head>
 
 <body class="d-flex flex-column">
