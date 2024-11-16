@@ -1,7 +1,7 @@
 <?php
 require_once './include/Producto.php';
 header('Content-Type: application/json');
-//session_start();
+session_start();
 
 try
 {

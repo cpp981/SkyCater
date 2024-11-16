@@ -13,7 +13,7 @@ $(document).ready(function () {
                     columns: ':visible',  // Exporta solo las columnas visibles
                 },
                 customize: function(doc) {
-                    // Personaliza el PDF aquí (opcional)
+                    // Personaliza el PDF aquí
                     doc.content[1].table.widths = ['*', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'];
                     doc.styles.tableHeader.fontSize = 12;
                 },
@@ -41,9 +41,38 @@ $(document).ready(function () {
             { title: "Categoría" },
             { title: "Alérgenos" },
             { title: "Stock" },
-            { title: "Fecha última actualización" },
+            { title: "Fecha últ. actualización",
+                render: function(data, type, row) {
+                    if (data) {
+                        // Formatear la fecha (suponiendo que está en formato ISO 8601 o YYYY-MM-DD HH:MM:SS)
+                        const date = new Date(data);
+                        const day = String(date.getDate()).padStart(2, '0'); // Día con dos dígitos
+                        const month = String(date.getMonth() + 1).padStart(2, '0'); // Mes con dos dígitos
+                        const year = date.getFullYear(); // Año completo
+                        const hours = String(date.getHours()).padStart(2, '0'); // Hora con dos dígitos
+                        const minutes = String(date.getMinutes()).padStart(2, '0'); // Minutos con dos dígitos
+                        
+                        return `${day}-${month}-${year} ${hours}:${minutes}`;
+                    }
+                    return ""; // Si no hay fecha, devuelve vacío
+                }
+            },
             { title: "Valor Nutricional" },
-            { title: "Descripción" }
+            { title: "Descripción" },
+            { 
+                title: "Acciones",
+                orderable: false, // Deshabilitamos el orden en esta columna
+                searchable: false, // Deshabilitamos la búsqueda en esta columna
+                render: function(data, type, row) {
+                    // Botón con icono de Font Awesome
+                    return `<button class="btn btn-danger btn-sm delete-row" data-id="${row[0]}">
+                                <i class="fas fa-trash-can"></i>
+                            </button>
+                            <button class="btn btn-warning btn-sm text-white" data-id="${row[0]}">
+                                <i class="fas fa-pencil"></i>
+                            </button>`;
+                }
+            }
         ],
         lengthChange: false,
         destroy: true,
@@ -86,7 +115,7 @@ $(document).ready(function () {
     });
 
     $("#guardarProducto").click(function (event) {
-        console.log('CLICK GUARDAR PRODUCTO');
+        //console.log('CLICK GUARDAR PRODUCTO');
         event.preventDefault();
         // Recoger los datos del formulario
         var nombre = $("#nombreProducto").val();
