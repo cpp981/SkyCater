@@ -150,6 +150,10 @@ body.dark-mode {
 
 .indi {
     color: #003262;
+}
+
+.indi-pedidos{
+    color: #003262;
     max-width: 250px;
     width: 240px;
     height: 55%;

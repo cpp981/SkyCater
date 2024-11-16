@@ -83,11 +83,11 @@ if (!isset($_SESSION['nombre'])) {
 
                 <!-- Primer contenedor de tarjetas (pedidos completados y pendientes) -->
                 <div class="d-flex align-items-center justify-content-center mb-4">
-                    <div class="card bg-success me-2 p-3 mb-5 indi text-center rounded shadow">
+                    <div class="card bg-success me-2 p-3 mb-5 indi-pedidos text-center rounded shadow">
                         <p><i class="fas fa-truck-fast me-1"></i>Pedidos Completados</p>
                         <p class="text-center fw-bold" style="font-size: 2.5em;">50</p>
                     </div>
-                    <div class="card bg-warning p-3 me-2 mb-5 indi text-center rounded shadow">
+                    <div class="card bg-warning p-3 me-2 mb-5 indi-pedidos text-center rounded shadow">
                         <p><i class="fas fa-circle-exclamation me-1"></i>Total Pedidos Pendientes</p>
                         <p class="text-center fw-bold" style="font-size: 2.5em;">20</p>
                     </div>
