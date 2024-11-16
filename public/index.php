@@ -17,17 +17,17 @@ if (!isset($_SESSION['nombre'])) {
     <link rel="icon" href="../img/favicon.ico" type="image/x-icon">
     <title>Dashboard - SkyCater</title>
     <!-- jQuery -->
-    <script src="js/jquery.min.js"></script>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <!-- Chart.js -->
-    <script src="js/chart.umd.js"></script>
+    <script src="../node_modules/chart.js/dist/chart.umd.js"></script>
     <!--JSDelivr SweetAlert2 CDN -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- css Font Awesome -->
-    <link href="css/all.min.css" rel="stylesheet">
+    <link href="../node_modules/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
     <!-- CSS de Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- JavaScript de Bootstrap -->
-    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <!--Js y Css -->
     <script src="../js/charts.js"></script>
     <script src="../js/dash.js"></script>
