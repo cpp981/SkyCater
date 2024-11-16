@@ -137,20 +137,32 @@ if (!isset($_SESSION['nombre'])) {
                 <div class="modal-body">
                     <form>
                         <div class="mb-3">
-                            <label for="pedidoNombre" class="form-label">Nombre del Pedido</label>
-                            <input type="text" class="form-control" id="pedidoNombre" placeholder="Nombre del Pedido">
-                        </div>
-                        <div class="mb-3">
-                            <label for="pedidoCantidad" class="form-label">Cantidad</label>
-                            <input type="number" class="form-control" id="pedidoCantidad" placeholder="Cantidad">
+                            <label for="pedidoNombre" class="form-label">Nº de Pedido</label>
+                            <input type="text" class="form-control" id="pedidoNum" placeholder="Número de Pedido" disabled>
                         </div>
                         <div class="mb-3">
                             <label for="pedidoFecha" class="form-label">Fecha de Entrega</label>
                             <input type="date" class="form-control" id="pedidoFecha">
                         </div>
                         <div class="mb-3">
+                            <label for="proveedor" class="form-label">Proveedor</label>
+                            <select class="form-control" id="proveedor">
+                                <option value="">Seleccione una opción</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="producto" class="form-label">Producto</label>
+                            <select class="form-control" id="producto">
+                                <option value="">Seleccione una opción</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="pedidoCantidad" class="form-label">Cantidad</label>
+                            <input type="number" class="form-control" id="pedidoCantidad" placeholder="Cantidad">
+                        </div>
+                        <div class="mb-3">
                             <label for="pedidoObservaciones" class="form-label">Observaciones</label>
-                            <textarea class="form-control" id="pedidoObservaciones" rows="3"></textarea>
+                            <textarea class="form-control" id="pedidoObservaciones" rows="3" style="resize: none;"></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">Guardar</button>
                     </form>
