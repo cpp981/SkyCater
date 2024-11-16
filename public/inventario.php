@@ -14,16 +14,16 @@ if (!isset($_SESSION['nombre'])) {
     <link rel="icon" href="../img/favicon.ico" type="image/x-icon">
     <title>Gestión de Catering de Aerolínea</title>
     <!-- jQuery -->
-    <script src="js/jquery.min.js"></script>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <!-- CSS de DataTables -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css">
     <!-- CSS de Buttons para DataTables -->
     <link rel="stylesheet" type="text/css"
         href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
     <!-- CSS de Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- css Font Awesome -->
-    <link href="css/all.min.css" rel="stylesheet">
+    <link href="../node_modules/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
     <!--JSDelivr SweetAlert2 CDN -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Estilos de Notyf -->
@@ -188,7 +188,7 @@ if (!isset($_SESSION['nombre'])) {
         </div>
     </div>
     <!-- JavaScript de Bootstrap -->
-    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <!-- JS DataTables CDN -->
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
