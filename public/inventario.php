@@ -147,9 +147,10 @@ if (!isset($_SESSION['nombre'])) {
                                         </div>
                                         <!-- Id Proveedor (Opcional) -->
                                         <div class="mb-3">
-                                            <label for="idProveedor" class="form-label">Id Proveedor</label>
-                                            <input type="number" class="form-control border border-secondary"
-                                                id="idProveedor" rows="2" style="resize: none;" disabled></input>
+                                            <label for="idProveedor" class="form-label">Proveedor</label>
+                                            <select class="form-select border border-secondary" id="nombreProvs">
+                                                <option value="" selected>Seleccione una opción</option>
+                                            </select>
                                         </div>
                                 </div>
                                 <div class="modal-footer">

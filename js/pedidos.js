@@ -82,6 +82,64 @@ $(document).ready(function () {
     });
 });
 
+// Función para traer los nombres e ids de los proveedores
+document.addEventListener('DOMContentLoaded', function () {
+    $.ajax({
+        url: '../src/proveedores.php',
+        method: 'GET',
+        dataType: 'json',
+        success: function (data) {
+           // console.log(data);
+            // Recuperamos la data que viene en un array de arrays
+            const selectElement = $("#proveedor");
+            // Recorremos la data y creamos las opciones.
+            $.each(data, function (index, item) {
+                const nombre = item[0]; // Nombre del elemento (primer valor del array).
+                const id = item[1];     // ID del elemento (segundo valor del array).
+                
+                // Creamos y añadimos la opción al select.
+                selectElement.append(`<option value="${id}">${nombre}</option>`);
+            });
+        },
+        error: function (xhr, status, error) {
+            console.error("Error al cargar los datos: " + error);
+        }
+    });
+
+    // Detectar cuando se selecciona un proveedor
+    $("#proveedor").on('change', function () {
+        const proveedorId = $(this).val(); // Obtener el ID del proveedor seleccionado
+
+        if (proveedorId) { // Validar que haya un proveedor seleccionado
+            // Hacer la petición AJAX con el ID del proveedor
+            $.ajax({
+                url: '../src/productosByProv.php', // Cambia esta URL a la ruta adecuada
+                method: 'POST',
+                data: { idProveedor: proveedorId },
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data); // Verificar la estructura de la data recibida
+                    
+                    const selectProductos = $("#producto"); // Select para los productos
+                    selectProductos.empty(); // Vaciar el select de productos
+                    selectProductos.append('<option value="" selected>Seleccione un producto</option>'); // Opción vacía
+                    
+                    // Iterar sobre la data y añadir las opciones
+                    $.each(data, function (index, item) {
+                        const nombre = item[0]; // El nombre del producto está en el primer índice del array
+                        selectProductos.append(`<option value="${index}">${nombre}</option>`);
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error al cargar los productos: " + error);
+                }
+            });
+        } else {
+            console.log("No se seleccionó ningún proveedor.");
+        }
+    });
+});
+
 $(document).ready(function () {
     $('#addPedido').click(function () {
         $('#modalPedido').modal('show');
