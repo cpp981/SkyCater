@@ -131,8 +131,8 @@ if (!isset($_SESSION['nombre'])) {
                     <div class="d-flex flex-column mb-5" style="margin-top: 37px;">
                         <div class="card shadow" style="height: 184px; width: 334px; margin-top: -27px;">
                             <div class="indi card-body ">
-                                <p class="text-center"><i class="fas fa-users me-2"></i>Personas a bordo con
-                                    intolerancias</p>
+                                <p class="text-center"><i class="fas fa-users me-2"></i>Personas con
+                                    intolerancias este mes</p>
                                 <h1 class="text-center" id="intolerancias" style="font-size: 4.5em;"></h1>
                                 <p class="text-end"><?php echo date('d M Y'); ?></p>
                             </div>

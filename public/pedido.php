@@ -83,28 +83,26 @@ if (!isset($_SESSION['nombre'])) {
 
                 <!-- Primer contenedor de tarjetas (pedidos completados y pendientes) -->
                 <div class="d-flex align-items-center justify-content-center mb-4">
-                    <div class="card bg-success me-2 p-3 mb-5 h-50 indi text-center rounded shadow"
-                        style="max-width: 250px;">
-                        Total Pedidos Completados
-                        <p class="text-center" style="font-size: 2.5em;">50</p>
+                    <div class="card bg-success me-2 p-3 mb-5 indi text-center rounded shadow">
+                        <p><i class="fas fa-truck-fast me-1"></i>Pedidos Completados</p>
+                        <p class="text-center fw-bold" style="font-size: 2.5em;">50</p>
                     </div>
-                    <div class="card bg-warning p-3 me-2 mb-5 h-50 indi text-center rounded shadow"
-                        style="max-width: 250px;">
-                        Total Pedidos Pendientes
-                        <p class="text-center" style="font-size: 2.5em;">20</p>
+                    <div class="card bg-warning p-3 me-2 mb-5 indi text-center rounded shadow">
+                        <p><i class="fas fa-circle-exclamation me-1"></i>Total Pedidos Pendientes</p>
+                        <p class="text-center fw-bold" style="font-size: 2.5em;">20</p>
                     </div>
                 </div>
 
                 <!-- Botones encima de las cards (se colocan fuera de las tarjetas) -->
-                <div class="d-flex justify-content-center mb-4">
-                    <!-- Botón "Refrescar" para la card de "Listado Pedidos Completados" -->
-                    <button class="btn btn-primary me-5" style="max-width: 250px;"><i class="fas fa-redo me-1"></i>Refrescar</button>
-
-                    <!-- Botones "Añadir Pedido" y "Exportar PDF" para la card de "Listado Pedidos Pendientes" -->
+                <div class="d-flex justify-content-center mb-4 me-5">
+                    <!-- Botones "Añadir Pedido" y "Exportar PDF" -->
                     <div>
-                        <button class="btn btn-success  me-3" style="max-width: 250px;"><i class="fas fa-plus me-1"></i>Añadir Pedido</button>
-                        <button class="btn btn-danger" style="max-width: 250px;"><i class="fas fa-file-pdf me-1"></i>Exportar PDF</button>
+                        <button class="btn btn-success" style="max-width: 250px;"><i class="fas fa-plus me-1"></i>Añadir Pedido</button>
+                        <button class="btn btn-danger me-5" style="max-width: 250px;"><i class="fas fa-file-pdf me-1"></i>Exportar PDF</button>
                     </div>
+                    <!-- Botón "Refrescar" -->
+                    <button class="btn btn-primary " style="max-width: 250px;"><i class="fas fa-redo me-1"></i>Refrescar</button>
+
                 </div>
 
                 <!-- Segundo contenedor de tarjetas (listados de pedidos completados y pendientes) -->

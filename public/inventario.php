@@ -95,7 +95,7 @@ if (!isset($_SESSION['nombre'])) {
                     <a id="refrescarTabla" class="btn btn-primary shadow rounded">
                         <i class="fas fa-redo"></i></a>
                     <!-- Modal -->
-                    <div class="modal fade shadow" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    <div class="modal fade shadow-lg" data-bs-backdrop="static" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                         aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -172,6 +172,7 @@ if (!isset($_SESSION['nombre'])) {
                         <table id="tablaProductos" class="table table-striped rounded shadow" style="width: 100%;">
                             <thead>
                                 <tr>
+                                    <th class="centered cabecera"></th>
                                     <th class="centered cabecera"></th>
                                     <th class="centered cabecera"></th>
                                     <th class="centered cabecera"></th>

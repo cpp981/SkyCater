@@ -4,11 +4,13 @@ if (session_status() == PHP_SESSION_NONE)
 {
     session_start(
         [
-                    'cookie_lifetime' => 21600,  // Duración de la cookie (6 horas)
+                    'cookie_lifetime' => 0,  // Duración de la cookie (hasta que se cierre el navegador)
                     'cookie_secure' => true,     // Solo se enviará la cookie por HTTPS
                     'cookie_httponly' => true,   // Evita el acceso mediante JavaScript
                     'cookie_samesite' => 'Strict', // Previene CSRF
-    ]);
+                    'cookie_path' => '/',   // Disponible en toda la aplicación
+                    'cookie_domain' => '' // Lo dejamos en blanco para aplicarlo al dominio actual
+        ]);
 }
 
 // Regenerar el ID de sesión después de que el usuario inicie sesión
