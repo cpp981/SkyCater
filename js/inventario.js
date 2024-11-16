@@ -167,7 +167,8 @@ $(document).ready(function () {
 document.addEventListener('DOMContentLoaded', function () {
     //jQuery para menú desplegable
     $('#sidebarToggle').click(function () {
-        $('#sidebar').toggle(350, 'linear');
+        //$('#sidebar').toggle(350, 'linear');
+        $('#sidebar').toggleClass('sidebar-collapsed');
     });
     
     $(document).ready(function() {
