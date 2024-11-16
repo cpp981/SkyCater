@@ -39,6 +39,34 @@
     /*transform: translateX(0); /* Aseguramos que esté visible al inicio */
 }
 
+/* Estilo cuando el sidebar está colapsado */
+.sidebar-collapsed {
+    width: 50px; /* Ajusta este ancho según el tamaño de los iconos */
+    transition: width 0.35s linear;
+}
+
+/* Ocultar texto en los enlaces del sidebar */
+.sidebar-collapsed .nav-link span {
+    display: none; /* Oculta solo el texto, no el ícono */
+}
+
+/* Centrar los íconos en la vista colapsada */
+.sidebar-collapsed .nav-link i {
+    margin-right: 0;
+    display: block;
+    text-align: center;
+}
+
+/* Opcional: Ajustar alineación del contenido */
+.sidebar-collapsed .navbar-brand img {
+    width: 50px; /* Cambiar tamaño del logo si es necesario */
+}
+
+.sidebar-collapsed p {
+    display: none; /* Oculta cualquier texto adicional */
+}
+
+
 .sidebar.active {
     display: block;
 }
@@ -194,6 +222,11 @@ html, body {
     overflow-y: auto; /* Agrega una barra de desplazamiento vertical si es necesario */
     overflow-x: hidden; /* Oculta el desbordamiento horizontal */
     margin-top: -55px;
+    width: auto;
+}
+
+.table-buttons{
+    margin-right: 855px;
 }
 
 .pagination {
@@ -258,6 +291,12 @@ html, body {
 }
 
 #tablaVuelos{
+    border: 1px solid !important;
+    border-radius: 5px !important;
+    border-color: #ffffff !important;
+}
+
+#tablaPedidos{
     border: 1px solid !important;
     border-radius: 5px !important;
     border-color: #ffffff !important;

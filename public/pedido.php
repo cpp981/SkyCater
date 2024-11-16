@@ -29,6 +29,7 @@ if (!isset($_SESSION['nombre'])) {
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" href="../css/styles.css">
     <script type="text/javascript" src="../js/pedido.js"></script>
+    <script type="text/javascript" src="../js/pedidos.js"></script>
 </head>
 
 <body class="d-flex flex-column">
@@ -75,7 +76,7 @@ if (!isset($_SESSION['nombre'])) {
                     </button>
                 </div>
             </nav>
-            <div class="d-flex flex-column">
+            <div class="d-flex flex-column align-items-center">
                 <!-- Título principal -->
                 <div class="text-center mb-5" style="color: #003262;">
                     <h2>Gestión de Pedidos</h2>
@@ -93,34 +94,70 @@ if (!isset($_SESSION['nombre'])) {
                     </div>
                 </div>
 
-                <!-- Botones encima de las cards (se colocan fuera de las tarjetas) -->
-                <div class="d-flex justify-content-center mb-4 me-5">
-                    <!-- Botones "Añadir Pedido" y "Exportar PDF" -->
-                    <div>
-                        <button class="btn btn-success" style="max-width: 250px;"><i class="fas fa-plus me-1"></i>Añadir Pedido</button>
-                        <button class="btn btn-danger me-5" style="max-width: 250px;"><i class="fas fa-file-pdf me-1"></i>Exportar PDF</button>
+                <!-- DATATABLE -->
+                <div id="contenedorDataTable" class="flex-grow-1 w-75 mb-3">
+                    <a id="addPedido" class="btn btn-success me-2">
+                        <i class="fas fa-plus me-1"></i>Añadir Pedido
+                    </a>
+                    <a class="btn btn-danger me-2">
+                        <i class="fas fa-file-pdf me-1"></i>Exportar PDF
+                    </a>
+                    <a class="btn btn-primary ms-2">
+                        <i class="fas fa-redo me-1"></i>Refrescar
+                    </a>
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 ">
+                        <table id="tablaPedidos" class="table table-striped rounded shadow" style="100%;">
+                            <thead>
+                                <tr>
+                                    <th class="centered cabecera"></th>
+                                    <th class="centered cabecera"></th>
+                                    <th class="centered cabecera"></th>
+                                    <th class="centered cabecera"></th>
+                                    <th class="centered cabecera"></th>
+                                    <th class="centered cabecera"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tBodyPedidos">
+                                <!-- Datos de ejemplo -->
+                            </tbody>
+                        </table>
                     </div>
-                    <!-- Botón "Refrescar" -->
-                    <button class="btn btn-primary " style="max-width: 250px;"><i class="fas fa-redo me-1"></i>Refrescar</button>
-
                 </div>
-
-                <!-- Segundo contenedor de tarjetas (listados de pedidos completados y pendientes) -->
-                <div class="d-flex justify-content-center mb-4">
-                    <!-- Tarjeta "Listado Pedidos Completados" -->
-                    <div class="card me-3 p-2 text-center rounded shadow" style="max-width: 250px;">
-                        Listado Pedidos Completados
-                    </div>
-
-                    <!-- Tarjeta "Listado Pedidos Pendientes" -->
-                    <div class="card p-2 text-center rounded shadow" style="max-width: 250px;">
-                        Listado Pedidos Pendientes
-                    </div>
-                </div>
-
             </div>
-
         </div>
+    </div>
+    <!-- Modal para añadir pedido -->
+    <div class="modal fade" id="modalPedido" tabindex="-1" aria-labelledby="modalPedidoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalPedidoLabel">Añadir Pedido</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="pedidoNombre" class="form-label">Nombre del Pedido</label>
+                            <input type="text" class="form-control" id="pedidoNombre" placeholder="Nombre del Pedido">
+                        </div>
+                        <div class="mb-3">
+                            <label for="pedidoCantidad" class="form-label">Cantidad</label>
+                            <input type="number" class="form-control" id="pedidoCantidad" placeholder="Cantidad">
+                        </div>
+                        <div class="mb-3">
+                            <label for="pedidoFecha" class="form-label">Fecha de Entrega</label>
+                            <input type="date" class="form-control" id="pedidoFecha">
+                        </div>
+                        <div class="mb-3">
+                            <label for="pedidoObservaciones" class="form-label">Observaciones</label>
+                            <textarea class="form-control" id="pedidoObservaciones" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
 
         <div class="foot d-flex justify-content-center align-items-end mt-5">
             <footer class="fixed-bottom text-center">
@@ -128,7 +165,7 @@ if (!isset($_SESSION['nombre'])) {
             </footer>
         </div>
         <!-- JavaScript de Bootstrap -->
-        <script src="js/bootstrap.bundle.min.js"></script>
+        <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
         <!-- JS DataTables CDN -->
         <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
