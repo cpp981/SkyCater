@@ -1,4 +1,4 @@
-$(document).ready(function () {
+document.addEventListener('DOMContentLoaded', function () {
     // Configuración de DataTable con AJAX
     const tableOptions = {
         dom: 'frtip', // Esto define la estructura y dónde se mostrarán los botones
@@ -91,7 +91,13 @@ $(document).ready(function () {
             infoFiltered: "(filtrados desde _MAX_ registros totales)",
         },
     };
-
+        //Iniciamos Notyf para notificar el resultado al usuario
+        const notyf = new Notyf({
+            position: {
+                x: 'right',  // Alineación horizontal
+                y: 'top'      // Alineación vertical en la parte superior
+            },
+        });
     // Inicializar DataTable con la configuración definida
     var table = $('#tablaProductos').DataTable(tableOptions);
     
@@ -114,22 +120,28 @@ $(document).ready(function () {
                 cancelButtonColor: '#d33'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Acción después de la confirmación (por ejemplo, eliminar la fila en DataTable)
-                    console.log('Producto eliminado: ' + productoNombre);
-    
-                    // Aquí puedes hacer la eliminación real (en este ejemplo, eliminamos la fila de la tabla)
-                    // Por ejemplo, eliminamos la fila correspondiente en DataTable:
-                    //table.row($(this).parents('tr')).remove().draw();
-    
-                    // O realizar alguna otra acción, como hacer una petición AJAX para eliminar en el servidor
-                    // $.ajax({
-                    //     url: 'eliminarProducto.php',
-                    //     method: 'POST',
-                    //     data: { id: productoId },
-                    //     success: function(response) {
-                    //         // Manejo de la respuesta del servidor
-                    //     }
-                    // });
+                    // Si pulsa Aceptar borramos producto
+                     $.ajax({
+                         url: '../src/borraProducto.php',
+                         method: 'POST',
+                         data: { nombreProd: productoNombre },
+                         success: function(response) {
+                            if (response.status === 'success') {
+                                // Mostrar notificación de éxito
+                                notyf.success(response.message);
+        
+                                // Eliminar la fila correspondiente en DataTable
+                               // table.row($(this).parents('tr')).remove().draw();
+                            } else {
+                                // Mostrar notificación de error
+                                notyf.error(response.message);
+                            }
+                        },
+                        error: function() {
+                            // Mostrar notificación de error genérico
+                            notyf.error('Hubo un problema al conectar con el servidor. Inténtalo de nuevo más tarde.');
+                        }
+                     });
                 }
             });
         });
@@ -142,48 +154,6 @@ $(document).ready(function () {
     // Event listener para el botón de refresco
     $('#refrescarTabla').on('click', function () {
         table.ajax.reload(); // Refrescar la tabla al hacer clic en el botón
-    });
-});
-
-$(document).ready(function () {
-    const $tooltip = $('#tooltip');
-
-    $('#tablaProductos').on('mouseenter', '.icon-button', function (event) {
-        const tooltipText = $(this).data('tooltip');
-        if (tooltipText) {
-            console.log("Mostrando tooltip:", tooltipText);
-            $tooltip.text(tooltipText)
-                .appendTo('body') // Mueve el tooltip al body para evitar recortes
-                .css({ display: 'block' })
-                .fadeIn(200);
-        }
-    });
-
-    $('#tablaProductos').on('mousemove', '.icon-button', function (event) {
-        let tooltipX = event.pageX + 15;
-        let tooltipY = event.pageY + 15;
-
-        // Evitar que el tooltip se desborde por el lado derecho o inferior de la ventana
-        const windowWidth = $(window).width();
-        const windowHeight = $(window).height();
-        const tooltipWidth = $tooltip.outerWidth();
-        const tooltipHeight = $tooltip.outerHeight();
-
-        if (tooltipX + tooltipWidth > windowWidth) {
-            tooltipX = windowWidth - tooltipWidth - 15; // Ajustar a la derecha
-        }
-        if (tooltipY + tooltipHeight > windowHeight) {
-            tooltipY = windowHeight - tooltipHeight - 15; // Ajustar hacia abajo
-        }
-
-        $tooltip.css({
-            top: tooltipY + 'px',
-            left: tooltipX + 'px',
-        });
-    });
-
-    $('#tablaProductos').on('mouseleave', '.icon-button', function () {
-        $tooltip.fadeOut(200);
     });
 });
 

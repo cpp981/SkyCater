@@ -11,4 +11,9 @@ class Messages{
     const ERROR_INSERT_PRODUCT = 'Error al guardar el producto.';
     const ERROR_VALIDATION_FAILED = 'Por favor, complete todos los campos obligatorios.';
     const SUCCESS_PRODUCT_SAVED = 'Producto guardado correctamente.';
+    const DELETE_DATA_ERROR = 'Error al borrar los datos.';
+    const PRODUCT_NOT_FOUND = 'Producto no encontrado.';
+    const DELETE_PRODUCT_FAILED = 'No se pudo borrar el producto.';
+    const DELETE_PRODUCT_SUCCESS = 'Producto borrado correctamente.';
+    const MISSING_ARGUMENTS = 'Faltan parámetros.';
 }
