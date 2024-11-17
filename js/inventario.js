@@ -67,10 +67,10 @@ $(document).ready(function () {
                 searchable: false, // Deshabilitamos la búsqueda en esta columna
                 render: function (data, type, row) {
                     // Botón con icono de Font Awesome
-                    return `<button class="btn btn-danger btn-sm delete-row icon-button" data-id="${row[0]}" data-tooltip="Borrar Producto">
+                    return `<button id="borraProd" class="btn btn-danger btn-sm delete-row icon-button" data-id="${row[0]}" data-tooltip="Borrar Producto">
                                 <i class="fas fa-trash-can"></i>
                             </button>
-                            <button class="btn btn-warning btn-sm text-white icon-button" data-id="${row[0]}" data-tooltip="Editar Producto">
+                            <button id="editProd" class="btn btn-warning btn-sm text-white icon-button" data-id="${row[0]}" data-tooltip="Editar Producto">
                                 <i class="fas fa-pencil"></i>
                             </button>`;
                 }
@@ -94,6 +94,45 @@ $(document).ready(function () {
 
     // Inicializar DataTable con la configuración definida
     var table = $('#tablaProductos').DataTable(tableOptions);
+    
+        // Usamos delegación de eventos para el botón que se genera dentro de DataTable
+        $(document).on('click', '#borraProd', function () {
+            // Obtener los datos de la fila donde se hizo clic
+            var rowData = table.row($(this).parents('tr')).data(); // Obtiene los datos de la fila
+    
+            // Obtener el nombre del producto desde el objeto de datos de la fila
+            var productoNombre = rowData[0];
+            
+            Swal.fire({
+                title:'AVISO',
+                html: '¡Se va a eliminar el producto "<strong>' + productoNombre + '</strong>" de manera definitiva!<br><br>¿Estás seguro?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Aceptar',
+                cancelButtonText: 'Cancelar',
+                confirmButtonColor: '#5cb85c',
+                cancelButtonColor: '#d33'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Acción después de la confirmación (por ejemplo, eliminar la fila en DataTable)
+                    console.log('Producto eliminado: ' + productoNombre);
+    
+                    // Aquí puedes hacer la eliminación real (en este ejemplo, eliminamos la fila de la tabla)
+                    // Por ejemplo, eliminamos la fila correspondiente en DataTable:
+                    //table.row($(this).parents('tr')).remove().draw();
+    
+                    // O realizar alguna otra acción, como hacer una petición AJAX para eliminar en el servidor
+                    // $.ajax({
+                    //     url: 'eliminarProducto.php',
+                    //     method: 'POST',
+                    //     data: { id: productoId },
+                    //     success: function(response) {
+                    //         // Manejo de la respuesta del servidor
+                    //     }
+                    // });
+                }
+            });
+        });
 
     // Vincular botón de Exportar PDF al Datatables
     $('#exportPdf').on('click', function () {
@@ -147,7 +186,7 @@ $(document).ready(function () {
         $tooltip.fadeOut(200);
     });
 });
-   
+
 // Preparación y envío datos del Modal de Añadir Producto
 // Hacemos petición por AJAX para recuperar nombres de proveedores
 document.addEventListener('DOMContentLoaded', function () {
@@ -163,7 +202,7 @@ document.addEventListener('DOMContentLoaded', function () {
             $.each(data, function (index, item) {
                 const nombre = item[0]; // Nombre del elemento (primer valor del array).
                 const id = item[1];     // ID del elemento (segundo valor del array).
-                
+
                 // Creamos y añadimos la opción al select.
                 selectElement.append(`<option value="${id}">${nombre}</option>`);
             });
