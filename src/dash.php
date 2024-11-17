@@ -1,6 +1,7 @@
 <?php
 require_once './include/Conexion.php';
 require_once './include/Dashboard.php';
+require_once './include/Messages.php';
 header('Content-Type: application/json');
 require_once '../src/session.php';
 
