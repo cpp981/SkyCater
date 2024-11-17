@@ -54,7 +54,7 @@ class Conexion
         }
     }
 
-    public function getPdo() 
+    public function getPdo(): PDO 
     {
         return $this->pdo;
     }

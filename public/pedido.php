@@ -28,7 +28,7 @@ if (!isset($_SESSION['nombre'])) {
     <!-- css DataTables CDN -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" href="../css/styles.css">
-    <script type="text/javascript" src="../js/pedido.js"></script>
+    <script type="text/javascript" src="../js/sideBar.js"></script>
     <script type="text/javascript" src="../js/pedidos.js"></script>
 </head>
 
@@ -38,23 +38,24 @@ if (!isset($_SESSION['nombre'])) {
             <div class="d-flex justify-content-center mt-3">
                 <!-- Logo de la aplicación -->
                 <a class="navbar-brand">
-                    <img src="../img/LogoMenu.png" alt="Logo" class="rounded img-fluid logo-menu">
+                    <img src="../img/LogoMenu2.png" alt="Logo" class="rounded img-fluid logo-menu">
+                    <hr class="hr-custom w-75 mx-auto mt-3">
                     <p class="text-white text-center mt-2"><i
                             class="fas fa-user text-white me-1"></i><?php echo $_SESSION['nombre'] ?></p>
                 </a>
             </div>
             <ul class="nav flex-column mt-5 justify-content-center align-content-between">
                 <li class="nav-item mt-5">
-                    <a class="nav-link" href="index.php"><i class="fas fa-dashboard"></i> Dashboard</a>
+                    <a class="nav-link" href="index.php"><i class="fas fa-dashboard me-1"></i><span>Dashboard</span></a>
                 </li>
                 <li class="nav-item mt-3">
-                    <a class="nav-link" href="listaVuelos.php"><i class="fas fa-plane-departure"></i> Vuelos</a>
+                    <a class="nav-link" href="listaVuelos.php"><i class="fas fa-plane-departure me-1"></i><span>Vuelos</span></a>
                 </li>
                 <li class="nav-item mt-3">
-                    <a class="nav-link" href="inventario.php"><i class="fas fa-clipboard-list"></i> Inventario</a>
+                    <a class="nav-link" href="inventario.php"><i class="fas fa-clipboard-list me-1"></i><span>Inventario</span></a>
                 </li>
                 <li class="nav-item mt-3">
-                    <a class="nav-link" href="pedido.php"><i class="fas fa-truck-fast"></i> Pedidos</a>
+                    <a class="nav-link" href="pedido.php"><i class="fas fa-truck-fast me-1"></i><span>Pedidos</span></a>
                 </li>
             </ul>
             <div class="d-flex justify-content-center align-items-end mt-5">
@@ -137,20 +138,32 @@ if (!isset($_SESSION['nombre'])) {
                 <div class="modal-body">
                     <form>
                         <div class="mb-3">
-                            <label for="pedidoNombre" class="form-label">Nombre del Pedido</label>
-                            <input type="text" class="form-control" id="pedidoNombre" placeholder="Nombre del Pedido">
-                        </div>
-                        <div class="mb-3">
-                            <label for="pedidoCantidad" class="form-label">Cantidad</label>
-                            <input type="number" class="form-control" id="pedidoCantidad" placeholder="Cantidad">
+                            <label for="pedidoNombre" class="form-label">Nº de Pedido</label>
+                            <input type="text" class="form-control" id="pedidoNum" placeholder="Número de Pedido" disabled>
                         </div>
                         <div class="mb-3">
                             <label for="pedidoFecha" class="form-label">Fecha de Entrega</label>
                             <input type="date" class="form-control" id="pedidoFecha">
                         </div>
                         <div class="mb-3">
+                            <label for="proveedor" class="form-label">Proveedor</label>
+                            <select class="form-control" id="proveedor">
+                                <option value="">Seleccione una opción</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="producto" class="form-label">Producto</label>
+                            <select class="form-control" id="producto">
+                                <option value="">Seleccione una opción</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="pedidoCantidad" class="form-label">Cantidad</label>
+                            <input type="number" class="form-control" id="pedidoCantidad" placeholder="Cantidad">
+                        </div>
+                        <div class="mb-3">
                             <label for="pedidoObservaciones" class="form-label">Observaciones</label>
-                            <textarea class="form-control" id="pedidoObservaciones" rows="3"></textarea>
+                            <textarea class="form-control" id="pedidoObservaciones" rows="3" style="resize: none;"></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">Guardar</button>
                     </form>
