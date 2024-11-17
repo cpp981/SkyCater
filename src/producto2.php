@@ -1,5 +1,6 @@
 <?php
 require_once './include/Producto.php';
+require_once './include/Messages.php';
 header('Content-Type: application/json');
 session_start();
 
