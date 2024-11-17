@@ -67,10 +67,10 @@ $(document).ready(function () {
                 searchable: false, // Deshabilitamos la búsqueda en esta columna
                 render: function (data, type, row) {
                     // Botón con icono de Font Awesome
-                    return `<button class="btn btn-danger btn-sm delete-row" data-id="${row[0]}">
+                    return `<button class="btn btn-danger btn-sm delete-row icon-button" data-id="${row[0]}" data-tooltip="Borrar Producto">
                                 <i class="fas fa-trash-can"></i>
                             </button>
-                            <button class="btn btn-warning btn-sm text-white" data-id="${row[0]}">
+                            <button class="btn btn-warning btn-sm text-white icon-button" data-id="${row[0]}" data-tooltip="Editar Producto">
                                 <i class="fas fa-pencil"></i>
                             </button>`;
                 }
@@ -106,6 +106,48 @@ $(document).ready(function () {
     });
 });
 
+$(document).ready(function () {
+    const $tooltip = $('#tooltip');
+
+    $('#tablaProductos').on('mouseenter', '.icon-button', function (event) {
+        const tooltipText = $(this).data('tooltip');
+        if (tooltipText) {
+            console.log("Mostrando tooltip:", tooltipText);
+            $tooltip.text(tooltipText)
+                .appendTo('body') // Mueve el tooltip al body para evitar recortes
+                .css({ display: 'block' })
+                .fadeIn(200);
+        }
+    });
+
+    $('#tablaProductos').on('mousemove', '.icon-button', function (event) {
+        let tooltipX = event.pageX + 15;
+        let tooltipY = event.pageY + 15;
+
+        // Evitar que el tooltip se desborde por el lado derecho o inferior de la ventana
+        const windowWidth = $(window).width();
+        const windowHeight = $(window).height();
+        const tooltipWidth = $tooltip.outerWidth();
+        const tooltipHeight = $tooltip.outerHeight();
+
+        if (tooltipX + tooltipWidth > windowWidth) {
+            tooltipX = windowWidth - tooltipWidth - 15; // Ajustar a la derecha
+        }
+        if (tooltipY + tooltipHeight > windowHeight) {
+            tooltipY = windowHeight - tooltipHeight - 15; // Ajustar hacia abajo
+        }
+
+        $tooltip.css({
+            top: tooltipY + 'px',
+            left: tooltipX + 'px',
+        });
+    });
+
+    $('#tablaProductos').on('mouseleave', '.icon-button', function () {
+        $tooltip.fadeOut(200);
+    });
+});
+   
 // Preparación y envío datos del Modal de Añadir Producto
 // Hacemos petición por AJAX para recuperar nombres de proveedores
 document.addEventListener('DOMContentLoaded', function () {
@@ -139,7 +181,6 @@ $(document).ready(function () {
             y: 'top'      // Alineación vertical en la parte superior
         },
     });
-
 
     $("#guardarProducto").on('click', function (event) {
         //console.log('CLICK GUARDAR PRODUCTO');
@@ -183,57 +224,6 @@ $(document).ready(function () {
             error: function () {
                 // Si la petición AJAX falla, mostramos la notificación de error
                 notyf.error('Hubo un problema al guardar el producto.');  // Notificación de error
-            }
-        });
-    });
-});
-
-
-document.addEventListener('DOMContentLoaded', function () {
-    //jQuery para menú desplegable
-    $('#sidebarToggle').on('click', function () {
-        //$('#sidebar').toggle(350, 'linear');
-        $('#sidebar').toggleClass('sidebar-collapsed');
-    });
-
-    $(document).ready(function () {
-        // Detectamos la URL actual de la página
-        var currentPath = window.location.pathname;
-
-        // Recorremos todos los enlaces del menú
-        $('.nav-item .nav-link').each(function () {
-            var linkPath = $(this).attr('href');  // Obtenemos el href del enlace
-
-            // Si la URL actual coincide con el enlace, agregamos la clase 'active' al item
-            if (currentPath.indexOf(linkPath) !== -1) {
-                $(this).parent('.nav-item').addClass('active'); // Añadimos 'active' al elemento <li> correspondiente
-            }
-        });
-
-        // Cuando el usuario haga clic en un enlace del menú
-        $('.nav-item .nav-link').click(function () {
-            // Eliminamos la clase 'active' de todos los elementos
-            $('.nav-item').removeClass('active');
-
-            // Agregamos la clase 'active' solo al item que fue clickeado
-            $(this).parent('.nav-item').addClass('active');
-        });
-    });
-
-    //Antes de cerrar la sesión, pide confirmación.
-    $('#close').click(function () {
-        Swal.fire({
-            title: "Estás seguro?",
-            text: "Se cerrará tu sesión!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#5cb85c",
-            cancelButtonColor: "#d33",
-            cancelButtonText: 'Cancelar',
-            confirmButtonText: "Aceptar"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = '../src/cerrar.php';
             }
         });
     });
