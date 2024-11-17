@@ -30,7 +30,7 @@ if (!isset($_SESSION['nombre'])) {
     <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <!--Js y Css -->
     <script src="../js/charts.js"></script>
-    <script src="../js/dash.js"></script>
+    <script src="../js/sideBar.js"></script>
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 
@@ -40,24 +40,26 @@ if (!isset($_SESSION['nombre'])) {
             <div class="d-flex justify-content-center mt-3">
                 <!-- Logo de la aplicación -->
                 <a class="navbar-brand">
-                    <img src="../img/LogoMenu.png" alt="Logo" class="rounded img-fluid logo-menu">
+                    <img src="../img/LogoMenu2.png" alt="Logo" class="rounded img-fluid logo-menu">
+                    <hr class="hr-custom w-75 mx-auto mt-3">
                     <p class="text-white text-center mt-2"><i
                             class="fas fa-user text-white me-1"></i><?php echo $_SESSION['nombre'] ?></p>
                 </a>
             </div>
             <ul class="nav flex-column mt-5 justify-content-center align-content-between">
                 <li class="nav-item mt-5">
-                    <a class="nav-link" href="index.php"><i class="fas fa-dashboard"></i> Dashboard</a>
+                    <a class="nav-link" href="index.php"><i class="fas fa-dashboard me-1"></i><span>Dashboard</span></a>
                 </li>
                 <li class="nav-item mt-3">
-                    <a class="nav-link" href="listaVuelos.php"><i class="fas fa-plane-departure"></i> Vuelos</a>
+                    <a class="nav-link" href="listaVuelos.php"><i class="fas fa-plane-departure me-1"></i><span>Vuelos</span></a>
                 </li>
                 <li class="nav-item mt-3">
-                    <a class="nav-link" href="inventario.php"><i class="fas fa-clipboard-list"></i> Inventario</a>
+                    <a class="nav-link" href="inventario.php"><i class="fas fa-clipboard-list me-1"></i><span>Inventario</span></a>
                 </li>
                 <li class="nav-item mt-3">
-                    <a class="nav-link" href="pedido.php"><i class="fas fa-truck-fast"></i> Pedidos</a>
+                    <a class="nav-link" href="pedido.php"><i class="fas fa-truck-fast me-1"></i><span>Pedidos</span></a>
                 </li>
+            </ul>
             </ul>
             <div class="d-flex justify-content-center align-items-end mt-3" style="height: 270px; margin-left: -25px;">
                 <!-- <a class="nav-link text-white"><i class="fas fa-lg fa-moon"></i> Modo Oscuro</a>-->

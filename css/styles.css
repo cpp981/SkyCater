@@ -32,12 +32,20 @@
 
 .sidebar {
     width: 175px;
-    height: auto;
+    height: 100vh;
+    max-height: 100vh;
     background-color: #003262;
     color: white;
     /*display: none;*/
     /*transform: translateX(0); /* Aseguramos que esté visible al inicio */
 }
+
+.hr-custom {
+    border: 1px solid #000; /* Cambia el color */
+    width: 50%;             /* Ajusta el ancho */
+    margin: 20px auto;      /* Centra la línea */
+    
+  }
 
 /* Estilo cuando el sidebar está colapsado */
 .sidebar-collapsed {
@@ -71,10 +79,23 @@
     display: block;
 }
 
+/* Estilo para el tooltip */
+.tooltip {
+    position: absolute;
+    background-color: #333;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    display: none; /* Asegúrate de que está oculto inicialmente */
+    z-index: 99999;
+    white-space: nowrap;
+  }
+
 .login-page {
     position: relative;
     min-height: 100vh; /* Asegura que la imagen cubra toda la altura de la pantalla */
-    background-image: url('../img/SkyCaterPlane.png'); /* Imagen de fondo */
+    background-image: url('../img/SkyCaterBoeing2.jpg'); /* Imagen de fondo */
     background-size: cover; /* Hace que la imagen cubra toda la pantalla */
     background-position: center; /* Centra la imagen */
     background-attachment: fixed; /* Fija la imagen mientras haces scroll */
@@ -149,6 +170,13 @@
     color: #003262;
 }
 
+html, body {
+    height: 100%;          /* Asegura que el html y body ocupen toda la altura de la ventana */
+    margin: 0;             /* Elimina los márgenes por defecto */
+    padding: 0;            /* Elimina el padding por defecto */
+    overflow: hidden;      /* Elimina el scroll global en la página */
+}
+
 body {
 
     background: hsla(0, 0%, 100%, 1);
@@ -161,7 +189,6 @@ body {
     
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff", endColorstr="#a8c8e0", GradientType=1);
     
-
     /*background: linear-gradient(to top, #a4d8e1, #ffffff);*/
 }
 
@@ -219,7 +246,7 @@ html, body {
 /* Evitamos que desborde la tabla y si lo necesita crea un scroll */
 #contenedorDataTable {
     max-height: 710px; /* Ajusta la altura máxima */
-    overflow-y: auto; /* Agrega una barra de desplazamiento vertical si es necesario */
+    overflow-y: visible; /* Agrega una barra de desplazamiento vertical si es necesario */
     overflow-x: hidden; /* Oculta el desbordamiento horizontal */
     margin-top: -55px;
     width: auto;
