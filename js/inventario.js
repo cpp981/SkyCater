@@ -104,8 +104,8 @@ $(document).ready(function () {
             var productoNombre = rowData[0];
             
             Swal.fire({
-                title:'AVISO',
-                html: '¡Se va a eliminar el producto "<strong>' + productoNombre + '</strong>" de manera definitiva!<br><br>¿Estás seguro?',
+                title:'¡AVISO!',
+                html: 'Se va a eliminar de manera definitiva el producto: <br><br>"<strong>' + productoNombre + '</strong>"<br><br>¿Estás seguro?',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'Aceptar',
