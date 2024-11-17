@@ -13,7 +13,7 @@ $(document).ready(function () {
                     columns: ':not(:last-child)', // Excluye la última columna
                     columns: [0, 1, 2, 3, 4, 5, 6]
                 },
-                customize: function(doc) {
+                customize: function (doc) {
                     // Personaliza el PDF aquí
                     doc.content[1].table.widths = ['*', 'auto', 'auto', 'auto', 'auto', 'auto', '*'];  // Ajusta la cantidad de columnas exportadas
                     doc.styles.tableHeader.fontSize = 12;
@@ -42,8 +42,9 @@ $(document).ready(function () {
             { title: "Categoría" },
             { title: "Alérgenos" },
             { title: "Stock" },
-            { title: "Fecha últ. actualización",
-                render: function(data, type, row) {
+            {
+                title: "Fecha últ. actualización",
+                render: function (data, type, row) {
                     if (data) {
                         // Formatear la fecha (suponiendo que está en formato ISO 8601 o YYYY-MM-DD HH:MM:SS)
                         const date = new Date(data);
@@ -52,7 +53,7 @@ $(document).ready(function () {
                         const year = date.getFullYear(); // Año completo
                         const hours = String(date.getHours()).padStart(2, '0'); // Hora con dos dígitos
                         const minutes = String(date.getMinutes()).padStart(2, '0'); // Minutos con dos dígitos
-                        
+
                         return `${day}-${month}-${year} ${hours}:${minutes}`;
                     }
                     return ""; // Si no hay fecha, devuelve vacío
@@ -60,16 +61,16 @@ $(document).ready(function () {
             },
             { title: "Valor Nutricional" },
             { title: "Descripción" },
-            { 
+            {
                 title: "Acciones",
                 orderable: false, // Deshabilitamos el orden en esta columna
                 searchable: false, // Deshabilitamos la búsqueda en esta columna
-                render: function(data, type, row) {
+                render: function (data, type, row) {
                     // Botón con icono de Font Awesome
-                    return `<button class="btn btn-danger btn-sm delete-row" data-id="${row[0]}">
+                    return `<button class="btn btn-danger btn-sm delete-row icon-button" data-id="${row[0]}" data-tooltip="Borrar Producto">
                                 <i class="fas fa-trash-can"></i>
                             </button>
-                            <button class="btn btn-warning btn-sm text-white" data-id="${row[0]}">
+                            <button class="btn btn-warning btn-sm text-white icon-button" data-id="${row[0]}" data-tooltip="Editar Producto">
                                 <i class="fas fa-pencil"></i>
                             </button>`;
                 }
@@ -94,18 +95,84 @@ $(document).ready(function () {
     // Inicializar DataTable con la configuración definida
     var table = $('#tablaProductos').DataTable(tableOptions);
 
-     // Vincular botón de Exportar PDF al Datatables
-     $('#exportPdf').on('click', function () {
+    // Vincular botón de Exportar PDF al Datatables
+    $('#exportPdf').on('click', function () {
         console.log("Exportando a PDF...");
         table.button(0).trigger(); // Usa el índice del botón PDF configurado en el array de botones
     });
     // Event listener para el botón de refresco
-    $('#refrescarTabla').click(function () {
+    $('#refrescarTabla').on('click', function () {
         table.ajax.reload(); // Refrescar la tabla al hacer clic en el botón
     });
 });
 
+$(document).ready(function () {
+    const $tooltip = $('#tooltip');
+
+    $('#tablaProductos').on('mouseenter', '.icon-button', function (event) {
+        const tooltipText = $(this).data('tooltip');
+        if (tooltipText) {
+            console.log("Mostrando tooltip:", tooltipText);
+            $tooltip.text(tooltipText)
+                .appendTo('body') // Mueve el tooltip al body para evitar recortes
+                .css({ display: 'block' })
+                .fadeIn(200);
+        }
+    });
+
+    $('#tablaProductos').on('mousemove', '.icon-button', function (event) {
+        let tooltipX = event.pageX + 15;
+        let tooltipY = event.pageY + 15;
+
+        // Evitar que el tooltip se desborde por el lado derecho o inferior de la ventana
+        const windowWidth = $(window).width();
+        const windowHeight = $(window).height();
+        const tooltipWidth = $tooltip.outerWidth();
+        const tooltipHeight = $tooltip.outerHeight();
+
+        if (tooltipX + tooltipWidth > windowWidth) {
+            tooltipX = windowWidth - tooltipWidth - 15; // Ajustar a la derecha
+        }
+        if (tooltipY + tooltipHeight > windowHeight) {
+            tooltipY = windowHeight - tooltipHeight - 15; // Ajustar hacia abajo
+        }
+
+        $tooltip.css({
+            top: tooltipY + 'px',
+            left: tooltipX + 'px',
+        });
+    });
+
+    $('#tablaProductos').on('mouseleave', '.icon-button', function () {
+        $tooltip.fadeOut(200);
+    });
+});
+   
 // Preparación y envío datos del Modal de Añadir Producto
+// Hacemos petición por AJAX para recuperar nombres de proveedores
+document.addEventListener('DOMContentLoaded', function () {
+    $.ajax({
+        url: '../src/proveedores.php',
+        method: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            console.log(data);
+            // Recuperamos la data que viene en un array de arrays
+            const selectElement = $("#nombreProvs");
+            // Recorremos la data y creamos las opciones.
+            $.each(data, function (index, item) {
+                const nombre = item[0]; // Nombre del elemento (primer valor del array).
+                const id = item[1];     // ID del elemento (segundo valor del array).
+                
+                // Creamos y añadimos la opción al select.
+                selectElement.append(`<option value="${id}">${nombre}</option>`);
+            });
+        },
+        error: function (xhr, status, error) {
+            console.error("Error al cargar los datos: " + error);
+        }
+    });
+});
 
 $(document).ready(function () {
     const notyf = new Notyf({
@@ -115,7 +182,7 @@ $(document).ready(function () {
         },
     });
 
-    $("#guardarProducto").click(function (event) {
+    $("#guardarProducto").on('click', function (event) {
         //console.log('CLICK GUARDAR PRODUCTO');
         event.preventDefault();
         // Recoger los datos del formulario
@@ -124,8 +191,8 @@ $(document).ready(function () {
         var categoria = $("#categoriaProducto").val();
         var alergenos = $("#alergenosProducto").val();
         var valorNutricional = $("#valorNutricional").val();
-        var idProveedor = $('#idProveedor').val();
-
+        var idProveedor = $('#nombreProvs').val();
+        console.log(idProveedor);
         // Preparar los datos a enviar en formato POST
         var datos = {
             nombre: nombre,
@@ -150,65 +217,13 @@ $(document).ready(function () {
                     $("#formularioProducto")[0].reset();
                 } else {
                     // Si hubo un error, mostramos la notificación de error
+                    $("#formularioProducto")[0].reset();
                     notyf.error(response.message);  // Notificación de error
                 }
             },
             error: function () {
                 // Si la petición AJAX falla, mostramos la notificación de error
                 notyf.error('Hubo un problema al guardar el producto.');  // Notificación de error
-            }
-        });
-    });
-});
-
-
-
-
-document.addEventListener('DOMContentLoaded', function () {
-    //jQuery para menú desplegable
-    $('#sidebarToggle').click(function () {
-        //$('#sidebar').toggle(350, 'linear');
-        $('#sidebar').toggleClass('sidebar-collapsed');
-    });
-    
-    $(document).ready(function() {
-        // Detectamos la URL actual de la página
-        var currentPath = window.location.pathname;
-    
-        // Recorremos todos los enlaces del menú
-        $('.nav-item .nav-link').each(function() {
-            var linkPath = $(this).attr('href');  // Obtenemos el href del enlace
-    
-            // Si la URL actual coincide con el enlace, agregamos la clase 'active' al item
-            if (currentPath.indexOf(linkPath) !== -1) {
-                $(this).parent('.nav-item').addClass('active'); // Añadimos 'active' al elemento <li> correspondiente
-            }
-        });
-    
-        // Cuando el usuario haga clic en un enlace del menú
-        $('.nav-item .nav-link').click(function() {
-            // Eliminamos la clase 'active' de todos los elementos
-            $('.nav-item').removeClass('active');
-    
-            // Agregamos la clase 'active' solo al item que fue clickeado
-            $(this).parent('.nav-item').addClass('active');
-        });
-    }); 
-
-    //Antes de cerrar la sesión, pide confirmación.
-    $('#close').click(function () {
-        Swal.fire({
-            title: "Estás seguro?",
-            text: "Se cerrará tu sesión!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#5cb85c",
-            cancelButtonColor: "#d33",
-            cancelButtonText: 'Cancelar',
-            confirmButtonText: "Aceptar"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = '../src/cerrar.php';
             }
         });
     });

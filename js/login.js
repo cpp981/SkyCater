@@ -1,5 +1,5 @@
-$(document).ready(function() {
-    $('#loginForm').on('submit', function(e) {
+$(document).ready(function () {
+    $('#loginForm').on('submit', function (e) {
         var username = $('#username').val();
         var password = $('#password').val();
         e.preventDefault();
@@ -12,7 +12,7 @@ $(document).ready(function() {
                 password: password
             },
             dataType: 'json',
-            success: function(response) {
+            success: function (response) {
                 if (response.status === 'success') {
                     Swal.fire({
                         title: 'Inicio de sesión exitoso',
@@ -30,28 +30,18 @@ $(document).ready(function() {
                         icon: 'error',
                         confirmButtonText: 'Aceptar',
                         confirmButtonColor: '#5cb85c'
-                      })
+                    })
                 }
             },
-            error: function(response) {
+            error: function (response) {
                 // Hay que mirar como mostrar aquí el error del BACK.
-                if(response.status == 'error')
-                {
+                if (response.status == 'error') {
                     alert(response.message);
                 }
             }
-            });
         });
     });
-        // Modo oscuro/claro
-        /*$('#toggle-dark-mode').click(function() {
-            $('body').toggleClass('dark-mode');
-            $(this).text(function(i, text) {
-                return text === "Modo Oscuro" ? "Modo Claro" : "Modo Oscuro";
-            });
-        });*/
+});
 
 
 
-
-      

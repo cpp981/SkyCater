@@ -32,4 +32,15 @@ class Pedido
         }
     }
 
+    public function crearPeido($numPedido, $fecha, $coste, $obs, $idProv, $idUser, $nombreProd, $cantidad, $precioUnidad)
+    {
+        $queryPedido = "INSERT INTO Pedido (Numero_Pedido, Fecha_Pedido, Coste_Total, Observaciones, Id_Proveedor, Id_Usuario, Estado_Pedido) 
+                        VALUES (?,NOW(),?,?,?,?,1)";
+        //Este idPedido hay que pasarselo a la siguente consulta bindieandolo. En esta debemos bindear el Numero_Pedido de la consulta de arriba.
+        $idPedido = "SELECT Id_Pedido FROM Pedido WHERE Numero_Pedido = ?";
+        
+        $queryProdPedido = "INSERT INTO Pedido_Producto (Nombre_Producto, Cantidad, Precio_Producto, Id_Pedido, Id_Producto) 
+                            VALUES (?,?,?,?,?)";
+    }
+
 }

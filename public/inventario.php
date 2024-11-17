@@ -31,6 +31,7 @@ if (!isset($_SESSION['nombre'])) {
     <!-- Script de Notyf -->
     <script src="https://cdn.jsdelivr.net/npm/notyf/notyf.min.js"></script>
     <link rel="stylesheet" href="../css/styles.css">
+    <script type="text/javascript" src="../js/sideBar.js"></script>
     <script type="text/javascript" src="../js/inventario.js"></script>
 </head>
 
@@ -40,22 +41,24 @@ if (!isset($_SESSION['nombre'])) {
         <div class="d-flex justify-content-center mt-3">
                 <!-- Logo de la aplicación -->
                 <a  class="navbar-brand">
-                    <img src="../img/LogoMenu.png" alt="Logo" class="rounded img-fluid logo-menu">
-                    <p class="text-white text-center mt-2"><i class="fas fa-user text-white me-1"></i><?php echo $_SESSION['nombre']?></p>
+                    <img src="../img/LogoMenu2.png" alt="Logo" class="rounded img-fluid logo-menu">
+                    <hr class="hr-custom w-75 mx-auto mt-3">
+                    <p class="text-white text-center mt-2"><i
+                            class="fas fa-user text-white me-1"></i><?php echo $_SESSION['nombre'] ?></p>
                 </a>
             </div>
             <ul class="nav flex-column mt-5 justify-content-center align-content-between">
                 <li class="nav-item mt-5">
-                    <a class="nav-link" href="index.php"><i class="fas fa-dashboard"></i><span>Dashboard</span></a>
+                    <a class="nav-link" href="index.php"><i class="fas fa-dashboard me-1"></i><span>Dashboard</span></a>
                 </li>
                 <li class="nav-item mt-3">
-                    <a class="nav-link" href="listaVuelos.php"><i class="fas fa-plane-departure"></i><span>Vuelos</span></a>
+                    <a class="nav-link" href="listaVuelos.php"><i class="fas fa-plane-departure me-1"></i><span>Vuelos</span></a>
                 </li>
                 <li class="nav-item mt-3">
-                    <a class="nav-link" href="inventario.php"><i class="fas fa-clipboard-list"></i><span>Inventario</span></a>
+                    <a class="nav-link" href="inventario.php"><i class="fas fa-clipboard-list me-1"></i><span>Inventario</span></a>
                 </li>
                 <li class="nav-item mt-3">
-                    <a class="nav-link" href="pedido.php"><i class="fas fa-truck-fast"></i><span>Pedidos</span></a>
+                    <a class="nav-link" href="pedido.php"><i class="fas fa-truck-fast me-1"></i><span>Pedidos</span></a>
                 </li>
             </ul>
             <div class="d-flex justify-content-center align-items-end mt-5">
@@ -79,7 +82,7 @@ if (!isset($_SESSION['nombre'])) {
             </nav>
             <div id="containerTablaProducto"
                 class="container-fluid flex-grow-1 d-flex flex-column justify-content-center mt-4">
-                <div class="text-center  mb-5" style="color: #003262;">
+                <div class="text-center mb-5" style="color: #003262;">
                     <h2>Gestión de Productos</h2>
                 </div>
                 <div id="contenedorDataTable" class="flex-grow-1">
@@ -147,9 +150,10 @@ if (!isset($_SESSION['nombre'])) {
                                         </div>
                                         <!-- Id Proveedor (Opcional) -->
                                         <div class="mb-3">
-                                            <label for="idProveedor" class="form-label">Id Proveedor</label>
-                                            <input type="number" class="form-control border border-secondary"
-                                                id="idProveedor" rows="2" style="resize: none;" disabled></input>
+                                            <label for="idProveedor" class="form-label">Proveedor</label>
+                                            <select class="form-select border border-secondary" id="nombreProvs">
+                                                <option value="" selected>Seleccione una opción</option>
+                                            </select>
                                         </div>
                                 </div>
                                 <div class="modal-footer">
@@ -166,7 +170,7 @@ if (!isset($_SESSION['nombre'])) {
 
                     <!-- DataTables para productos -->
                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 ">
-                        <table id="tablaProductos" class="table table-striped rounded shadow" style="width: 100%;">
+                        <table id="tablaProductos" class="table table-striped rounded shadow" style="width: 100%; position: relative;">
                             <thead>
                                 <tr>
                                     <th class="centered cabecera"></th>
@@ -182,6 +186,7 @@ if (!isset($_SESSION['nombre'])) {
                             <tbody id="tBodyProductos">
                             </tbody>
                         </table>
+                        <div class="tooltip" id="tooltip"></div>
                     </div>
                 </div>
             </div>
