@@ -1,113 +1,130 @@
-// Configuración Datatables para Vuelos
-const tableOptions = {
-    columnDefs: [
-        {
-            className: "centered", targets: [0, 1, 2, 3, 4, 5, 6, 7],
-            targets: [6, 7], searchable: false, orderable: false
+document.addEventListener('DOMContentLoaded', function () {
+    const tableOptions = {
+        dom: 'frtip',  // Estructura de los elementos (filtro, tabla, paginación)
+        responsive: true,
+        ajax: {
+            url: "../src/listaVuelos2.php",  // URL del archivo que devuelve los datos
+            type: "GET",
+            dataSrc: ""  // Deja vacío si los datos están directamente en la raíz
         },
-    ],
-    "columns": [
-        { title: "Vuelo" },
-        { title: "Origen" },
-        { title: "Destino" },
-        { title: "Salida" },
-        { title: "Llegada" },
-        { title: "Estado" },
-        { title: "Detalles" },
-        { title: "Gestionar" }
-    ],
-    lengthChange: false,
-    destroy: true,
-    language: {
-        paginate: {
-            first: '<button class="btn btn-sm">Primero</button>',
-            previous: '<button class="btn btn-sm">Anterior</button>',
-            next: '<button class="btn btn-sm">Siguiente</button>',
-            last: '<button class="btn btn-sm">Último</button>'
-        },
-        search: "Buscar: ",
-        zeroRecords: "Ningún producto encontrado",
-        info: "Mostrando de _START_ a _END_ de un total de _TOTAL_ registros",
-        infoFiltered: "(filtrados desde _MAX_ registros totales)",
-
-    },
-};
-
-// Cargar la lista de vuelos pendientes de gestionar
-$(document).ready(function () {
-    var tabla = $('#tablaVuelos').DataTable(tableOptions);
-
-    $.ajax({
-        url: '../src/listaVuelos2.php',
-        method: 'GET',
-        dataType: 'json',
-        success: function (data) {
-            console.log(data);
-            data.forEach(function (vuelo) {
-                console.log(vuelo);
-
-                if (vuelo.length === 6) {
-                    tabla.row.add([
-                        vuelo[0],
-                        vuelo[1],
-                        vuelo[2],
-                        vuelo[3],
-                        vuelo[4],
-                        vuelo[5],
-                        '<button class="details btn btn-sm btn-primary text-white" data-id="' + vuelo[0] + '"><i class="fas fa-circle-info"></i> Detalles Vuelo</button>',
-                        '<button class="btn btn-sm btn-success text-white" data-id="' + vuelo[0] + '"><i class="fas fa-plane-departure"></i> Gestionar Vuelo</button>'
-                    ]).draw(false);
-                } else {
-                    console.warn("Fila incompleta: ", vuelo);
+        columnDefs: [
+            {
+                className: "centered",
+                targets: [0, 1, 2, 3, 4, 5], // Definir qué columnas deben ser centradas
+                searchable: true, // Deshabilita búsqueda en estas columnas
+                orderable: true   // Deshabilita el orden en estas columnas
+            },
+            {
+                targets: 6,  // La columna de "Acciones"
+                orderable: false,
+                searchable: false  // Deshabilita búsqueda en esta columna
+            }
+        ],
+        columns: [
+            { title: "Vuelo" },
+            { title: "Origen" },
+            { title: "Destino" },
+            { title: "Salida" },
+            { title: "Llegada" },
+            { title: "Estado" },
+            {
+                title: "Acciones",
+                orderable: false,
+                searchable: false,
+                render: function (data, type, row) {
+                    return `
+                        <button class="details btn btn-sm btn-primary text-white" data-id="${row[0]}">
+                            <i class="fas fa-circle-info"></i> Detalles
+                        </button>
+                        <button class="manage btn btn-sm btn-success text-white" data-id="${row[0]}">
+                            <i class="fas fa-plane-departure"></i> Gestionar
+                        </button>`;
                 }
-            });
+            }
+        ],
+        lengthChange: false,
+        destroy: true,
+        language: {
+            paginate: {
+                first: '<button class="btn btn-sm">Primero</button>',
+                previous: '<button class="btn btn-sm">Anterior</button>',
+                next: '<button class="btn btn-sm">Siguiente</button>',
+                last: '<button class="btn btn-sm">Último</button>'
+            },
+            search: "Buscar: ",
+            zeroRecords: "Ningún vuelo encontrado",
+            info: "Mostrando de _START_ a _END_ de un total de _TOTAL_ registros",
+            infoFiltered: "(filtrados desde _MAX_ registros totales)"
         },
-        error: function (xhr, status, error) {
-            console.error("Error al cargar los datos: " + error);
-        }
-    });
+    };
+    
+    const tablaVuelos = $('#tablaVuelos').DataTable(tableOptions);
+    
 
-    // Manejador de clic para el botón "detalles del vuelo"
+    let expandedRow = null; // Rastrea la fila actualmente desplegada
+
+    // Manejador para el botón "Detalles"
     $('#tablaVuelos tbody').on('click', 'button.details', function () {
-        // Obtener la fila actual
-        var tr = $(this).closest('tr');
-        // Obtener la instancia de la fila
-        var row = tabla.row(tr);
-        // Obtener los datos de la fila
-        var dataRow = tabla.row(row).data();
-        // Almacenar el valor de la columna "Vuelo"
-        var numVuelo = dataRow[0];
+        const tr = $(this).closest('tr');
+        const row = tablaVuelos.row(tr);
+        const dataRow = row.data();
 
         if (row.child.isShown()) {
-            // Si ya está desplegada, ocultamos
+            // Si la fila actual ya está desplegada, la ocultamos
             row.child.hide();
             tr.removeClass('shown');
+            expandedRow = null; // Resetear la fila desplegada
         } else {
-            // Si no está desplegada, la mostramos
+            // Si hay otra fila desplegada, la ocultamos
+            if (expandedRow && expandedRow !== row) {
+                expandedRow.child.hide();
+                $(expandedRow.node()).removeClass('shown');
+            }
+
+            // Desplegamos la fila actual
             row.child(format(dataRow)).show();
             tr.addClass('shown');
+            expandedRow = row;
 
-            // Realizar la consulta AJAX
+            // Cargar detalles del vuelo
             $.ajax({
                 url: '../src/detalleVuelos.php',
                 method: 'POST',
-                data: {
-                    vuelo: numVuelo,
-                },
+                data: { vuelo: dataRow[0] },
                 success: function (data) {
-                    // Procesar y mostrar la data recibida
-                    // Actualiza el contenido en la fila desplegada
-                    var content = format(dataRow) + '<div class="mb-2"><p> Total pasajeros: ' + JSON.stringify(data['pasajeros'], null, 2) + ' <br>Pasajeros con intolerancias: ' + JSON.stringify(data['intolerancias'], null, 2) + '</p></div>';
-                    row.child(content).show();
+                    const content = `
+                        <div class="details-row d-flex justify-content-center align-items-center" style="background-color:#003262;">
+                            <div class="detail-item">
+                                <div class="card card-details1 shadow w-50">
+                                    <p class="text-center"><strong>Total pasajeros</strong></p>
+                                    <p class="text-center"><strong>${data.pasajeros}</strong></p>
+                                </div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="card shadow w-50">
+                                    <p class="text-center"><strong>Pasajeros con intolerancias</strong></p>
+                                    <p class="text-center"><strong>${data.intolerancias}</strong></p>
+                                </div>
+                            </div>
+                        </div>`;
+                    row.child(format(dataRow) + content).show();
                 },
                 error: function (xhr, status, error) {
-                    console.error('Error en la solicitud AJAX:', error);
+                    console.error('Error al cargar detalles:', error);
                 }
             });
         }
     });
-});
-    // Función para formatear el título del contenido que se mostrará al desplegar la fila
+
+    // Manejador para el botón "Gestionar Vuelo"
+    $('#tablaVuelos tbody').on('click', 'button.manage', function () {
+        const vueloId = $(this).data('id');
+        console.log('Gestionar vuelo ID:', vueloId);
+    });
+
+    // Función para formatear los detalles del vuelo
     function format(dataRow) {
-        return '<div><strong>Información adicional para el vuelo ' + dataRow[0] + '</strong></div>';
+        return `<div class="indi text-center"><strong>INFORMACIÓN ADICIONAL PARA EL VUELO ${dataRow[0]}</strong></div>`;
     }
+});
+

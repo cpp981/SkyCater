@@ -91,60 +91,131 @@ document.addEventListener('DOMContentLoaded', function () {
             infoFiltered: "(filtrados desde _MAX_ registros totales)",
         },
     };
-        //Iniciamos Notyf para notificar el resultado al usuario
-        const notyf = new Notyf({
-            position: {
-                x: 'right',  // Alineación horizontal
-                y: 'top'      // Alineación vertical en la parte superior
-            },
-        });
+    //Iniciamos Notyf para notificar el resultado al usuario
+    const notyf = new Notyf({
+        position: {
+            x: 'right',  // Alineación horizontal
+            y: 'top'      // Alineación vertical en la parte superior
+        },
+    });
     // Inicializar DataTable con la configuración definida
-    var table = $('#tablaProductos').DataTable(tableOptions);
-    
-        // Usamos delegación de eventos para el botón que se genera dentro de DataTable
-        $(document).on('click', '#borraProd', function () {
-            // Obtener los datos de la fila donde se hizo clic
-            var rowData = table.row($(this).parents('tr')).data(); // Obtiene los datos de la fila
-    
-            // Obtener el nombre del producto desde el objeto de datos de la fila
-            var productoNombre = rowData[0];
-            
-            Swal.fire({
-                title:'¡AVISO!',
-                html: 'Se va a eliminar de manera definitiva el producto: <br><br>"<strong>' + productoNombre + '</strong>"<br><br>¿Estás seguro?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Aceptar',
-                cancelButtonText: 'Cancelar',
-                confirmButtonColor: '#5cb85c',
-                cancelButtonColor: '#d33'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Si pulsa Aceptar borramos producto
-                     $.ajax({
-                         url: '../src/borraProducto.php',
-                         method: 'POST',
-                         data: { nombreProd: productoNombre },
-                         success: function(response) {
-                            if (response.status === 'success') {
-                                // Mostrar notificación de éxito
-                                notyf.success(response.message);
-        
-                                // Eliminar la fila correspondiente en DataTable
-                               // table.row($(this).parents('tr')).remove().draw();
-                            } else {
-                                // Mostrar notificación de error
-                                notyf.error(response.message);
-                            }
-                        },
-                        error: function() {
-                            // Mostrar notificación de error genérico
-                            notyf.error('Hubo un problema al conectar con el servidor. Inténtalo de nuevo más tarde.');
+    const table = $('#tablaProductos').DataTable(tableOptions);
+
+    // Usamos delegación de eventos para el botón que se genera dentro de DataTable
+    $(document).on('click', '#borraProd', function () {
+        // Obtener los datos de la fila donde se hizo clic
+        var rowData = table.row($(this).parents('tr')).data(); // Obtiene los datos de la fila
+
+        // Obtener el nombre del producto desde el objeto de datos de la fila
+        var productoNombre = rowData[0];
+
+        Swal.fire({
+            title: '¡AVISO!',
+            html: 'Se va a eliminar de manera definitiva el producto: <br><br>"<strong>' + productoNombre + '</strong>"<br><br>¿Estás seguro?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Aceptar',
+            cancelButtonText: 'Cancelar',
+            confirmButtonColor: '#5cb85c',
+            cancelButtonColor: '#d33'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Si pulsa Aceptar borramos producto
+                $.ajax({
+                    url: '../src/borraProducto.php',
+                    method: 'POST',
+                    data: { nombreProd: productoNombre },
+                    success: function (response) {
+                        if (response.status === 'success') {
+                            // Mostrar notificación de éxito
+                            notyf.success(response.message);
+
+                            // Eliminar la fila correspondiente en DataTable
+                            // table.row($(this).parents('tr')).remove().draw();
+                        } else {
+                            // Mostrar notificación de error
+                            notyf.error(response.message);
                         }
-                     });
-                }
-            });
+                    },
+                    error: function () {
+                        // Mostrar notificación de error genérico
+                        notyf.error('Hubo un problema al conectar con el servidor. Inténtalo de nuevo más tarde.');
+                    }
+                });
+            }
         });
+    });
+
+// Preparación y envío datos del Modal de Editar Producto
+$(document).ready(function () {
+    // Cuando el botón de editar es presionado
+    $(document).on('click', '#editProd', function () {
+        var rowData = table.row($(this).parents('tr')).data(); // Obtiene los datos de la fila
+        // Obtener los datos del producto
+        var nombreProducto = rowData[0];
+        var descripcionProducto = rowData[6];
+        var categoriaProducto = rowData[1];
+        var alergenosProducto = rowData[2];
+        var valorNutricional = rowData[5];
+        //var proveedorId = rowData[4]; // Suponiendo que el proveedorId está en la columna 4 de la tabla
+
+        // Rellenar los campos del formulario con los valores obtenidos
+        $('#nombreP').val(nombreProducto);
+        $('#descripcionP').val(descripcionProducto);
+        $('#categoriaP').val(categoriaProducto);
+        $('#alergenosP').val(alergenosProducto);
+        
+        // Expresión regular para extraer solo los números del valor nutricional
+        var valorNumerico = parseInt(valorNutricional.replace(/\D/g, ''), 10);
+        $('#valorNutricionalP').val(valorNumerico);
+        
+        // Realizamos la petición AJAX para obtener el nombre del proveedor
+        $.ajax({
+            url: '../src/obtenerProveedor.php', 
+            type: 'GET',
+            data: { nombreProducto: nombreProducto }, // Enviamos el proveedorId para obtener su nombre
+            success: function (response) {
+                console.log(response[0]['Nombre_Empresa']);
+                // Suponiendo que la respuesta es un string con el nombre del proveedor
+                $('#nombreProv').val(response[0]['Nombre_Empresa']); // Rellenamos el campo del modal con el nombre del proveedor
+            },
+            error: function (xhr, status, error) {
+                // Manejo de errores si algo sale mal
+                console.error('Error al obtener el nombre del proveedor:', error);
+                alert('Hubo un error al cargar el nombre del proveedor');
+            }
+        });
+
+        // Mostrar el modal
+        $('#modalEdit').modal('show');
+    });
+
+        // Preparamos el envío mediante Ajax para actualizar el producto con la nueva data del modal
+        $('#formularioEditProducto').submit(function (event) {
+            event.preventDefault();
+
+            //var formularioData = $(this).serialize(); // Obtener los datos del formulario
+
+            /*$.ajax({
+                url: '../src/updateProducto.php',
+                type: 'POST',
+                data: formularioData, // Enviar los datos del formulario
+                success: function (response) {
+                    // Aquí puedes manejar la respuesta del servidor
+                    console.log(response);
+                    // Si la actualización es exitosa, cerrar el modal
+                    $('#exampleModal').modal('hide');
+                    // Opcional: actualizar la tabla o mostrar un mensaje de éxito
+                    alert('Producto actualizado correctamente');
+                },
+                error: function (xhr, status, error) {
+                    // Manejo de errores
+                    alert('Hubo un error al guardar el producto');
+                }
+            });*/
+        });
+    });
+
 
     // Vincular botón de Exportar PDF al Datatables
     $('#exportPdf').on('click', function () {

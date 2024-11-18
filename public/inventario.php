@@ -167,7 +167,8 @@ if (!isset($_SESSION['nombre'])) {
                             </div>
                         </div>
                     </div>
-
+                     <!-- Incluimos el modal con el formulario de edición de producto -->
+                    <?php require('modalEdit.php'); ?>
                     <!-- DataTables para productos -->
                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 ">
                         <table id="tablaProductos" class="table table-striped rounded shadow" style="width: 100%; position: relative;">
