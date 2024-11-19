@@ -1,7 +1,9 @@
-*.png linguistic-vendored
-*.jpg linguistic-vendored
-*.jpeg linguistic-vendored
-*.gif linguistic-vendored
-*.svg linguistic-vendored
-*.ico linguistic-vendored
-*.php linguistic-language=PHP
+*.png linguist-vendored
+*.jpg linguist-vendored
+*.jpeg linguist-vendored
+*.gif linguist-vendored
+*.svg linguist-vendored
+*.ico linguist-vendored
+*.php linguist-language=PHP
+vendor/**/* linguist-vendored
+node_modules/**/* linguist-vendored
