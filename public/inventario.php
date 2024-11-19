@@ -150,7 +150,7 @@ if (!isset($_SESSION['nombre'])) {
                                         </div>
                                         <!-- Id Proveedor (Opcional) -->
                                         <div class="mb-3">
-                                            <label for="idProveedor" class="form-label">Proveedor</label>
+                                            <label for="nombreProvs" class="form-label">Proveedor</label>
                                             <select class="form-select border border-secondary" id="nombreProvs">
                                                 <option value="" selected>Seleccione una opción</option>
                                             </select>
@@ -167,7 +167,8 @@ if (!isset($_SESSION['nombre'])) {
                             </div>
                         </div>
                     </div>
-
+                     <!-- Incluimos el modal con el formulario de edición de producto -->
+                    <?php require('modalEdit.php'); ?>
                     <!-- DataTables para productos -->
                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 ">
                         <table id="tablaProductos" class="table table-striped rounded shadow" style="width: 100%; position: relative;">

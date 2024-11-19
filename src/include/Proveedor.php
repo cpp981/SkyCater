@@ -1,6 +1,7 @@
 <?php
 
-require 'Conexion.php';
+require_once 'Conexion.php';
+require_once 'Messages.php';
 
 class Proveedor
 {
@@ -31,6 +32,7 @@ class Proveedor
         }
    }
 
+   // Recupera nombre de producto a partir del Id del proveedor
    public function getProdByIdProveedor($id)
    {
         $query = "SELECT Nombre FROM Producto WHERE Id_Proveedor = ?";
@@ -41,6 +43,23 @@ class Proveedor
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }catch(Exception $e)
+        {
+            throw new Exception(Messages::LOAD_DATA_ERROR);
+        }
+   }
+
+   // Recupera nombre de proveedor a partir de su Id
+   public function getNombreProveedorById($id)
+   {
+        $query = "SELECT Nombre_Empresa FROM Proveedor WHERE Id_Proveedor = ?";
+        try
+        {
+            $stmt = $this->pdo->prepare($query);
+            $stmt->bindParam(1, $id);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+        catch(PDOException $e)
         {
             throw new Exception(Messages::LOAD_DATA_ERROR);
         }

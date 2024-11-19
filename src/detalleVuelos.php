@@ -2,7 +2,7 @@
 require_once './include/Vuelo.php';
 require_once './include/Messages.php';
 header('Content-Type: application/json');
-//session_start();
+session_start();
 
 try{
     if (isset($_POST['vuelo'])) {
