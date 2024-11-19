@@ -4,3 +4,4 @@
 *.gif linguistic-vendored
 *.svg linguistic-vendored
 *.ico linguistic-vendored
+*.php linguistic-language=PHP
