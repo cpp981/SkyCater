@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 data: { vuelo: dataRow[0] },
                 success: function (data) {
                     const content = `
-                        <div class="details-row d-flex justify-content-center align-items-center" style="background-color:#003262;">
+                        <div class="details-row d-flex justify-content-center align-items-center"">
                             <div class="detail-item">
                                 <div class="card card-details1 shadow w-50">
                                     <p class="text-center"><strong>Total pasajeros</strong></p>
