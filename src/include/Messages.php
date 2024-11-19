@@ -15,5 +15,7 @@ class Messages{
     const PRODUCT_NOT_FOUND = 'Producto no encontrado.';
     const DELETE_PRODUCT_FAILED = 'No se pudo borrar el producto.';
     const DELETE_PRODUCT_SUCCESS = 'Producto borrado correctamente.';
+    const UPDATE_PRODUCT_SUCCESS = 'Producto actualizado correctamente';
+    const UPDATE_PRODUCT_ERROR = 'Error al actualizar el producto';
     const MISSING_ARGUMENTS = 'Faltan parámetros.';
 }

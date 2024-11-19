@@ -91,69 +91,172 @@ document.addEventListener('DOMContentLoaded', function () {
             infoFiltered: "(filtrados desde _MAX_ registros totales)",
         },
     };
-        //Iniciamos Notyf para notificar el resultado al usuario
-        const notyf = new Notyf({
-            position: {
-                x: 'right',  // Alineación horizontal
-                y: 'top'      // Alineación vertical en la parte superior
-            },
-        });
+    //Iniciamos Notyf para notificar el resultado al usuario
+    const notyf = new Notyf({
+        position: {
+            x: 'right',  // Alineación horizontal
+            y: 'top'      // Alineación vertical en la parte superior
+        },
+    });
     // Inicializar DataTable con la configuración definida
-    var table = $('#tablaProductos').DataTable(tableOptions);
-    
-        // Usamos delegación de eventos para el botón que se genera dentro de DataTable
-        $(document).on('click', '#borraProd', function () {
-            // Obtener los datos de la fila donde se hizo clic
-            var rowData = table.row($(this).parents('tr')).data(); // Obtiene los datos de la fila
-    
-            // Obtener el nombre del producto desde el objeto de datos de la fila
-            var productoNombre = rowData[0];
-            
-            Swal.fire({
-                title:'¡AVISO!',
-                html: 'Se va a eliminar de manera definitiva el producto: <br><br>"<strong>' + productoNombre + '</strong>"<br><br>¿Estás seguro?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Aceptar',
-                cancelButtonText: 'Cancelar',
-                confirmButtonColor: '#5cb85c',
-                cancelButtonColor: '#d33'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Si pulsa Aceptar borramos producto
-                     $.ajax({
-                         url: '../src/borraProducto.php',
-                         method: 'POST',
-                         data: { nombreProd: productoNombre },
-                         success: function(response) {
-                            if (response.status === 'success') {
-                                // Mostrar notificación de éxito
-                                notyf.success(response.message);
-        
-                                // Eliminar la fila correspondiente en DataTable
-                               // table.row($(this).parents('tr')).remove().draw();
-                            } else {
-                                // Mostrar notificación de error
-                                notyf.error(response.message);
-                            }
-                        },
-                        error: function() {
-                            // Mostrar notificación de error genérico
-                            notyf.error('Hubo un problema al conectar con el servidor. Inténtalo de nuevo más tarde.');
+    const table = $('#tablaProductos').DataTable(tableOptions);
+
+    // Usamos delegación de eventos para el botón que se genera dentro de DataTable
+    $(document).on('click', '#borraProd', function () {
+        // Obtener los datos de la fila donde se hizo clic
+        var rowData = table.row($(this).parents('tr')).data(); // Obtiene los datos de la fila
+
+        // Obtener el nombre del producto desde el objeto de datos de la fila
+        var productoNombre = rowData[0];
+
+        Swal.fire({
+            title: '¡AVISO!',
+            html: 'Se va a eliminar de manera definitiva el producto: <br><br>"<strong>' + productoNombre + '</strong>"<br><br>¿Estás seguro?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Aceptar',
+            cancelButtonText: 'Cancelar',
+            confirmButtonColor: '#5cb85c',
+            cancelButtonColor: '#d33'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Si pulsa Aceptar borramos producto
+                $.ajax({
+                    url: '../src/borraProducto.php',
+                    method: 'POST',
+                    data: { nombreProd: productoNombre },
+                    success: function (response) {
+                        if (response.status === 'success') {
+                            // Mostrar notificación de éxito
+                            notyf.success(response.message);
+
+                            // Eliminar la fila correspondiente en DataTable
+                            // table.row($(this).parents('tr')).remove().draw();
+                        } else {
+                            // Mostrar notificación de error
+                            notyf.error(response.message);
                         }
-                     });
+                    },
+                    error: function () {
+                        // Mostrar notificación de error genérico
+                        notyf.error('Hubo un problema al conectar con el servidor. Inténtalo de nuevo más tarde.');
+                    }
+                });
+            }
+        });
+    });
+
+    // Preparación y envío datos del Modal de Editar Producto
+    $(document).ready(function () {
+        // Cuando el botón de editar es presionado
+        $(document).on('click', '#editProd', function () {
+            var rowData = table.row($(this).parents('tr')).data(); // Obtiene los datos de la fila
+            // Obtener los datos del producto
+            var nombreProducto = rowData[0];
+            var descripcionProducto = rowData[6];
+            var categoriaProducto = rowData[1];
+            var alergenosProducto = rowData[2];
+            var valorNutricional = rowData[5];
+            //var proveedorId = rowData[4]; // Suponiendo que el proveedorId está en la columna 4 de la tabla
+
+            // Rellenar los campos del formulario con los valores obtenidos
+            $('#nombreP').val(nombreProducto);
+            $('#descripcionP').val(descripcionProducto);
+            $('#categoriaP').val(categoriaProducto);
+            $('#alergenosP').val(alergenosProducto);
+
+            // Expresión regular para extraer solo los números del valor nutricional
+            var valorNumerico = parseInt(valorNutricional.replace(/\D/g, ''), 10);
+            $('#valorNutricionalP').val(valorNumerico);
+
+            // Realizamos la petición AJAX para obtener el nombre del proveedor
+            $.ajax({
+                url: '../src/obtenerProveedor.php',
+                type: 'GET',
+                data: { nombreProducto: nombreProducto }, // Enviamos el proveedorId para obtener su nombre
+                success: function (response) {
+                    // Traemos nombre del proveedor del producto
+                    $('#nombreProv').text(response[0]['Nombre_Empresa']);
+                    // Le damos el id al value del option
+                    $('#nombreProv').val(response[1]);
+                    // Agregamos el option al select
+                    $('#selectProv').append($('#nombreProv'));
+                },
+                error: function (xhr, status, error) {
+                    // Manejo de errores si algo sale mal
+                    console.error('Error al obtener el nombre del proveedor:', error);
+                    alert('Hubo un error al cargar el nombre del proveedor');
+                }
+            });
+            // Mostrar el modal
+            $('#modalEdit').modal('show');
+        });
+
+        // Preparamos el envío mediante Ajax para actualizar el producto con la nueva data del modal
+        $('#guardarEditProducto').on('click', function (event) {
+            event.preventDefault(); // Evita el comportamiento predeterminado
+
+            // Obtener los valores de los campos
+            var nombre = $("#nombreP").val();
+            var descripcion = $("#descripcionP").val();
+            var categoria = $("#categoriaP").val();
+            var alergenos = $("#alergenosP").val();
+            var valorNutricional = $("#valorNutricionalP").val();
+            var idProveedor = $('#nombreProv').val();
+
+            // Validación de los campos requeridos
+            if (!nombre || !categoria || !alergenos) {
+                notyf.error('Por favor, complete todos los campos obligatorios.');
+                return; // Detener la ejecución si hay campos vacíos
+            }
+
+            if (isNaN(valorNutricional)) {
+                notyf.error('El valor nutricional debe ser un número válido.');
+                return; // Detener si el valor nutricional no es un número válido
+            }
+
+            // Preparar los datos para la solicitud
+            var formularioData = {
+                nombre: nombre,
+                descripcion: descripcion,
+                categoria: categoria,
+                alergenos: alergenos,
+                valorNutricional: valorNutricional + " kcal",
+                idProveedor: idProveedor
+            };
+
+            // Enviar los datos por AJAX
+            $.ajax({
+                url: '../src/updateProducto.php',
+                type: 'POST',
+                data: formularioData,
+                success: function (response) {
+                    if (response.status == 'success') {
+                        // Si la actualización es correcta
+                        notyf.success(response.message);
+                        $("#modalEdit").modal('hide');
+                        $("#formularioEditProducto")[0].reset();
+                    } else {
+                        // Si falla notificamos tambien
+                        notyf.error(response.message);
+                    }
+                },
+                error: function () {
+                    notyf.error('Hubo un problema al guardar el producto.');
                 }
             });
         });
 
-    // Vincular botón de Exportar PDF al Datatables
-    $('#exportPdf').on('click', function () {
-        console.log("Exportando a PDF...");
-        table.button(0).trigger(); // Usa el índice del botón PDF configurado en el array de botones
-    });
-    // Event listener para el botón de refresco
-    $('#refrescarTabla').on('click', function () {
-        table.ajax.reload(); // Refrescar la tabla al hacer clic en el botón
+
+        // Vincular botón de Exportar PDF al Datatables
+        $('#exportPdf').on('click', function () {
+            console.log("Exportando a PDF...");
+            table.button(0).trigger(); // Usa el índice del botón PDF configurado en el array de botones
+        });
+        // Event listener para el botón de refresco
+        $('#refrescarTabla').on('click', function () {
+            table.ajax.reload(); // Refrescar la tabla al hacer clic en el botón
+        });
     });
 });
 
@@ -165,7 +268,6 @@ document.addEventListener('DOMContentLoaded', function () {
         method: 'GET',
         dataType: 'json',
         success: function (data) {
-            console.log(data);
             // Recuperamos la data que viene en un array de arrays
             const selectElement = $("#nombreProvs");
             // Recorremos la data y creamos las opciones.
@@ -208,7 +310,8 @@ $(document).ready(function () {
             descripcion: descripcion,
             categoria: categoria,
             alergenos: alergenos,
-            valorNutricional: valorNutricional + " kcal"
+            valorNutricional: valorNutricional + " kcal",
+            idProveedor: idProveedor
         };
 
         // Enviar los datos al servidor mediante AJAX
