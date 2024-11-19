@@ -50,15 +50,16 @@
                     </div>
                     <!-- Id Proveedor -->
                     <div class="mb-3">
-                        <label for="nombreProv" class="form-label">Proveedor</label>
-                        <input type="text" class="form-control border border-secondary" id="nombreProv" disabled>
+                        <label for="selectProv" class="form-label">Proveedor</label>
+                        <select class="form-select border border-secondary" id="selectProv" disabled>
+                            <option id="nombreProv" value="">Seleccione una opción</option>
+                        </select>
                     </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal"></i>Cerrar</button>
-                <button type="submit" id="guardarProducto" form="formularioProducto" class="btn btn-success"><i
-                        class="fas fa-save me-1"></i>Grabar
-                    Producto</button>
+                <button type="submit" id="guardarEditProducto"  class="btn btn-success"><i
+                        class="fas fa-save me-1"></i>Grabar Producto</button>
             </div>
             </form>
         </div>

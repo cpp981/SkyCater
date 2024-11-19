@@ -150,7 +150,7 @@ if (!isset($_SESSION['nombre'])) {
                                         </div>
                                         <!-- Id Proveedor (Opcional) -->
                                         <div class="mb-3">
-                                            <label for="idProveedor" class="form-label">Proveedor</label>
+                                            <label for="nombreProvs" class="form-label">Proveedor</label>
                                             <select class="form-select border border-secondary" id="nombreProvs">
                                                 <option value="" selected>Seleccione una opción</option>
                                             </select>

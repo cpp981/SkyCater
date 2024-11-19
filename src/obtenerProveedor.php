@@ -22,6 +22,7 @@ try
     $idProveedor = $arrayId[0]['Id_Proveedor'];
     $proveedor = new Proveedor();
     $result = $proveedor->getNombreProveedorById($idProveedor);
+    $result[1] = $idProveedor;
     // Devolvemos el json con el nombre del proveedor
     echo json_encode($result);
 }catch(Exception $e)

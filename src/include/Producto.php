@@ -124,7 +124,7 @@ class Producto
     public function updateProductById($n,$cat,$aler,$vn,$desc,$id)
     {
         $query = "UPDATE Producto SET Nombre = ?, Descripcion = ?, Categoria = ?, Alergenos = ?,
-                    Fecha_Actualizacion = NOW(), Valor_Nutricional = ?";
+                    Fecha_Actualizacion = NOW(), Valor_Nutricional = ? WHERE Id_Producto = ?";
 
         try
         {
@@ -134,6 +134,7 @@ class Producto
             $stmt->bindParam(3, $cat);
             $stmt->bindParam(4, $aler);
             $stmt->bindParam(5, $vn);
+            $stmt->bindParam(6, $id);
             $stmt->execute();
             // Comprobar aquí como devolver si el update es correcto o si es erróneo
             // En principio podría ser así, COMPROBAR
