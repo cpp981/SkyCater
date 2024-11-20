@@ -51,10 +51,10 @@ if (!isset($_SESSION['nombre'])) {
                     <a class="nav-link" href="index.php"><i class="fas fa-dashboard me-1"></i><span>Dashboard</span></a>
                 </li>
                 <li class="nav-item mt-3">
-                    <a class="nav-link" href="listaVuelos.php"><i class="fas fa-plane-departure me-1"></i><span>Vuelos</span></a>
+                    <a class="nav-link" href="inventario.php"><i class="fas fa-clipboard-list me-1"></i><span>Inventario</span></a>
                 </li>
                 <li class="nav-item mt-3">
-                    <a class="nav-link" href="inventario.php"><i class="fas fa-clipboard-list me-1"></i><span>Inventario</span></a>
+                    <a class="nav-link" href="listaVuelos.php"><i class="fas fa-plane-departure me-1"></i><span>Vuelos</span></a>
                 </li>
                 <li class="nav-item mt-3">
                     <a class="nav-link" href="pedido.php"><i class="fas fa-truck-fast me-1"></i><span>Pedidos</span></a>

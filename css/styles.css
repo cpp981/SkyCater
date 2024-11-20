@@ -206,12 +206,26 @@ body.dark-mode {
 .indi {
     color: #003262;
 }
+.indi-vuelos{
+    color: #003262;
+    max-width: 250px;
+    width: 240px;
+    height: 10vh;
+}
+
+.indi-vuelos > .valor-indi-vuelo{
+    font-size: 2.2em;
+}
 
 .indi-pedidos{
     color: #003262;
     max-width: 250px;
     width: 240px;
-    height: 55%;
+    height: 10vh;
+}
+
+.indi-pedidos > .valor-indi-pedido{
+    font-size: 2.2em;
 }
 
 body.dark-mode .login-container {
