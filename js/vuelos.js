@@ -1,4 +1,12 @@
 document.addEventListener('DOMContentLoaded', function () {
+    
+        const notyf = new Notyf({
+            position: {
+                x: 'right',  // Alineación horizontal
+                y: 'top'      // Alineación vertical en la parte superior
+            }
+        });
+        
     const tableOptions = {
         dom: 'frtip',  // Estructura de los elementos (filtro, tabla, paginación)
         responsive: true,
@@ -113,6 +121,31 @@ document.addEventListener('DOMContentLoaded', function () {
                     console.error('Error al cargar detalles:', error);
                 }
             });
+        }
+    });
+
+    // Petición para los valores cards
+    $.ajax({
+        url: '../src/indiVuelos.php',
+        type: 'GET',
+        dataType: 'json',
+        success: function(response) {
+            if (response.success) {
+                 // Accedemos a los datos que necesitamos desde la respuesta
+                 const gestionados = response.data.vuelos_gestionados[0].Num_Vuelos_Gestionados;
+                 const sinGestionar = response.data.vuelos_sin_gestionar[0].Num_Vuelos_Gestionados;
+ 
+                 // Actualizar las cards en el frontend con los datos recibidos
+                 $('#card-gestionados').text(gestionados);
+                 $('#card-sin-gestionar').text(sinGestionar);
+
+            } else {
+                notyf.error('Error en la respuesta:', response.error);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            // Manejar errores en la solicitud AJAX
+            notyf.error('Error en la solicitud AJAX:', textStatus, errorThrown);
         }
     });
 

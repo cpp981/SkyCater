@@ -68,4 +68,34 @@ class Vuelo {
             throw new Exception(Messages::LOAD_DATA_ERROR);
         }
     }
+
+    public function getTotalVuelosGestionados()
+    {
+        $query = "SELECT count(*) AS 'Num_Vuelos_Gestionados' FROM Vuelo WHERE Id_Estado = 2";
+        try
+        {
+            $stmt = $this->pdo->prepare($query);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+        catch(PDOException $e)
+        {
+            throw new Exception(Messages::LOAD_DATA_ERROR);
+        }
+    }
+
+    public function getTotalVuelosSinGestionar()
+    {
+        $query = "SELECT count(*) AS 'Num_Vuelos_Gestionados' FROM Vuelo WHERE Id_Estado = 1";
+        try
+        {
+            $stmt = $this->pdo->prepare($query);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+        catch(PDOException $e)
+        {
+            throw new Exception(Messages::LOAD_DATA_ERROR);
+        }
+    }
 }

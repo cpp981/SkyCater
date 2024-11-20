@@ -49,10 +49,10 @@ if (!isset($_SESSION['nombre'])) {
                     <a class="nav-link" href="index.php"><i class="fas fa-dashboard me-1"></i><span>Dashboard</span></a>
                 </li>
                 <li class="nav-item mt-3">
-                    <a class="nav-link" href="listaVuelos.php"><i class="fas fa-plane-departure me-1"></i><span>Vuelos</span></a>
+                    <a class="nav-link" href="inventario.php"><i class="fas fa-clipboard-list me-1"></i><span>Inventario</span></a>
                 </li>
                 <li class="nav-item mt-3">
-                    <a class="nav-link" href="inventario.php"><i class="fas fa-clipboard-list me-1"></i><span>Inventario</span></a>
+                    <a class="nav-link" href="listaVuelos.php"><i class="fas fa-plane-departure me-1"></i><span>Vuelos</span></a>
                 </li>
                 <li class="nav-item mt-3">
                     <a class="nav-link" href="pedido.php"><i class="fas fa-truck-fast me-1"></i><span>Pedidos</span></a>
@@ -85,13 +85,13 @@ if (!isset($_SESSION['nombre'])) {
 
                 <!-- Primer contenedor de tarjetas (pedidos completados y pendientes) -->
                 <div class="d-flex align-items-center justify-content-center mb-4">
-                    <div class="card bg-success me-2 p-3 mb-5 indi-pedidos text-center rounded shadow">
+                    <div class="card bg-success me-2  mb-5 indi-pedidos text-center rounded shadow">
                         <p><i class="fas fa-truck-fast me-1"></i>Pedidos Completados</p>
-                        <p class="text-center fw-bold" style="font-size: 2.5em;">50</p>
+                        <p class="text-center fw-bold valor-indi-pedido">50</p>
                     </div>
-                    <div class="card bg-warning p-3 me-2 mb-5 indi-pedidos text-center rounded shadow">
+                    <div class="card bg-warning me-2 mb-5 indi-pedidos text-center rounded shadow">
                         <p><i class="fas fa-circle-exclamation me-1"></i>Total Pedidos Pendientes</p>
-                        <p class="text-center fw-bold" style="font-size: 2.5em;">20</p>
+                        <p class="text-center fw-bold valor-indi-pedido">20</p>
                     </div>
                 </div>
 
