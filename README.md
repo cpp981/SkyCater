@@ -6,7 +6,7 @@
 
 ## Características
 
-- **Roles de Usuario**:
+- **Roles de Usuario**: (No incluido en pre-proyecto, se incluirá en la aplicación si el tiempo es suficiente).
   - **Trabajador de la Aerolínea**: Acceso completo a la aplicación, con la capacidad de gestionar productos, visualizar pedidos y acceder a informes.
   - **Proveedor**: Acceso restringido a sus propios pedidos y la capacidad de dar de alta nuevos productos en el inventario.
 
