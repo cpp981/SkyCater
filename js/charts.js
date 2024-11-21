@@ -36,7 +36,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 },
                 options: {
                     font: {
-                        size: 10
+                        size: 10,
+                        responsive: true
                     }
                 }
             });
@@ -78,6 +79,8 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    var bgColor = '#E6A817';
+    var colorClaro = lightenColor(bgColor, 0.4);
     var ctx3 = document.getElementById('chart3').getContext('2d');
     var chart3 = new Chart(ctx3, {
         type: 'bar',
@@ -86,7 +89,9 @@ document.addEventListener('DOMContentLoaded', function () {
             datasets: [{
                 label: 'Pedidos',
                 data: [50, 60, 70, 80],
-                backgroundColor: '#E6A817',
+                backgroundColor: colorClaro,
+                borderColor: bgColor,
+                borderWidth: 2 
             }]
         }
     });
@@ -137,7 +142,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 data: [50, 60, 70, 80],
                 borderColor: bgColor,
                 backgroundColor: colorClaro,
-                fill: true
+                borderWidth: 2
             }]
         }
     });

@@ -1,5 +1,6 @@
 <?php
 require_once '../src/session.php';
+require_once '../src/timeSince.php';
 if (!isset($_SESSION['nombre'])) {
     header('Location:login.html');
     exit();
@@ -41,9 +42,13 @@ if (!isset($_SESSION['nombre'])) {
                 <a class="navbar-brand">
                     <img src="../img/LogoMenu2.png" alt="Logo" class="rounded img-fluid logo-menu">
                     <hr class="hr-custom w-75 mx-auto mt-3">
-                    <p class="text-white text-center mt-2"><i
-                            class="fas fa-user text-white me-1"></i><?php echo $_SESSION['nombre'] ?></p>
                 </a>
+            </div>
+            <!-- Sección del usuario -->
+            <div class="user-info d-flex justify-content-center align-items-center">
+                <i class="fas fa-user text-white me-1 user-icon" data-bs-toggle="tooltip" data-bs-html="true" data-bs-placement="left"
+                    title="Usuario: <?php echo $_SESSION['nombre'];?> Conectado desde: <?php echo time_since($_SESSION['session_start_time']); ?>"></i>
+                <p class="text-white text-center mt-2 mb-0 user-name"><?php echo $_SESSION['nombre']; ?></p>
             </div>
             <ul class="nav flex-column mt-5 justify-content-center align-content-between">
                 <li class="nav-item mt-5">
@@ -82,9 +87,9 @@ if (!isset($_SESSION['nombre'])) {
             </nav>
 
             <!-- Contenedor de fondo con imagen -->
-            
+
             <div class="custom-container-fondo position-relative">
-               <img src="../img/SkyCaterPlane.png" class="custom-bg-image">
+                <img src="../img/SkyCaterPlane.png" class="custom-bg-image">
                 <div id="containerTablaVuelos" class="d-flex flex-column align-items-center position-relative">
                     <div class="text-center" style="color: #003262;">
                         <h2>Listado de Vuelos</h2>
@@ -98,49 +103,49 @@ if (!isset($_SESSION['nombre'])) {
                                 <p id="card-sin-gestionar" class="text-center fw-bold valor-indi-vuelo">20</p>
                             </div>
                             <div class="d-flex align-items-center justify-content-center mb-4">
-                            <div class="card me-2 mb-4 indi-vuelos text-center rounded shadow">
-                                <p><i class="fas fa-plane-departure me-1"></i>Próximo Vuelo</p>
-                                <p id="card-gestionados" class="text-center fw-bold valor-indi-vuelo">50</p>
+                                <div class="card me-2 mb-4 indi-vuelos text-center rounded shadow">
+                                    <p><i class="fas fa-plane-departure me-1"></i>Próximo Vuelo</p>
+                                    <p id="card-gestionados" class="text-center fw-bold valor-indi-vuelo">50</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- Contenedor de la tabla -->
-            <div class="custom-contenedor-dataTable flex-grow-1 w-75">
-                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                    <table id="tablaVuelos" class="table table-striped rounded shadow custom-table">
-                        <thead>
-                            <tr>
-                                <th class="centered cabecera"></th>
-                                <th class="centered cabecera"></th>
-                                <th class="centered cabecera"></th>
-                                <th class="centered cabecera"></th>
-                                <th class="centered cabecera"></th>
-                                <th class="centered cabecera"></th>
-                                <th class="centered cabecera"></th>
-                            </tr>
-                        </thead>
-                        <tbody id="tBodyVuelos">
-                            <!-- Datos de ejemplo -->
-                        </tbody>
-                    </table>
+                <!-- Contenedor de la tabla -->
+                <div class="custom-contenedor-dataTable flex-grow-1 w-75">
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                        <table id="tablaVuelos" class="table table-striped rounded shadow custom-table">
+                            <thead>
+                                <tr>
+                                    <th class="centered cabecera"></th>
+                                    <th class="centered cabecera"></th>
+                                    <th class="centered cabecera"></th>
+                                    <th class="centered cabecera"></th>
+                                    <th class="centered cabecera"></th>
+                                    <th class="centered cabecera"></th>
+                                    <th class="centered cabecera"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tBodyVuelos">
+                                <!-- Datos de ejemplo -->
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
+
+
         </div>
-
-
-    </div>
-    <div class="foot d-flex justify-content-center align-items-end mt-5">
-        <footer class="fixed-bottom text-center">
-            <p>© 2024 SkyCater. Todos los derechos reservados.</p>
-        </footer>
-    </div>
-    <!-- JavaScript de Bootstrap -->
-    <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- JS DataTables CDN -->
-    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
+        <div class="foot d-flex justify-content-center align-items-end mt-5">
+            <footer class="fixed-bottom text-center">
+                <p>© 2024 SkyCater. Todos los derechos reservados.</p>
+            </footer>
+        </div>
+        <!-- JavaScript de Bootstrap -->
+        <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- JS DataTables CDN -->
+        <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
 </body>
 
 </html>

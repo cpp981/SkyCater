@@ -78,18 +78,25 @@
     display: block;
 }
 
-/* Estilo para el tooltip */
-.tooltip {
-    position: absolute;
-    background-color: #333;
-    color: #fff;
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-size: 12px;
-    display: none; /* Asegúrate de que está oculto inicialmente */
-    z-index: 99999;
-    white-space: nowrap;
-  }
+/* Personalizar la posición del tooltip */
+.tooltip-inner {
+    background-color: #003262 !important; /* Fondo oscuro */
+    color: #fff !important; /* Texto blanco */
+    border-radius: 5px; /* Bordes redondeados */
+    font-size: 0.875rem;
+    height: 10vh;
+}
+
+/* Ajustar la posición de la flecha */
+.tooltip.bs-tooltip-left .arrow::before {
+    border-left-color: #003262 !important;
+}
+
+/* Si deseas mover el tooltip aún más a la izquierda */
+.tooltip.bs-tooltip-left {
+    margin-left: -35px; /* Ajusta el margen a la izquierda */
+}
+
 
 .login-page {
     position: relative;
@@ -305,22 +312,24 @@ body.dark-mode .login-container {
     color:#003262 !important;
 }
 
-/* Estilo para el contenedor de fondo con imagen */
+/* Ajuste del contenedor */
 .custom-container-fondo {
     position: relative;
     z-index: 0; /* Fondo detrás del contenido */
     overflow: hidden;
+    min-height: 100vh; /* Altura mínima: ocupa toda la ventana */
 }
 
+/* Ajuste de la imagen de fondo */
 .custom-bg-image {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: 25%;
+    object-fit: cover; /* Asegura que la imagen siempre cubra el área */
     opacity: 0.18; /* Transparencia de la imagen */
-    z-index: -1; /* Imagen siempre detrás del contenido */
+    z-index: -2; /* Imagen siempre detrás del contenido */
 }
 
 /* Centrado de la tabla con margen explícito */

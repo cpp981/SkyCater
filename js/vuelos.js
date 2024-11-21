@@ -67,9 +67,17 @@ document.addEventListener('DOMContentLoaded', function () {
     };
     
     const tablaVuelos = $('#tablaVuelos').DataTable(tableOptions);
-    
 
     let expandedRow = null; // Rastrea la fila actualmente desplegada
+
+    // Manejador para el botón "Gestionar"
+    $('#tablaVuelos').on('click', '.manage', function () {
+        var id = $(this).data('id');  // Recuperamos el id del vuelo
+        var url = 'vuelos.php/gestion?id=' + id;  // Construimos la URL con el parámetro 'id'
+        
+        // Redirigimos a la URL
+        window.location.href = url;
+    });
 
     // Manejador para el botón "Detalles"
     $('#tablaVuelos tbody').on('click', 'button.details', function () {

@@ -1,8 +1,41 @@
 document.addEventListener('DOMContentLoaded', function () {
-    //jQuery para menú desplegable
+    // jQuery para menú desplegable
     $('#sidebarToggle').on('click', function () {
-        //$('#sidebar').toggle(350, 'linear');
         $('#sidebar').toggleClass('sidebar-collapsed');
+        // Verificar si la sidebar está colapsada y activar/desactivar tooltips
+        toggleTooltips();
+    });
+
+    // Inicializamos o desactivamos los tooltips manualmente dependiendo del estado de la sidebar
+    function toggleTooltips() {
+        if ($('#sidebar').hasClass('sidebar-collapsed')) {
+            // Solo inicializar los tooltips si la sidebar está colapsada
+            $('[data-bs-toggle="tooltip"]').each(function() {
+                new bootstrap.Tooltip(this); // Crear la instancia del tooltip solo si la sidebar está colapsada
+                // Restauramos el atributo title al tooltip para evitar que se vea el tooltip nativo
+                $(this).attr('title', $(this).data('bs-original-title'));
+            });
+        } else {
+            // Desactivamos los tooltips si la sidebar no está colapsada
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            tooltipTriggerList.map(function (tooltipTriggerEl) {
+                var tooltip = bootstrap.Tooltip.getInstance(tooltipTriggerEl); // Obtener instancia del tooltip
+                if (tooltip) {
+                    tooltip.dispose(); // Eliminar tooltip si ya está inicializado
+                }
+                // Guardamos el title original antes de eliminarlo y lo removemos para evitar el tooltip nativo
+                var title = $(tooltipTriggerEl).attr('title');
+                $(tooltipTriggerEl).data('bs-original-title', title).removeAttr('title');
+            });
+        }
+    }
+
+    // Ejecutar al cargar la página para manejar el estado inicial de la sidebar
+    toggleTooltips();
+
+    // Al cambiar de página, volvemos a verificar si la sidebar está colapsada
+    $(window).on('beforeunload', function () {
+        toggleTooltips(); // Llamar a la función para asegurarse de que los tooltips están correctamente gestionados.
     });
 
     $(document).ready(function () {
@@ -27,7 +60,20 @@ document.addEventListener('DOMContentLoaded', function () {
             // Agregamos la clase 'active' solo al item que fue clickeado
             $(this).parent('.nav-item').addClass('active');
         });
+
+        // Solo mostrar el tooltip cuando la sidebar esté colapsada
+        $('.user-icon').hover(function () {
+            if ($('#sidebar').hasClass('sidebar-collapsed')) {
+                // Mostrar el tooltip cuando la sidebar está colapsada
+                $(this).tooltip('show');
+            }
+        }, function () {
+            // Ocultar el tooltip cuando el ratón se va
+            $(this).tooltip('hide');
+        });
     });
+
+
 
     //Antes de cerrar la sesión, pide confirmación.
     $('#close').click(function () {

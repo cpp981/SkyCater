@@ -12,10 +12,10 @@ class Vuelo {
         $this->pdo = $conexion->getPdo();
     }
 
-    //Obtener los Vuelo
+    //Obtener los Vuelos
     public function ObtenerVuelos()
     {
-        $query = "SELECT v.Numero_Vuelo, vp.Origen, vp.Destino, MAX(vp.Fecha_Salida) AS Fecha_Salida, 
+        $query = "SELECT v.Id_Vuelo, v.Numero_Vuelo, vp.Origen, vp.Destino, MAX(vp.Fecha_Salida) AS Fecha_Salida, 
         MAX(vp.Fecha_Llegada) AS Fecha_Llegada, ev.Estado 
         FROM Vuelo v 
         INNER JOIN Vuelo_Pasajero vp ON v.Id_Vuelo = vp.Id_Vuelo 
@@ -32,6 +32,7 @@ class Vuelo {
         }
     }
 
+    // Cuenta los pasajeros que hay en un vuelo
     public function contadorPasajerosVuelo($numVuelo)
     {
         $query = "SELECT COUNT(Id_Pasajero) AS 'Num_Pasajeros' FROM Vuelo_Pasajero AS vp 
@@ -50,6 +51,7 @@ class Vuelo {
         }
     }
 
+    // Cuenta los pasajeros con intolerancias alimentarias en un vuelo
     public function contadorPasajerosIntolerancias($numVuelo)
     {
         $query = "SELECT COUNT(vp.Id_Pasajero) AS Intolerancias FROM Vuelo_Pasajero AS vp 
@@ -69,6 +71,7 @@ class Vuelo {
         }
     }
 
+    // Cuenta el total de vuelos ya gestionados
     public function getTotalVuelosGestionados()
     {
         $query = "SELECT count(*) AS 'Num_Vuelos_Gestionados' FROM Vuelo WHERE Id_Estado = 2";
@@ -84,6 +87,7 @@ class Vuelo {
         }
     }
 
+    // Cuenta el total de vuelos sin gestionar
     public function getTotalVuelosSinGestionar()
     {
         $query = "SELECT count(*) AS 'Num_Vuelos_Gestionados' FROM Vuelo WHERE Id_Estado = 1";

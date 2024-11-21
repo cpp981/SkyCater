@@ -68,10 +68,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 searchable: false, // Deshabilitamos la búsqueda en esta columna
                 render: function (data, type, row) {
                     // Botón con icono de Font Awesome
-                    return `<button id="borraProd" class="btn btn-danger btn-sm delete-row icon-button" data-id="${row[0]}" data-tooltip="Borrar Producto">
+                    return `<button id="borraProd" class="btn btn-danger btn-sm delete-row icon-button" data-id="${row[0]}" 
+                                data-bs-toggle="tooltip" data-bs-html="true" data-bs-placement="left" title="Borrar Producto">
                                 <i class="fas fa-trash-can"></i>
                             </button>
-                            <button id="editProd" class="btn btn-warning btn-sm text-white icon-button" data-id="${row[0]}" data-tooltip="Editar Producto">
+                            <button id="editProd" class="btn btn-warning btn-sm text-white icon-button" data-id="${row[0]}"
+                                    data-bs-toggle="tooltip" data-bs-html="true" data-bs-placement="left" title="Editar Producto">
                                 <i class="fas fa-pencil"></i>
                             </button>`;
                 }
