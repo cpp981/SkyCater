@@ -31,7 +31,9 @@ if (!isset($_SESSION['nombre'])) {
     <!--Js y Css -->
     <script src="../js/charts.js"></script>
     <script src="../js/sideBar.js"></script>
+    <script src="../js/colorUtils.js"></script>
     <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/responsive.css">
 </head>
 
 <body class="d-flex flex-column">

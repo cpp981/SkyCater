@@ -1,0 +1,203 @@
+/* RESPONSIVE */
+/* Media queries para pantallas pequeñas */
+@media (max-width: 768px) {
+    /* Ajustar el sidebar */
+    .sidebar {
+        position: fixed;
+        width: 100%;
+        height: auto;
+        top: 0;
+        left: 0;
+        z-index: 1050;
+        display: none;
+        background-color: #003262;
+    }
+
+    .sidebar.active {
+        display: block; /* Muestra el sidebar cuando se activa */
+    }
+
+    .sidebar .nav-item {
+        margin: 15px 0;
+        text-align: center;
+    }
+
+    /* Botón de toggle para el sidebar */
+    #sidebarToggle {
+        display: block;
+        z-index: 1100;
+        position: fixed;
+        top: 10px;
+        left: 10px;
+    }
+
+    /* Ajustar el contenido principal */
+    .super {
+        flex-direction: column;
+    }
+
+    .flex-grow-1 {
+        margin-top: 70px;
+        padding: 0 15px;
+    }
+
+    /* Tarjetas */
+    .card {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    /* Dashboard y gráficos */
+    .dash {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+
+    canvas {
+        width: 100% !important;
+        height: auto !important;
+    }
+
+    /* Ajustar textos */
+    .indi h1 {
+        font-size: 3rem;
+    }
+
+    .indi p {
+        font-size: 1rem;
+    }
+
+    /* Footer */
+    footer {
+        font-size: 0.9rem;
+        padding: 10px 0;
+    }
+}
+
+/* Media queries para pantallas ultra pequeñas */
+@media (max-width: 576px) {
+    .flex-grow-1 {
+        margin-top: 60px;
+    }
+
+    .indi h1 {
+        font-size: 2.5rem;
+    }
+
+    .indi p {
+        font-size: 0.9rem;
+    }
+
+    canvas {
+        height: 250px !important;
+    }
+
+    footer {
+        font-size: 0.8rem;
+    }
+}
+
+/* Sidebar colapsado (ajuste adicional para móviles y pantallas grandes) */
+@media (max-width: 768px) {
+    .sidebar-collapsed {
+        width: 50px; /* Mantiene visibles los iconos */
+        display: block;
+        transition: width 0.35s linear;
+    }
+
+    .sidebar-collapsed .nav-item span {
+        display: none; /* Oculta los textos */
+    }
+
+    .sidebar-collapsed .nav-item i {
+        font-size: 1.5rem;
+        text-align: center;
+    }
+}
+
+
+/* Media queries para pantallas pequeñas (móviles y tablets) */
+@media (max-width: 768px) {
+    /* Ajustes para los botones en #session */
+    #session {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch; /* Los botones se ajustan al contenedor */
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    #session .btn {
+        width: 100%;  /* Los botones ocupan el 100% del ancho */
+        margin-top: 10px;
+        text-align: center; /* Centrar texto en botones */
+    }
+
+    /* Ajustar los botones de Añadir producto, Exportar a PDF, Refrescar la tabla */
+    #addProd, #exportPdf, #refrescarTabla {
+        width: 100%;  /* Los botones ocupan el 100% del ancho */
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    /* Ajuste de la tabla para que no se corte y la paginación sea accesible */
+    #contenedorDataTable {
+        width: 100% !important; /* Asegurar que la tabla ocupe todo el ancho disponible */
+        max-height: 500px; /* Ajustar altura para pantallas pequeñas */
+        overflow-y: auto; /* Agregar barra de desplazamiento vertical si es necesario */
+        margin-top: 20px;
+    }
+
+    #tablaProductos {
+        width: 100% !important;  /* Asegurar que la tabla no se desborde */
+        font-size: 0.85rem; /* Reducir el tamaño de la fuente */
+        margin-top: 10px;
+        overflow-x: auto; /* Permitir desplazamiento horizontal si es necesario */
+    }
+
+    /* Asegurarnos de que los botones de la paginación se ajusten bien */
+    .pagination > li > .page-link {
+        background-color: #003262 !important;
+        border: 1px solid !important;
+        border-radius: 5px !important;
+        margin-right: 5px !important;
+        color: #ffffff !important;
+        padding: 5px 10px;
+    }
+
+    .pagination {
+        font-size: 0.85rem; /* Reducir el tamaño de los botones de paginación */
+    }
+
+    /* Ajuste del contenedor de la paginación para que no se desborde */
+    #tablaProductos_wrapper .dataTables_paginate {
+        text-align: center;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    /* Estilo de la cabecera de la tabla */
+    .cabecera {
+        color: #003262 !important;
+    }
+}
+
+/* Media queries para pantallas aún más pequeñas (móviles) */
+@media (max-width: 576px) {
+    /* Ajuste de la tabla en pantallas más pequeñas */
+    #tablaProductos {
+        font-size: 0.8rem; /* Asegura que el tamaño de fuente sea adecuado */
+        margin-top: 5px;
+    }
+
+    /* Ajustes adicionales para la paginación */
+    .pagination > li > .page-link {
+        padding: 5px 8px;
+        font-size: 0.75rem; /* Reducir el tamaño de los botones */
+    }
+
+    #tablaProductos_wrapper .dataTables_paginate {
+        font-size: 0.75rem;
+    }
+}
+

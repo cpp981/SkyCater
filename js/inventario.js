@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     // Configuración de DataTable con AJAX
     const tableOptions = {
+        responsive: true,
         dom: 'frtip', // Esto define la estructura y dónde se mostrarán los botones
         buttons: [
             {
