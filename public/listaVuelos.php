@@ -28,6 +28,7 @@ if (!isset($_SESSION['nombre'])) {
     <!-- css DataTables CDN -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/responsive.css">
     <script type="text/javascript" src="../js/vuelos.js"></script>
     <script type="text/javascript" src="../js/sideBar.js"></script>
 </head>
@@ -88,13 +89,18 @@ if (!isset($_SESSION['nombre'])) {
                     <div class="text-center" style="color: #003262;">
                         <h2>Listado de Vuelos</h2>
                         <div class="d-flex align-items-center justify-content-center mb-4">
-                            <div class="card bg-success me-2 mb-5 indi-vuelos text-center rounded shadow">
+                            <div class="card me-2 mb-5 indi-vuelos text-center rounded shadow">
                                 <p><i class="fas fa-tasks me-1"></i>Vuelos Completados</p>
                                 <p id="card-gestionados" class="text-center fw-bold valor-indi-vuelo">50</p>
                             </div>
-                            <div class="card bg-warning me-2 mb-5 indi-vuelos text-center rounded shadow">
+                            <div class="card me-2 mb-5 indi-vuelos text-center rounded shadow">
                                 <p><i class="fas fa-hourglass-half me-1"></i>Vuelos Pendientes</p>
                                 <p id="card-sin-gestionar" class="text-center fw-bold valor-indi-vuelo">20</p>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-center mb-4">
+                            <div class="card me-2 mb-4 indi-vuelos text-center rounded shadow">
+                                <p><i class="fas fa-plane-departure me-1"></i>Próximo Vuelo</p>
+                                <p id="card-gestionados" class="text-center fw-bold valor-indi-vuelo">50</p>
                             </div>
                         </div>
                     </div>

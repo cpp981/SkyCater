@@ -31,6 +31,7 @@ if (!isset($_SESSION['nombre'])) {
     <!-- Script de Notyf -->
     <script src="https://cdn.jsdelivr.net/npm/notyf/notyf.min.js"></script>
     <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/responsive.css">
     <script type="text/javascript" src="../js/sideBar.js"></script>
     <script type="text/javascript" src="../js/inventario.js"></script>
 </head>

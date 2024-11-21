@@ -28,6 +28,7 @@ if (!isset($_SESSION['nombre'])) {
     <!-- css DataTables CDN -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/responsive.css">
     <script type="text/javascript" src="../js/sideBar.js"></script>
     <script type="text/javascript" src="../js/pedidos.js"></script>
 </head>
