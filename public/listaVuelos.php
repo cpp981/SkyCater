@@ -88,7 +88,7 @@ if (!isset($_SESSION['nombre'])) {
 
             <!-- Contenedor de fondo con imagen -->
 
-            <div class="custom-container-fondo position-relative">
+            <div class="custom-container-fondo position-relative container-fluid">
                 <img src="../img/SkyCaterPlane.png" class="custom-bg-image">
                 <div id="containerTablaVuelos" class="d-flex flex-column align-items-center position-relative">
                     <div class="text-center" style="color: #003262;">
@@ -112,11 +112,12 @@ if (!isset($_SESSION['nombre'])) {
                     </div>
                 </div>
                 <!-- Contenedor de la tabla -->
-                <div class="custom-contenedor-dataTable flex-grow-1 w-75">
+                <div class="flex-grow-1 d-flex flex-column justify-content-center container-fluid contenedorDataTable">
                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                        <table id="tablaVuelos" class="table table-striped rounded shadow custom-table">
+                        <table id="tablaVuelos" class="table table-striped rounded shadow dataTable no-footer">
                             <thead>
                                 <tr>
+                                    <th></th> <!-- Columna oculta para el campo Id_Vuelo -->
                                     <th class="centered cabecera"></th>
                                     <th class="centered cabecera"></th>
                                     <th class="centered cabecera"></th>
@@ -133,7 +134,6 @@ if (!isset($_SESSION['nombre'])) {
                     </div>
                 </div>
             </div>
-
 
         </div>
         <div class="foot d-flex justify-content-center align-items-end mt-5">

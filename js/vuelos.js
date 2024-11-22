@@ -1,12 +1,12 @@
 document.addEventListener('DOMContentLoaded', function () {
-    
-        const notyf = new Notyf({
-            position: {
-                x: 'right',  // Alineación horizontal
-                y: 'top'      // Alineación vertical en la parte superior
-            }
-        });
-        
+
+    const notyf = new Notyf({
+        position: {
+            x: 'right',  // Alineación horizontal
+            y: 'top'      // Alineación vertical en la parte superior
+        }
+    });
+
     const tableOptions = {
         dom: 'frtip',  // Estructura de los elementos (filtro, tabla, paginación)
         responsive: true,
@@ -18,28 +18,44 @@ document.addEventListener('DOMContentLoaded', function () {
         columnDefs: [
             {
                 className: "centered",
-                targets: [0, 1, 2, 3, 4, 5], // Definir qué columnas deben ser centradas
-                searchable: true, // Deshabilita búsqueda en estas columnas
-                orderable: true   // Deshabilita el orden en estas columnas
+                targets: [0, 1, 2, 3, 4, 5], // Define qué columnas deben ser centradas
+                searchable: true,
+                orderable: true
             },
             {
                 targets: 6,  // La columna de "Acciones"
                 orderable: false,
-                searchable: false  // Deshabilita búsqueda en esta columna
+                searchable: false,
+            },
+            {
+                targets: 0,  // Columna del `id` (oculta)
+                visible: false, // Oculta la columna de `id`
+                searchable: false,
+                orderable: false
             }
         ],
         columns: [
+            { title: "Id" },               // Columna oculta (id)
             { title: "Vuelo" },
             { title: "Origen" },
             { title: "Destino" },
             { title: "Salida" },
             { title: "Llegada" },
-            { title: "Estado" },
+            {
+                title: "Estado",
+                render: function (data, type, row) {
+                    const estado = row[6]; // Valor de la columna "Estado"
+                    const isPendiente = estado === "Pendiente";
+                    const badgeClass = isPendiente ? "badge badge-warning text-dark" : "badge badge-success text-white"; // Añadir texto visible
+                    return `<span class="badge ${badgeClass}" style="font-size: 0.9em;">${estado}</span>`;
+                }
+            },
             {
                 title: "Acciones",
                 orderable: false,
                 searchable: false,
                 render: function (data, type, row) {
+                    // El `id` está en el índice 0, aunque esté oculto
                     return `
                         <button class="details btn btn-sm btn-primary text-white" data-id="${row[0]}">
                             <i class="fas fa-circle-info"></i> Detalles
@@ -65,16 +81,17 @@ document.addEventListener('DOMContentLoaded', function () {
             infoFiltered: "(filtrados desde _MAX_ registros totales)"
         },
     };
-    
+
     const tablaVuelos = $('#tablaVuelos').DataTable(tableOptions);
+
 
     let expandedRow = null; // Rastrea la fila actualmente desplegada
 
     // Manejador para el botón "Gestionar"
     $('#tablaVuelos').on('click', '.manage', function () {
         var id = $(this).data('id');  // Recuperamos el id del vuelo
-        var url = 'vuelos.php/gestion?id=' + id;  // Construimos la URL con el parámetro 'id'
-        
+        var url = 'detallesVuelo.php?id=' + id;  // Construimos la URL con el parámetro 'id'
+
         // Redirigimos a la URL
         window.location.href = url;
     });
@@ -137,21 +154,21 @@ document.addEventListener('DOMContentLoaded', function () {
         url: '../src/indiVuelos.php',
         type: 'GET',
         dataType: 'json',
-        success: function(response) {
+        success: function (response) {
             if (response.success) {
-                 // Accedemos a los datos que necesitamos desde la respuesta
-                 const gestionados = response.data.vuelos_gestionados[0].Num_Vuelos_Gestionados;
-                 const sinGestionar = response.data.vuelos_sin_gestionar[0].Num_Vuelos_Gestionados;
- 
-                 // Actualizar las cards en el frontend con los datos recibidos
-                 $('#card-gestionados').text(gestionados);
-                 $('#card-sin-gestionar').text(sinGestionar);
+                // Accedemos a los datos que necesitamos desde la respuesta
+                const gestionados = response.data.vuelos_gestionados[0].Num_Vuelos_Gestionados;
+                const sinGestionar = response.data.vuelos_sin_gestionar[0].Num_Vuelos_Gestionados;
+
+                // Actualizar las cards en el frontend con los datos recibidos
+                $('#card-gestionados').text(gestionados);
+                $('#card-sin-gestionar').text(sinGestionar);
 
             } else {
                 notyf.error('Error en la respuesta:', response.error);
             }
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             // Manejar errores en la solicitud AJAX
             notyf.error('Error en la solicitud AJAX:', textStatus, errorThrown);
         }

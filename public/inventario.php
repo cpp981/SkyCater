@@ -91,7 +91,7 @@ if (!isset($_SESSION['nombre'])) {
                 <div class="text-center mb-5" style="color: #003262;">
                     <h2>Gestión de Productos</h2>
                 </div>
-                <div id="contenedorDataTable" class="flex-grow-1">
+                <div class="flex-grow-1 contenedorDataTable">
                     <a id="addProd" class="btn btn-success shadow rounded" data-bs-toggle="modal"
                         data-bs-target="#exampleModal">
                         <i class="fas fa-plus"></i> Añadir Producto
