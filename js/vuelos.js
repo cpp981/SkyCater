@@ -55,12 +55,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 orderable: false,
                 searchable: false,
                 render: function (data, type, row) {
-                    // El `id` está en el índice 0, aunque esté oculto
                     return `
-                        <button class="details btn btn-sm btn-primary text-white" data-id="${row[0]}">
-                            <i class="fas fa-circle-info"></i> Detalles
-                        </button>
-                        <button class="manage btn btn-sm btn-success text-white" data-id="${row[0]}">
+                        <button class="manage btn btn-sm btn-success text-white" 
+                                data-id="${row[0]}" 
+                                data-vuelo="${row[1]}">
                             <i class="fas fa-plane-departure"></i> Gestionar
                         </button>`;
                 }
@@ -83,71 +81,22 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     const tablaVuelos = $('#tablaVuelos').DataTable(tableOptions);
-
-
-    let expandedRow = null; // Rastrea la fila actualmente desplegada
-
-    // Manejador para el botón "Gestionar"
-    $('#tablaVuelos').on('click', '.manage', function () {
-        var id = $(this).data('id');  // Recuperamos el id del vuelo
-        var url = 'detallesVuelo.php?id=' + id;  // Construimos la URL con el parámetro 'id'
-
-        // Redirigimos a la URL
-        window.location.href = url;
-    });
-
-    // Manejador para el botón "Detalles"
-    $('#tablaVuelos tbody').on('click', 'button.details', function () {
-        const tr = $(this).closest('tr');
-        const row = tablaVuelos.row(tr);
-        const dataRow = row.data();
-
-        if (row.child.isShown()) {
-            // Si la fila actual ya está desplegada, la ocultamos
-            row.child.hide();
-            tr.removeClass('shown');
-            expandedRow = null; // Resetear la fila desplegada
-        } else {
-            // Si hay otra fila desplegada, la ocultamos
-            if (expandedRow && expandedRow !== row) {
-                expandedRow.child.hide();
-                $(expandedRow.node()).removeClass('shown');
-            }
-
-            // Desplegamos la fila actual
-            row.child(format(dataRow)).show();
-            tr.addClass('shown');
-            expandedRow = row;
-
-            // Cargar detalles del vuelo
-            $.ajax({
-                url: '../src/detalleVuelos.php',
-                method: 'POST',
-                data: { vuelo: dataRow[0] },
-                success: function (data) {
-                    const content = `
-                        <div class="details-row d-flex justify-content-center align-items-center"">
-                            <div class="detail-item">
-                                <div class="card card-details1 shadow w-50">
-                                    <p class="text-center"><strong>Total pasajeros</strong></p>
-                                    <p class="text-center"><strong>${data.pasajeros}</strong></p>
-                                </div>
-                            </div>
-                            <div class="detail-item">
-                                <div class="card shadow w-50">
-                                    <p class="text-center"><strong>Pasajeros con intolerancias</strong></p>
-                                    <p class="text-center"><strong>${data.intolerancias}</strong></p>
-                                </div>
-                            </div>
-                        </div>`;
-                    row.child(format(dataRow) + content).show();
-                },
-                error: function (xhr, status, error) {
-                    console.error('Error al cargar detalles:', error);
-                }
-            });
+  
+    document.addEventListener('click', function (event) {
+        if (event.target.closest('.manage')) {
+            const button = event.target.closest('.manage');
+            const id = button.dataset.id; // Obtén el id del vuelo desde el atributo data-id
+            const vuelo = button.dataset.vuelo; // Obtén el número de vuelo desde el atributo data-vuelo
+    
+            // Guarda el número de vuelo en sessionStorage
+            sessionStorage.setItem('numeroVuelo', vuelo);
+    
+            // Redirige a la página con solo el ID como parámetro GET
+            window.location.href = `detallesVuelo.php?id=${id}`;
         }
     });
+    
+    
 
     // Petición para los valores cards
     $.ajax({

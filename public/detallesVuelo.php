@@ -36,6 +36,8 @@ if (isset($_GET['id'])) {
         <link rel="stylesheet" href="../css/styles.css">
         <link rel="stylesheet" href="../css/responsive.css">
         <script type="text/javascript" src="../js/sideBar.js"></script>
+        <script src="../js/colorUtils.js"></script>
+        <script src="../js/detalleVuelos.js"></script>
     </head>
 
     <body class="d-flex flex-column">
@@ -104,12 +106,14 @@ if (isset($_GET['id'])) {
                 <div class="container-fluid mt-4">
                     <!-- Título y botones -->
                     <div class="text-center mb-4">
-                        <h2>Vuelo <?php echo $_GET['id']; ?> ({{Num_Vuelo}})</h2>
-                        <div class="btn-group" role="group" aria-label="Botones de navegación">
-                            <button type="button" class="btn btn-primary rounded-pill active me-4"
-                                id="detallesBtn"><i class="fas fa-circle-info me-2"></i>Detalles</button>
-                            <button type="button" class="btn btn-light rounded-pill"
-                                id="pasajerosBtn"><i class="fas fa-person me-2"></i>Pasajeros</button>
+                        <h2>Vuelo <?php echo $_GET['id']; ?></h2>
+                        <div class="btn-group mt-1" role="group" aria-label="Botones de navegación">
+                            <button type="button" class="btn btn-primary rounded-pill active me-4" id="detallesBtn"><i
+                                    class="fas fa-circle-info me-2"></i>Detalles</button>
+                            <button type="button" class="btn btn-light rounded-pill" id="pasajerosBtn"><i
+                                    class="fas fa-person me-2"></i>Pasajeros</button>
+                            <a href="listaVuelos.php" class="btn btn-light rounded-pill ms-4"><i
+                                    class="fas fa-arrow-left-long me-2"></i>Volver</a>
                         </div>
                     </div>
 
@@ -132,11 +136,38 @@ if (isset($_GET['id'])) {
                         </div>
 
                         <!-- Columna de la gráfica -->
+                        <!-- Columna de la gráfica -->
                         <div class="col-md-5 text-center">
-                            <h4>Gráfica de información</h4>
-                            <!-- Aquí se cargaría la gráfica de Chart.js -->
-                            <canvas id="flightChart"></canvas>
+                            <h4>Indicadores y gráfica</h4>
+                            <!-- Contenedor de los indicadores -->
+                            <div class="d-flex justify-content-between mb-4">
+                                <!-- Card Indicador 1 -->
+                                <div class="card shadow text-center" style="width: 48%;">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-primary">Indicador 1</h5>
+                                        <p class="card-text fs-4 fw-bold text-dark"></p>
+                                        <p class="text-muted mb-0">Porcentaje de ocupación</p>
+                                    </div>
+                                </div>
+                                <!-- Card Indicador 2 -->
+                                <div class="card shadow text-center" style="width: 48%;">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-success">Indicador 2</h5>
+                                        <p class="card-text fs-4 fw-bold text-dark"></p>
+                                        <p class="text-muted mb-0">Pasajeros con intolerancias</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card de la gráfica -->
+                            <div class="card shadow mb-2">
+                                <div class="card-body">
+                                    <h5 class="card-title">Nº Pasajeros por tipo de asiento</h5>
+                                    <canvas id="flightChart" style="max-height: 300px;"></canvas>
+                                </div>
+                            </div>
                         </div>
+
                     </div>
                 </div>
             </div>

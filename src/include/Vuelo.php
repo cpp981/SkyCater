@@ -102,4 +102,23 @@ class Vuelo {
             throw new Exception(Messages::LOAD_DATA_ERROR);
         }
     }
+
+    // Cuenta el total de pasajeros por Tipo de Asiento en un Vuelo
+    public function getCountAsientoById($idVuelo)
+    {
+        $query = "SELECT Asiento, COUNT(*) AS Cantidad_Pasajeros FROM Vuelo_Pasajero WHERE Id_Vuelo = ?
+                  GROUP BY Asiento";
+        try
+        {
+            $stmt = $this->pdo->prepare($query);
+            $stmt->bindParam(1, $idVuelo);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+        catch(PDOException $e)
+        {
+            throw new Exception(Messages::LOAD_DATA_ERROR);
+        }
+        
+    }
 }
