@@ -36,12 +36,36 @@ document.addEventListener('DOMContentLoaded', function () {
                 targets: 6,
                 searchable: false,
                 orderable: false,
+                targets: 2,
             },
         ],
         "columns": [
             { title: "Nombre" },
             { title: "Categoría" },
-            { title: "Alérgenos" },
+            {
+                title: "Alérgenos",
+                render: function (data, type, row) {
+                    if (type === 'display') {
+                        // Separar los alérgenos por coma y recortar espacios adicionales
+                        const alergenos = data.split(',').map(item => item.trim());
+                        let badgeClass;
+            
+                        // Si es "Ninguno"
+                        if (alergenos.length === 1 && alergenos[0].toLowerCase() === "ninguno") {
+                            badgeClass = "badge-success"; // Clase para "Ninguno"
+                            return `<span class="badge ${badgeClass}">Ninguno</span>`;
+                        } else {
+                            badgeClass = "badge-warning"; // Todos los demás casos serán warning
+                        }
+            
+                        // Crear los badges para cada alérgeno
+                        return alergenos
+                            .map(alergeno => `<span class="badge ${badgeClass}" style="margin-right: 4px;">${alergeno}</span>`)
+                            .join('');
+                    }
+                    return data; // Para otros tipos como ordenamiento o exportación
+                }
+            },
             { title: "Stock" },
             {
                 title: "Fecha últ. actualización",

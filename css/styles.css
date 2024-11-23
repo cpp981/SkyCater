@@ -5,7 +5,7 @@
     color: #000000 !important; /* Texto negro */
     display: block; /* Aseguramos que el enlace ocupe todo el ancho */
     padding-left: 20px; /* Padding para que no quede pegado al borde */
-    padding-right: 50px; /* Padding para que no quede pegado al borde */
+    padding-right: 45px; /* Padding para que no quede pegado al borde */
     border-radius: 0.5em;
     width: 100%; /* Aseguramos que el fondo blanco ocupe todo el ancho */
 }
@@ -31,7 +31,8 @@
 }
 
 .sidebar {
-    width: 175px;
+    width: 180px;
+    flex-shrink: 0;
     height: 100vh;
     max-height: 100vh;
     background-color: #003262;
@@ -47,7 +48,7 @@
 
 /* Estilo cuando el sidebar está colapsado */
 .sidebar-collapsed {
-    width: 50px; /* Ajusta este ancho según el tamaño de los iconos */
+    width: 7vh; /* Ajusta este ancho según el tamaño de los iconos */
     transition: width 0.35s linear;
     overflow: hidden;
 }
@@ -66,7 +67,7 @@
 
 /* Opcional: Ajustar alineación del contenido */
 .sidebar-collapsed .navbar-brand img {
-    width: 50px; /* Cambiar tamaño del logo si es necesario */
+    width: 55px; /* Cambiar tamaño del logo si es necesario */
 }
 
 .sidebar-collapsed p {
@@ -207,6 +208,26 @@ body.dark-mode {
     background-color: #333333;
 }
 
+/* Aseguramos que solo los botones dentro de .btn-group para los botones de detalles/pasajeros se vean afectados */
+.btn-group .btn {
+    border-radius: 20px; /* Botones redondeados */
+    padding: 10px 20px; /* Un poco de padding para hacer los botones más grandes */
+}
+
+/* Estilo para el borde azul del botón no seleccionado */
+.btn-group .btn:not(.active) {
+    border: 2px solid #003262; /* Borde azul oscuro */
+    background-color: white; /* Fondo blanco */
+    color: #003262; /* Texto azul */
+}
+
+/* Estilo para el botón seleccionado (Detalles) */
+.btn-group .btn.active {
+    border: 2px solid #003262; /* Borde azul oscuro */
+    background-color: #003262; /* Fondo azul */
+    color: white; /* Texto blanco */
+}
+
 
 .indi {
     color: #003262;
@@ -245,6 +266,15 @@ body.dark-mode .login-container {
     text-align: left;
 }
 
+/* Lista detalles vuelo */
+.list-group-item {
+    margin: 0; /* Elimina márgenes */
+    padding: 5px 10px; /* Reduce el relleno interno */
+    font-size: 14px; /* Opcional: Ajusta el tamaño de fuente */
+    line-height: 1.2; /* Opcional: Ajusta la altura de línea */
+    width: 100%;
+}
+
 /* ESTILO NOTIFICACIONES NOTYF */
 .notyf > .notyf__toast {
     transform: translateY(35px) !important;  /* Desplaza las notificaciones 20px hacia abajo */
@@ -258,12 +288,16 @@ body.dark-mode .login-container {
 }
 
 /* Evitamos que desborde la tabla y si lo necesita crea un scroll */
-#contenedorDataTable {
+.contenedorDataTable {
     max-height: 710px; /* Ajusta la altura máxima */
     overflow-y: visible; /* Agrega una barra de desplazamiento vertical si es necesario */
     overflow-x: hidden; /* Oculta el desbordamiento horizontal */
     margin-top: -55px;
     width: auto;
+}
+
+.contenedor-tabla-vuelos{
+    width: 5vh;
 }
 
 .table-buttons{
@@ -312,12 +346,34 @@ body.dark-mode .login-container {
     color:#003262 !important;
 }
 
+.badge {
+    display: inline-block !important;
+    background-color: initial !important;
+    border-radius: 0.25rem !important;
+    padding: 0.6em 0.8em !important;
+    font-size: 75% !important;
+    font-weight: 700 !important;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+}
+.badge-warning {
+    color: #212529 !important;
+    background-color: #ffc107 !important;
+}
+.badge-success {
+    color: #fff !important;
+    background-color: #198754 !important;
+}
+
+
 /* Ajuste del contenedor */
 .custom-container-fondo {
     position: relative;
     z-index: 0; /* Fondo detrás del contenido */
     overflow: hidden;
     min-height: 100vh; /* Altura mínima: ocupa toda la ventana */
+    max-width: 200vh;
 }
 
 /* Ajuste de la imagen de fondo */
@@ -336,7 +392,7 @@ body.dark-mode .login-container {
 .custom-contenedor-dataTable {
     display: flex;
     justify-content: center; /* Centra horizontalmente la tabla */
-    width: 100%;
+    width: 55%;
     margin: 0 auto; /* Asegura el centrado horizontal */
     margin-top: -50px; /* Ajusta la posición vertical hacia arriba */
     padding-left: 15px; /* Añade un margen explícito en el lado izquierdo */
@@ -429,6 +485,7 @@ body.dark-mode .login-container {
     border: 1px solid !important;
     border-radius: 5px !important;
     border-color: #ffffff !important;
+    width: 95% !important;
 }
 
 #tablaPedidos{

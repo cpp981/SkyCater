@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function toggleTooltips() {
         if ($('#sidebar').hasClass('sidebar-collapsed')) {
             // Solo inicializar los tooltips si la sidebar está colapsada
-            $('[data-bs-toggle="tooltip"]').each(function() {
+            $('[data-bs-toggle="tooltip"]').each(function () {
                 new bootstrap.Tooltip(this); // Crear la instancia del tooltip solo si la sidebar está colapsada
                 // Restauramos el atributo title al tooltip para evitar que se vea el tooltip nativo
                 $(this).attr('title', $(this).data('bs-original-title'));
@@ -40,17 +40,32 @@ document.addEventListener('DOMContentLoaded', function () {
 
     $(document).ready(function () {
         // Detectamos la URL actual de la página
-        var currentPath = window.location.pathname;
+        var currentUrl = window.location.href;  // URL completa
 
         // Recorremos todos los enlaces del menú
         $('.nav-item .nav-link').each(function () {
             var linkPath = $(this).attr('href');  // Obtenemos el href del enlace
 
             // Si la URL actual coincide con el enlace, agregamos la clase 'active' al item
-            if (currentPath.indexOf(linkPath) !== -1) {
+            if (currentUrl.indexOf(linkPath) !== -1) {
                 $(this).parent('.nav-item').addClass('active'); // Añadimos 'active' al elemento <li> correspondiente
             }
         });
+
+        if ((currentUrl.indexOf('detallesVuelo.php') !== -1 && currentUrl.includes('?id=')) ||
+            (currentUrl.indexOf('pasajerosVuelo.php') !== -1 && currentUrl.includes('?id='))) {
+            // Establecer el fondo blanco, el texto negro y el ícono negro para el "Vuelos"
+            $('.nav-item .nav-link[href="listaVuelos.php"]').css({
+                'background-color': '',  // Eliminar fondo blanco de "Vuelos"
+                'color': ''  // Restaurar el color de texto de "Vuelos"
+            }).find('i').css('color', '');  // Restaurar color del ícono de "Vuelos"
+
+            // Asegurar que el subenlace "Gestión" esté activo
+            $('.nav-item .nav-link[href="gestionarVuelos.php"]').css({
+                'background-color': 'white',  // Fondo blanco para "Gestión"
+                'color': 'black'  // Texto negro para "Gestión"
+            }).find('i').css('color', 'black');  // Ícono negro para "Gestión"
+        }
 
         // Cuando el usuario haga clic en un enlace del menú
         $('.nav-item .nav-link').click(function () {
@@ -72,8 +87,6 @@ document.addEventListener('DOMContentLoaded', function () {
             $(this).tooltip('hide');
         });
     });
-
-
 
     //Antes de cerrar la sesión, pide confirmación.
     $('#close').click(function () {
