@@ -72,7 +72,7 @@ if (isset($_GET['id'])) {
                             <?php if (basename($_SERVER['PHP_SELF']) == 'detallesVuelo.php') { ?>
                                 <li class="nav-item mt-2">
                                     <a class="nav-link active" href="detallesVuelo.php?id=<?php echo $_GET['id']; ?>">
-                                        <i class="fas fa-info-circle me-1"></i><span>Detalles</span>
+                                        <i class="fas fa-gear me-1"></i><span>Gestión</span>
                                     </a>
                                 </li>
                             <?php } ?>
@@ -163,7 +163,7 @@ if (isset($_GET['id'])) {
                             <div class="card shadow mb-2">
                                 <div class="card-body">
                                     <h5 class="card-title">Nº Pasajeros por tipo de asiento</h5>
-                                    <canvas id="flightChart" style="max-height: 300px;"></canvas>
+                                    <canvas id="flightChart" style="max-height: 250px;"></canvas>
                                 </div>
                             </div>
                         </div>

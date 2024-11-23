@@ -34,8 +34,8 @@ if (!isset($_SESSION['nombre'])) {
     <script type="text/javascript" src="../js/sideBar.js"></script>
 </head>
 
-<body style="background-color: #EDEAE0;">
-    <div class="d-flex">
+<body>
+    <div class="super d-flex">
         <div class="sidebar rounded-bottom shadow" id="sidebar">
             <div class="d-flex justify-content-center mt-3">
                 <!-- Logo de la aplicación -->
@@ -46,8 +46,9 @@ if (!isset($_SESSION['nombre'])) {
             </div>
             <!-- Sección del usuario -->
             <div class="user-info d-flex justify-content-center align-items-center">
-                <i class="fas fa-user text-white me-1 user-icon" data-bs-toggle="tooltip" data-bs-html="true" data-bs-placement="left"
-                    title="Usuario: <?php echo $_SESSION['nombre'];?> Conectado desde: <?php echo time_since($_SESSION['session_start_time']); ?>"></i>
+                <i class="fas fa-user text-white me-1 user-icon" data-bs-toggle="tooltip" data-bs-html="true"
+                    data-bs-placement="left"
+                    title="Usuario: <?php echo $_SESSION['nombre']; ?> Conectado desde: <?php echo time_since($_SESSION['session_start_time']); ?>"></i>
                 <p class="text-white text-center mt-2 mb-0 user-name"><?php echo $_SESSION['nombre']; ?></p>
             </div>
             <ul class="nav flex-column mt-5 justify-content-center align-content-between">
@@ -66,86 +67,99 @@ if (!isset($_SESSION['nombre'])) {
                     <a class="nav-link" href="pedido.php"><i class="fas fa-truck-fast me-1"></i><span>Pedidos</span></a>
                 </li>
             </ul>
-            <div class="d-flex justify-content-center align-items-end mt-5" style="height: 270px; margin-left: -25px;">
+            <div class="d-flex justify-content-center align-items-end mt-5">
                 <!-- <a class="nav-link text-white"><i class="fas fa-lg fa-moon"></i> Modo Oscuro</a>-->
             </div>
         </div>
-        <div class="flex-grow-1 d-flex flex-column">
+
+        <!-- Contenido principal -->
+        <div class="flex-grow-1 d-flex flex-column w-100">
+            <!-- Barra superior -->
             <nav class="navbar navbar-light bg-light">
-                <div class="">
-                    <button class="btn border-light" id="sidebarToggle" style="color: #003262"><i
-                            class="fas fa-lg fa-bars"></i> Menú</button>
+                <div>
+                    <button class="btn border-light" id="sidebarToggle" style="color: #003262">
+                        <i class="fas fa-lg fa-bars"></i> Menú
+                    </button>
                 </div>
-                <div id="session" class="ms-auto d-flex justify-content-center align-items-center">
-                    <p class="mx-2" style="color:#003262; line-height: 2.5; margin-bottom: 0;">Bienvenido,</p>
-                    <input type="text" class="form-control d-inline-block w-25" id="inputId"
-                        value="<?php echo $_SESSION['nombre']; ?>" disabled>
-                    <button id="close" class="btn text-white btn-danger">
+                <div id="session" class="ms-auto d-flex align-items-center">
+                    <p class="mx-2" style="color:#003262; margin-bottom: 0;">Bienvenido,</p>
+                    <input type="text" class="form-control w-25" id="inputId" value="<?php echo $_SESSION['nombre']; ?>"
+                        disabled>
+                    <button id="close" class="btn text-white btn-danger ms-2">
                         <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
                     </button>
                 </div>
             </nav>
 
             <!-- Contenedor de fondo con imagen -->
+            <div class="position-relative">
+                <img src="../img/SkyCaterPlane.png" class="custom-bg-image w-100"
+                    style="height: 300px; object-fit: cover;">
+                <div class="overlay"></div>
+            </div>
 
-            <div class="custom-container-fondo position-relative container-fluid">
-                <img src="../img/SkyCaterPlane.png" class="custom-bg-image">
-                <div id="containerTablaVuelos" class="d-flex flex-column align-items-center position-relative">
-                    <div class="text-center" style="color: #003262;">
-                        <h2>Listado de Vuelos</h2>
-                        <div class="d-flex align-items-center justify-content-center mb-4">
-                            <div class="card me-2 mb-5 indi-vuelos text-center rounded shadow">
-                                <p><i class="fas fa-tasks me-1"></i>Vuelos Completados</p>
-                                <p id="card-gestionados" class="text-center fw-bold valor-indi-vuelo">50</p>
-                            </div>
-                            <div class="card me-2 mb-5 indi-vuelos text-center rounded shadow">
-                                <p><i class="fas fa-hourglass-half me-1"></i>Vuelos Pendientes</p>
-                                <p id="card-sin-gestionar" class="text-center fw-bold valor-indi-vuelo">20</p>
-                            </div>
-                            <div class="d-flex align-items-center justify-content-center mb-4">
-                                <div class="card me-2 mb-4 indi-vuelos text-center rounded shadow">
-                                    <p><i class="fas fa-plane-departure me-1"></i>Próximo Vuelo</p>
-                                    <p id="card-gestionados" class="text-center fw-bold valor-indi-vuelo">50</p>
-                                </div>
-                            </div>
+            <div id="containerTablaVuelos" class="d-flex flex-column align-items-center p-4"
+                style="width: 95%; margin: 0 auto;">
+                <!-- Título -->
+                <h1 class="text-center mb-4">Listado de Vuelos</h1>
+
+                <!-- Contenedor de los indicadores -->
+                <div class="d-flex justify-content-between mb-4">
+                    <!-- Card Indicador de Vuelos gestionados -->
+                    <div class="card shadow text-center me-5" style="width: 35vh">
+                        <div class="card-body">
+                            <h5 class="card-title text-success">
+                                <i class="fas fa-plane-departure fa-lg"></i> Vuelos gestionados
+                            </h5>
+                            <p id="card-gestionados" class="card-text fs-4 fw-bold text-dark"></p>
+                        </div>
+                    </div>
+
+                    <!-- Card Indicador de Vuelos pendientes de gestionar -->
+                    <div class="card shadow text-center" style="width: 35vh">
+                        <div class="card-body">
+                            <h5 class="card-title text-warning">
+                                <i class="fas fa-plane-arrival fa-lg"></i> Vuelos pendientes
+                            </h5>
+                            </h5>
+                            <p id="card-sin-gestionar" class="card-text fs-4 fw-bold text-dark"></p>
                         </div>
                     </div>
                 </div>
-                <!-- Contenedor de la tabla -->
-                <div class="flex-grow-1 d-flex flex-column justify-content-center container-fluid contenedorDataTable">
-                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                        <table id="tablaVuelos" class="table table-striped rounded shadow dataTable no-footer">
-                            <thead>
-                                <tr>
-                                    <th></th> <!-- Columna oculta para el campo Id_Vuelo -->
-                                    <th class="centered cabecera"></th>
-                                    <th class="centered cabecera"></th>
-                                    <th class="centered cabecera"></th>
-                                    <th class="centered cabecera"></th>
-                                    <th class="centered cabecera"></th>
-                                    <th class="centered cabecera"></th>
-                                    <th class="centered cabecera"></th>
-                                </tr>
-                            </thead>
-                            <tbody id="tBodyVuelos">
-                                <!-- Datos de ejemplo -->
-                            </tbody>
-                        </table>
-                    </div>
+
+                <!-- Tabla DataTables -->
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <table id="tablaVuelos" class="table table-striped table-bordered ms-5">
+                        <thead>
+                            <tr>
+                                <th class="centered cabecera"></th>
+                                <th class="centered cabecera"></th>
+                                <th class="centered cabecera"></th>
+                                <th class="centered cabecera"></th>
+                                <th class="centered cabecera"></th>
+                                <th class="centered cabecera"></th>
+                                <th class="centered cabecera"></th>
+                                <th class="centered cabecera"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Contenido dinámico de la tabla -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
         </div>
-        <div class="foot d-flex justify-content-center align-items-end mt-5">
-            <footer class="fixed-bottom text-center">
-                <p>© 2024 SkyCater. Todos los derechos reservados.</p>
-            </footer>
-        </div>
-        <!-- JavaScript de Bootstrap -->
-        <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- JS DataTables CDN -->
-        <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
+    </div>
+
+    <footer class="fixed-bottom text-center">
+        <p>© 2024 SkyCater. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
 </body>
 
 </html>

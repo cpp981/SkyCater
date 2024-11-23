@@ -31,7 +31,8 @@
 }
 
 .sidebar {
-    width: 175px;
+    width: 180px;
+    flex-shrink: 0;
     height: 100vh;
     max-height: 100vh;
     background-color: #003262;
@@ -66,7 +67,7 @@
 
 /* Opcional: Ajustar alineación del contenido */
 .sidebar-collapsed .navbar-brand img {
-    width: 50px; /* Cambiar tamaño del logo si es necesario */
+    width: 55px; /* Cambiar tamaño del logo si es necesario */
 }
 
 .sidebar-collapsed p {
@@ -475,6 +476,7 @@ body.dark-mode .login-container {
     border: 1px solid !important;
     border-radius: 5px !important;
     border-color: #ffffff !important;
+    width: 95% !important;
 }
 
 #tablaPedidos{

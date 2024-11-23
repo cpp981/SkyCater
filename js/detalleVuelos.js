@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     // Validar que las claves existan antes de usarlas
                     if (data.pasajeros !== undefined && data.intolerancias !== undefined && Array.isArray(data.asientos)) {
                         // Actualizar los indicadores
-                        $('.card:nth-child(1) .card-text.fs-4').text(data.pasajeros);
+                        $('.card:nth-child(1) .card-text.fs-4').text(`${data.pasajeros} %`);
                         $('.card:nth-child(2) .card-text.fs-4').text(data.intolerancias);
         
                         let asientos = data.asientos;

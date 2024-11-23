@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const tableOptions = {
         dom: 'frtip',  // Estructura de los elementos (filtro, tabla, paginación)
         responsive: true,
+        //autoWidth: false,
+        //scrollX: true,
         ajax: {
             url: "../src/listaVuelos2.php",  // URL del archivo que devuelve los datos
             type: "GET",
@@ -59,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         <button class="manage btn btn-sm btn-success text-white" 
                                 data-id="${row[0]}" 
                                 data-vuelo="${row[1]}">
-                            <i class="fas fa-plane-departure"></i> Gestionar
+                            <i class="fas fa-gears"></i> Gestionar
                         </button>`;
                 }
             }

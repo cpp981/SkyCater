@@ -13,16 +13,19 @@ try {
 
     $numVuelo = $_POST['numeroVuelo'];
     $idVuelo = $_POST['idVuelo'];
+    $capacidad_max = 70;
 
     // Instanciar el objeto Vuelo y obtener los resultados
     $vuelo = new Vuelo();
     $resultNumPasajeros = $vuelo->contadorPasajerosVuelo($numVuelo);
     $resultNumPasajerosIntolerancias = $vuelo->contadorPasajerosIntolerancias($numVuelo);
     $resulGrafica = $vuelo->getCountAsientoById($idVuelo);
+    $porcentaje = ($resultNumPasajeros[0]['Num_Pasajeros'] / $capacidad_max) * 100;
+    $resulPorcentaje = round($porcentaje, 2); // 2 decimales
 
     // Crear el array con los datos
     $detalle_vuelos_tabla = [
-        'pasajeros' => $resultNumPasajeros[0]['Num_Pasajeros'],
+        'pasajeros' => $resulPorcentaje,
         'intolerancias' => $resultNumPasajerosIntolerancias[0]['Intolerancias'],
         'asientos' => $resulGrafica
     ];
