@@ -1,5 +1,37 @@
 document.addEventListener('DOMContentLoaded', function () {
     const numeroVuelo = sessionStorage.getItem('numeroVuelo'); // Recupera el número de vuelo
+     // Recupera los datos del vuelo almacenados en sessionStorage
+     const datosVuelo = JSON.parse(sessionStorage.getItem('datosVuelo'));
+
+     // Verifica si los datos existen y luego actualiza el HTML
+     if (datosVuelo) {
+         $('#numVuelo').html(`<strong>Número de Vuelo:</strong> ${datosVuelo.vueloNumero}`);
+         $('#origen').html(`<strong>Origen:</strong> ${datosVuelo.origen}`);
+         $('#destino').html(`<strong>Destino:</strong> ${datosVuelo.destino}`);
+         
+         // Formatear la fecha de salida
+         const horaSalida = formatDate(datosVuelo.salida);
+         $('#horaSalida').html(`<strong>Hora de salida:</strong> ${horaSalida}`);
+ 
+         // Formatear la fecha de llegada
+         const horaLlegada = formatDate(datosVuelo.llegada);
+         $('#horaLlegada').html(`<strong>Hora de llegada:</strong> ${horaLlegada}`);
+         
+         // Lógica para asignar el estado y las clases de color
+         let estadoClass = '';
+         let estadoTexto = datosVuelo.estado;
+ 
+         if (estadoTexto === 'Pendiente') {
+             estadoClass = 'badge badge-warning';
+         } else if (estadoTexto === 'Gestionado') {
+             estadoClass = 'badge badge-success';
+         }
+ 
+         // Actualiza el estado con la clase correspondiente
+         $('#estado').html(`<strong>Estado:</strong> <span class="${estadoClass}">${estadoTexto}</span>`);
+     } else {
+         console.error("No se encontraron los datos del vuelo en sessionStorage.");
+     }
     const urlParams = new URLSearchParams(window.location.search);
     const vueloId = urlParams.get('id'); // Recupera el id
 
@@ -16,16 +48,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 try {
                     let data = response;  // No hace falta JSON.parse() porque ya es un objeto
                     console.log("Respuesta del servidor:", data);
-        
+
                     // Validar que las claves existan antes de usarlas
                     if (data.pasajeros !== undefined && data.intolerancias !== undefined && Array.isArray(data.asientos)) {
                         // Actualizar los indicadores
                         $('.card:nth-child(1) .card-text.fs-4').text(`${data.pasajeros} %`);
                         $('.card:nth-child(2) .card-text.fs-4').text(data.intolerancias);
-        
+
                         let asientos = data.asientos;
                         let economica = 0, primeraClase = 0, bussiness = 0;
-        
+
                         // Recorremos el array de asientos para asignar las cantidades correspondientes
                         asientos.forEach(function (asiento) {
                             if (asiento.Asiento === 'Económica') {
@@ -36,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 bussiness = asiento.Cantidad_Pasajeros;
                             }
                         });
-        
+
                         console.log("Económica: " + economica);
                         console.log("Primera Clase: " + primeraClase);
                         console.log("Bussiness: " + bussiness);
@@ -96,4 +128,28 @@ document.addEventListener('DOMContentLoaded', function () {
     } else {
         console.error("Número de vuelo no encontrado en sessionStorage.");
     }
+
+    // Función para formatear la fecha al formato dd-mm-yyyy HH:mm
+function formatDate(dateString) {
+    // Verifica que el formato sea correcto antes de convertirlo
+    const date = new Date(dateString);
+    
+    // Verifica si la fecha es válida
+    if (isNaN(date)) {
+        console.error('Fecha inválida:', dateString);
+        return '';
+    }
+
+    // Obtiene el día, mes y año
+    const day = String(date.getDate()).padStart(2, '0'); // Agrega 0 al principio si es un solo dígito
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Los meses empiezan desde 0, por eso sumamos 1
+    const year = date.getFullYear();
+    
+    // Obtiene las horas y minutos
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+
+    // Devuelve el formato deseado: dd-mm-yyyy HH:mm
+    return `${day}-${month}-${year} ${hours}:${minutes}`;
+}
 });

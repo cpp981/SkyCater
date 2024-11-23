@@ -38,6 +38,13 @@ if (isset($_GET['id'])) {
         <script type="text/javascript" src="../js/sideBar.js"></script>
         <script src="../js/colorUtils.js"></script>
         <script src="../js/detalleVuelos.js"></script>
+        <script src="../js/mapa.js"></script>
+        <script type="text/javascript" 
+                src="https://www.bing.com/api/maps/mapcontrol?key=AuclIH7tjOOM0U1sN23KcivEu101gRo9PTWX5wv-CoUYf7G-ujoaBZ7bPIWy9D49&callback=initMap&setLang=es-ES" 
+                async defer></script>
+
+
+
     </head>
 
     <body class="d-flex flex-column">
@@ -106,7 +113,7 @@ if (isset($_GET['id'])) {
                 <div class="container-fluid mt-4">
                     <!-- Título y botones -->
                     <div class="text-center mb-4">
-                        <h2>Vuelo <?php echo $_GET['id']; ?></h2>
+                        <h2>Gestión del Vuelo <?php echo $_GET['id']; ?></h2>
                         <div class="btn-group mt-1" role="group" aria-label="Botones de navegación">
                             <button type="button" class="btn btn-primary rounded-pill active me-4" id="detallesBtn"><i
                                     class="fas fa-circle-info me-2"></i>Detalles</button>
@@ -122,12 +129,18 @@ if (isset($_GET['id'])) {
                         <!-- Columna de detalles -->
                         <div class="col-md-5 text-center">
                             <h4>Detalles del vuelo</h4>
-                            <ul>
-                                <li><strong>Origen:</strong> Madrid</li>
-                                <li><strong>Destino:</strong> Barcelona</li>
-                                <li><strong>Fecha:</strong> 25/12/2024</li>
-                                <!-- Más detalles del vuelo... -->
+                            <ul class="mt-5">
+                                <li id="numVuelo"><strong>Número de Vuelo:</strong> </li>
+                                <li id="origen"><strong>Origen:</strong> </li>
+                                <li id="destino"><strong>Destino:</strong> </li>
+                                <li id="horaSalida"><strong>Hora de salida:</strong> </li>
+                                <li id="horaLlegada"><strong>Hora de llegada:</strong> </li>
+                                <li id="estado"><strong>Estado:</strong> </li>
                             </ul>
+                            <div class="row justify-content-center">
+                                <div class="card shadow mb-2 col-md-10 border" id="mapa" style="height: 40vh;"></div>
+                                <!-- Mapa con un tamaño fijo -->
+                            </div>
                         </div>
 
                         <!-- Barra de separación (línea vertical negra) -->

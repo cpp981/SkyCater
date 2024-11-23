@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-
     const notyf = new Notyf({
         position: {
             x: 'right',  // Alineación horizontal
@@ -10,8 +9,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const tableOptions = {
         dom: 'frtip',  // Estructura de los elementos (filtro, tabla, paginación)
         responsive: true,
-        //autoWidth: false,
-        //scrollX: true,
         ajax: {
             url: "../src/listaVuelos2.php",  // URL del archivo que devuelve los datos
             type: "GET",
@@ -83,22 +80,37 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     const tablaVuelos = $('#tablaVuelos').DataTable(tableOptions);
-  
+
     document.addEventListener('click', function (event) {
         if (event.target.closest('.manage')) {
             const button = event.target.closest('.manage');
             const id = button.dataset.id; // Obtén el id del vuelo desde el atributo data-id
             const vuelo = button.dataset.vuelo; // Obtén el número de vuelo desde el atributo data-vuelo
-    
+
+            // Recoge los datos de la fila
+            const rowData = tablaVuelos.row(button.closest('tr')).data();
+
+            // Los datos de las columnas excepto la de "Acciones" (índice 6)
+            const datosOcultos = {
+               // idVuelo: rowData[0],      // Id
+                vueloNumero: rowData[1],  // Vuelo
+                origen: rowData[2],       // Origen
+                destino: rowData[3],      // Destino
+                salida: rowData[4],       // Salida
+                llegada: rowData[5],      // Llegada
+                estado: rowData[6]        // Estado
+            };
+
             // Guarda el número de vuelo en sessionStorage
             sessionStorage.setItem('numeroVuelo', vuelo);
-    
+
+            // Guarda los datos ocultos en sessionStorage
+            sessionStorage.setItem('datosVuelo', JSON.stringify(datosOcultos));
+
             // Redirige a la página con solo el ID como parámetro GET
             window.location.href = `detallesVuelo.php?id=${id}`;
         }
     });
-    
-    
 
     // Petición para los valores cards
     $.ajax({
@@ -107,14 +119,12 @@ document.addEventListener('DOMContentLoaded', function () {
         dataType: 'json',
         success: function (response) {
             if (response.success) {
-                // Accedemos a los datos que necesitamos desde la respuesta
                 const gestionados = response.data.vuelos_gestionados[0].Num_Vuelos_Gestionados;
                 const sinGestionar = response.data.vuelos_sin_gestionar[0].Num_Vuelos_Gestionados;
 
                 // Actualizar las cards en el frontend con los datos recibidos
                 $('#card-gestionados').text(gestionados);
                 $('#card-sin-gestionar').text(sinGestionar);
-
             } else {
                 notyf.error('Error en la respuesta:', response.error);
             }
@@ -130,10 +140,4 @@ document.addEventListener('DOMContentLoaded', function () {
         const vueloId = $(this).data('id');
         console.log('Gestionar vuelo ID:', vueloId);
     });
-
-    // Función para formatear los detalles del vuelo
-    function format(dataRow) {
-        return `<div class="indi text-center"><strong>INFORMACIÓN ADICIONAL PARA EL VUELO ${dataRow[0]}</strong></div>`;
-    }
 });
-
