@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function toggleTooltips() {
         if ($('#sidebar').hasClass('sidebar-collapsed')) {
             // Solo inicializar los tooltips si la sidebar está colapsada
-            $('[data-bs-toggle="tooltip"]').each(function() {
+            $('[data-bs-toggle="tooltip"]').each(function () {
                 new bootstrap.Tooltip(this); // Crear la instancia del tooltip solo si la sidebar está colapsada
                 // Restauramos el atributo title al tooltip para evitar que se vea el tooltip nativo
                 $(this).attr('title', $(this).data('bs-original-title'));
@@ -52,19 +52,19 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
-        // Si estamos en detallesVuelo.php con cualquier parámetro id, cambiamos los estilos de "Vuelos" y "Detalles"
-        if (currentUrl.indexOf('detallesVuelo.php') !== -1 && currentUrl.includes('?id=')) {
+        if ((currentUrl.indexOf('detallesVuelo.php') !== -1 && currentUrl.includes('?id=')) ||
+            (currentUrl.indexOf('pasajerosVuelo.php') !== -1 && currentUrl.includes('?id='))) {
             // Establecer el fondo blanco, el texto negro y el ícono negro para el "Vuelos"
             $('.nav-item .nav-link[href="listaVuelos.php"]').css({
                 'background-color': '',  // Eliminar fondo blanco de "Vuelos"
                 'color': ''  // Restaurar el color de texto de "Vuelos"
             }).find('i').css('color', '');  // Restaurar color del ícono de "Vuelos"
 
-            // Asegurar que el subenlace "Detalles" esté activo
-            $('.nav-item .active .nav-link[href="detallesVuelo.php"]').css({
-                'background-color': 'white',  // Fondo blanco para "Detalles"
-                'color': 'black'  // Texto negro para "Detalles"
-            }).find('i').css('color', 'black');  // Ícono negro para "Detalles"
+            // Asegurar que el subenlace "Gestión" esté activo
+            $('.nav-item .nav-link[href="gestionarVuelos.php"]').css({
+                'background-color': 'white',  // Fondo blanco para "Gestión"
+                'color': 'black'  // Texto negro para "Gestión"
+            }).find('i').css('color', 'black');  // Ícono negro para "Gestión"
         }
 
         // Cuando el usuario haga clic en un enlace del menú

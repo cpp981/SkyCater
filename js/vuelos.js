@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Los datos de las columnas excepto la de "Acciones" (índice 6)
             const datosOcultos = {
-               // idVuelo: rowData[0],      // Id
+                idVuelo: rowData[0],      // Id
                 vueloNumero: rowData[1],  // Vuelo
                 origen: rowData[2],       // Origen
                 destino: rowData[3],      // Destino

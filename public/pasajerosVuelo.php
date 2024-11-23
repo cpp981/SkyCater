@@ -36,12 +36,7 @@ if (isset($_GET['id'])) {
         <link rel="stylesheet" href="../css/styles.css">
         <link rel="stylesheet" href="../css/responsive.css">
         <script type="text/javascript" src="../js/sideBar.js"></script>
-        <script src="../js/colorUtils.js"></script>
-        <script src="../js/detalleVuelos.js"></script>
-        <script src="../js/mapa.js"></script>
-        <script type="text/javascript" 
-                src="https://www.bing.com/api/maps/mapcontrol?key=AuclIH7tjOOM0U1sN23KcivEu101gRo9PTWX5wv-CoUYf7G-ujoaBZ7bPIWy9D49&callback=initMap&setLang=es-ES" 
-                async defer></script>
+        <script type="text/javascript" src="../js/pasajeros.js"></script>
     </head>
 
     <body class="d-flex flex-column">
@@ -73,9 +68,9 @@ if (isset($_GET['id'])) {
                         <a class="nav-link" href="listaVuelos.php"><i
                                 class="fas fa-plane-departure me-1"></i><span>Vuelos</span></a>
                         <ul class="nav flex-column ms-3">
-                            <?php if (basename($_SERVER['PHP_SELF']) == 'detallesVuelo.php') { ?>
+                            <?php if (basename($_SERVER['PHP_SELF']) == 'pasajerosVuelo.php') { ?>
                                 <li class="nav-item mt-2">
-                                    <a class="nav-link active" href="detallesVuelo.php?id=<?php echo $_GET['id']; ?>">
+                                    <a class="nav-link active" href="pasajerosVuelo.php?id=<?php echo $_GET['id']; ?>">
                                         <i class="fas fa-gear me-1"></i><span>Gestión</span>
                                     </a>
                                 </li>
@@ -110,9 +105,9 @@ if (isset($_GET['id'])) {
                 <div class="container-fluid mt-4">
                     <!-- Título y botones -->
                     <div class="text-center mb-4">
-                        <h2>Gestión del Vuelo <?php echo $_GET['id']; ?></h2>
+                        <h2>Gestión de pasajeros para el Vuelo <?php echo $_GET['id']; ?></h2>
                         <div class="btn-group mt-1" role="group" aria-label="Botones de navegación">
-                            <button type="button" class="btn btn-primary rounded-pill active me-4" id="detallesBtn"><i
+                            <button type="button" class="btn btn-primary rounded-pill me-4" id="detallesBtn"><i
                                     class="fas fa-circle-info me-2"></i>Detalles</button>
                             <button type="button" class="btn btn-light rounded-pill" id="pasajerosBtn"><i
                                     class="fas fa-person me-2"></i>Pasajeros</button>
@@ -123,60 +118,14 @@ if (isset($_GET['id'])) {
 
                     <!-- Contenedor dividido en dos y centrado -->
                     <div class="row justify-content-center">
-                        <!-- Columna de detalles -->
-                        <div class="col-md-5 text-center">
-                            <h4>Detalles del vuelo</h4>
-                            <ul class=" list-group">
-                                <li id="numVuelo" class="list-group-item disabled"><strong>Número de Vuelo:</strong> </li>
-                                <li id="origen" class="list-group-item disabled"><strong>Origen:</strong> </li>
-                                <li id="destino" class="list-group-item disabled"><strong>Destino:</strong> </li>
-                                <li id="horaSalida" class="list-group-item disabled"><strong>Hora de salida:</strong> </li>
-                                <li id="horaLlegada" class="list-group-item disabled"><strong>Hora de llegada:</strong> </li>
-                                <li id="estado" class="list-group-item disabled"><strong>Estado:</strong> </li>
-                            </ul>
-                            <div class="row justify-content-center card shadow rounded" style="height: 38vh;">
-                                <div class="card-body col-md-10 border w-100" id="mapa" style="height: 38vh;"></div>
-                                <!-- Mapa con un tamaño fijo -->
-                            </div>
-                        </div>
+                        
 
                         <!-- Barra de separación (línea vertical negra) -->
                         <div class="col-md-1 d-flex justify-content-center align-items-center">
                             <div class="vr" style="height: 100%; border-left: 3px solid black;"></div>
                         </div>
 
-                        <!-- Columna de la gráfica -->
-                        <!-- Columna de la gráfica -->
-                        <div class="col-md-5 text-center">
-                            <h4>Indicadores y gráfica</h4>
-                            <!-- Contenedor de los indicadores -->
-                            <div class="d-flex justify-content-between mb-4">
-                                <!-- Card Indicador 1 -->
-                                <div class="card shadow text-center" style="width: 48%;">
-                                    <div class="card-body">
-                                        <h5 class="card-title text-primary">Indicador 1</h5>
-                                        <p class="card-text fs-4 fw-bold text-dark"></p>
-                                        <p class="text-muted mb-0">Porcentaje de ocupación</p>
-                                    </div>
-                                </div>
-                                <!-- Card Indicador 2 -->
-                                <div class="card shadow text-center" style="width: 48%;">
-                                    <div class="card-body">
-                                        <h5 class="card-title text-success">Indicador 2</h5>
-                                        <p class="card-text fs-4 fw-bold text-dark"></p>
-                                        <p class="text-muted mb-0">Pasajeros con intolerancias</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Card de la gráfica -->
-                            <div class="card shadow mb-2">
-                                <div class="card-body">
-                                    <h5 class="card-title">Nº Pasajeros por tipo de asiento</h5>
-                                    <canvas id="flightChart" style="max-height: 250px;"></canvas>
-                                </div>
-                            </div>
-                        </div>
+                        
 
                     </div>
                 </div>

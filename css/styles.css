@@ -5,7 +5,7 @@
     color: #000000 !important; /* Texto negro */
     display: block; /* Aseguramos que el enlace ocupe todo el ancho */
     padding-left: 20px; /* Padding para que no quede pegado al borde */
-    padding-right: 50px; /* Padding para que no quede pegado al borde */
+    padding-right: 45px; /* Padding para que no quede pegado al borde */
     border-radius: 0.5em;
     width: 100%; /* Aseguramos que el fondo blanco ocupe todo el ancho */
 }
@@ -48,7 +48,7 @@
 
 /* Estilo cuando el sidebar está colapsado */
 .sidebar-collapsed {
-    width: 50px; /* Ajusta este ancho según el tamaño de los iconos */
+    width: 7vh; /* Ajusta este ancho según el tamaño de los iconos */
     transition: width 0.35s linear;
     overflow: hidden;
 }
@@ -264,6 +264,15 @@ body.dark-mode .login-container {
     margin-left: 14.8em;
     width: 200px;
     text-align: left;
+}
+
+/* Lista detalles vuelo */
+.list-group-item {
+    margin: 0; /* Elimina márgenes */
+    padding: 5px 10px; /* Reduce el relleno interno */
+    font-size: 14px; /* Opcional: Ajusta el tamaño de fuente */
+    line-height: 1.2; /* Opcional: Ajusta la altura de línea */
+    width: 100%;
 }
 
 /* ESTILO NOTIFICACIONES NOTYF */

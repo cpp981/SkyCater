@@ -129,7 +129,7 @@ if (!isset($_SESSION['nombre'])) {
 
                 <!-- Tabla DataTables -->
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                    <table id="tablaVuelos" class="table table-striped table-bordered ms-5">
+                    <table id="tablaVuelos" class="table table-striped table-bordered ms-5 shadow rounded">
                         <thead>
                             <tr>
                                 <th class="centered cabecera"></th>

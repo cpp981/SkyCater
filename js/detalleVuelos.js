@@ -1,37 +1,37 @@
 document.addEventListener('DOMContentLoaded', function () {
     const numeroVuelo = sessionStorage.getItem('numeroVuelo'); // Recupera el número de vuelo
-     // Recupera los datos del vuelo almacenados en sessionStorage
-     const datosVuelo = JSON.parse(sessionStorage.getItem('datosVuelo'));
+    // Recupera los datos del vuelo almacenados en sessionStorage
+    const datosVuelo = JSON.parse(sessionStorage.getItem('datosVuelo'));
 
-     // Verifica si los datos existen y luego actualiza el HTML
-     if (datosVuelo) {
-         $('#numVuelo').html(`<strong>Número de Vuelo:</strong> ${datosVuelo.vueloNumero}`);
-         $('#origen').html(`<strong>Origen:</strong> ${datosVuelo.origen}`);
-         $('#destino').html(`<strong>Destino:</strong> ${datosVuelo.destino}`);
-         
-         // Formatear la fecha de salida
-         const horaSalida = formatDate(datosVuelo.salida);
-         $('#horaSalida').html(`<strong>Hora de salida:</strong> ${horaSalida}`);
- 
-         // Formatear la fecha de llegada
-         const horaLlegada = formatDate(datosVuelo.llegada);
-         $('#horaLlegada').html(`<strong>Hora de llegada:</strong> ${horaLlegada}`);
-         
-         // Lógica para asignar el estado y las clases de color
-         let estadoClass = '';
-         let estadoTexto = datosVuelo.estado;
- 
-         if (estadoTexto === 'Pendiente') {
-             estadoClass = 'badge badge-warning';
-         } else if (estadoTexto === 'Gestionado') {
-             estadoClass = 'badge badge-success';
-         }
- 
-         // Actualiza el estado con la clase correspondiente
-         $('#estado').html(`<strong>Estado:</strong> <span class="${estadoClass}">${estadoTexto}</span>`);
-     } else {
-         console.error("No se encontraron los datos del vuelo en sessionStorage.");
-     }
+    // Verifica si los datos existen y luego actualiza el HTML
+    if (datosVuelo) {
+        $('#numVuelo').html(`<strong>Número de Vuelo:</strong> ${datosVuelo.vueloNumero}`);
+        $('#origen').html(`<strong>Origen:</strong> ${datosVuelo.origen}`);
+        $('#destino').html(`<strong>Destino:</strong> ${datosVuelo.destino}`);
+
+        // Formatear la fecha de salida
+        const horaSalida = formatDate(datosVuelo.salida);
+        $('#horaSalida').html(`<strong>Hora de salida:</strong> ${horaSalida}`);
+
+        // Formatear la fecha de llegada
+        const horaLlegada = formatDate(datosVuelo.llegada);
+        $('#horaLlegada').html(`<strong>Hora de llegada:</strong> ${horaLlegada}`);
+
+        // Lógica para asignar el estado y las clases de color
+        let estadoClass = '';
+        let estadoTexto = datosVuelo.estado;
+
+        if (estadoTexto === 'Pendiente') {
+            estadoClass = 'badge badge-warning';
+        } else if (estadoTexto === 'Gestionado') {
+            estadoClass = 'badge badge-success';
+        }
+
+        // Actualiza el estado con la clase correspondiente
+        $('#estado').html(`<strong>Estado:</strong> <span class="${estadoClass}">${estadoTexto}</span>`);
+    } else {
+        console.error("No se encontraron los datos del vuelo en sessionStorage.");
+    }
     const urlParams = new URLSearchParams(window.location.search);
     const vueloId = urlParams.get('id'); // Recupera el id
 
@@ -130,26 +130,67 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Función para formatear la fecha al formato dd-mm-yyyy HH:mm
-function formatDate(dateString) {
-    // Verifica que el formato sea correcto antes de convertirlo
-    const date = new Date(dateString);
-    
-    // Verifica si la fecha es válida
-    if (isNaN(date)) {
-        console.error('Fecha inválida:', dateString);
-        return '';
+    function formatDate(dateString) {
+        // Verifica que el formato sea correcto antes de convertirlo
+        const date = new Date(dateString);
+
+        // Verifica si la fecha es válida
+        if (isNaN(date)) {
+            console.error('Fecha inválida:', dateString);
+            return '';
+        }
+
+        // Obtiene el día, mes y año
+        const day = String(date.getDate()).padStart(2, '0'); // Agrega 0 al principio si es un solo dígito
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Los meses empiezan desde 0, por eso sumamos 1
+        const year = date.getFullYear();
+
+        // Obtiene las horas y minutos
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+
+        // Devuelve el formato deseado: dd-mm-yyyy HH:mm
+        return `${day}-${month}-${year} ${hours}:${minutes}`;
     }
 
-    // Obtiene el día, mes y año
-    const day = String(date.getDate()).padStart(2, '0'); // Agrega 0 al principio si es un solo dígito
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Los meses empiezan desde 0, por eso sumamos 1
-    const year = date.getFullYear();
-    
-    // Obtiene las horas y minutos
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
+    // Control de los botones superiores
+    $('#detallesBtn').addClass('active');
 
-    // Devuelve el formato deseado: dd-mm-yyyy HH:mm
-    return `${day}-${month}-${year} ${hours}:${minutes}`;
-}
+    // Maneja el clic en los botones
+    $('.btn-group .btn').on('click', function () {
+        // Quita la clase 'active' de todos los botones
+        $('.btn-group .btn').removeClass('active');
+
+        // Agrega la clase 'active' al botón pulsado
+        $(this).addClass('active');
+    });
+
+    // Redirección al pulsar el botón Pasajeros
+    $('#pasajerosBtn').on('click', function () {
+        // Obtiene el id desde sessionStorage
+        const detallesVuelo = JSON.parse(sessionStorage.getItem('datosVuelo'));
+        const vueloId = detallesVuelo.idVuelo;
+        if (vueloId) {
+            // Redirige a la URL deseada con el parámetro id
+            window.location.href = `http://localhost/SkyCater/public/pasajerosVuelo.php?id=${vueloId}`;
+        } else {
+            alert("El ID del vuelo no está disponible en sessionStorage.");
+        }
+    });
+
+    // Redirección al pulsar el botón Detalles
+    $('#detallesBtn').on('click', function () {
+        // Obtiene el parámetro 'id' desde la URL actual
+        const currentUrl = window.location.href;
+        const url = new URL(currentUrl);
+        const idVuelo = url.searchParams.get("id");  // Obtiene el parámetro 'id' de la URL
+
+        if (idVuelo) {
+            // Si el parámetro 'id' está presente, redirige a 'detallesVuelo.php' con el parámetro
+            window.location.href = `http://localhost/SkyCater/public/detallesVuelo.php?id=${idVuelo}`;
+        } else {
+            // Si no hay parámetro 'id', no se agrega y simplemente se redirige sin él
+            // window.location.href = 'http://localhost/SkyCater/public/detallesVuelo.php';
+        }
+    });
 });
