@@ -18,4 +18,6 @@ class Messages{
     const UPDATE_PRODUCT_SUCCESS = 'Producto actualizado correctamente';
     const UPDATE_PRODUCT_ERROR = 'Error al actualizar el producto';
     const MISSING_ARGUMENTS = 'Faltan parámetros.';
+    const PASSENGER_LIST_LOAD_ERROR = 'Error al cargar la lista de pasajeros';
+    const INVALID_PARAMS = 'Parámetros no válidos';
 }

@@ -275,6 +275,23 @@ body.dark-mode .login-container {
     width: 100%;
 }
 
+/* Vista Pasajeros */
+#gestionMenuPasajero {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;  /* Ajusta este valor según el tamaño de tu contenedor */
+    text-align: center;
+}
+
+.loading-message {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
 /* ESTILO NOTIFICACIONES NOTYF */
 .notyf > .notyf__toast {
     transform: translateY(35px) !important;  /* Desplaza las notificaciones 20px hacia abajo */

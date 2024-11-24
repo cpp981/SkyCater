@@ -41,6 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
             url: '../src/detalleVuelos.php',
             type: 'POST',
             data: {
+                action: 'obtener_detalles_vuelo',
                 numeroVuelo: numeroVuelo,
                 idVuelo: vueloId
             },
