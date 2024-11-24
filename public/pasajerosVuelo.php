@@ -1,10 +1,17 @@
 <?php
 require_once '../src/session.php';
 require_once '../src/timeSince.php';
+
 if (!isset($_SESSION['nombre'])) {
     header('Location:login.html');
     exit();
 }
+// Si no hay parámetro id redirigimos
+if (!isset($_GET['id'])) {
+    header('Location:listaVuelos.php');
+    exit();
+}
+
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
     ?>
@@ -105,7 +112,7 @@ if (isset($_GET['id'])) {
                 <div class="container-fluid mt-4">
                     <!-- Título y botones -->
                     <div class="text-center mb-4">
-                        <h2>Gestión de pasajeros para el Vuelo <?php echo $_GET['id']; ?></h2>
+                        <h2>Gestión del Vuelo <?php echo $_GET['id']; ?></h2>
                         <div class="btn-group mt-1" role="group" aria-label="Botones de navegación">
                             <button type="button" class="btn btn-primary rounded-pill me-4" id="detallesBtn"><i
                                     class="fas fa-circle-info me-2"></i>Detalles</button>
@@ -118,28 +125,60 @@ if (isset($_GET['id'])) {
 
                     <!-- Contenedor dividido en dos y centrado -->
                     <div class="row justify-content-center">
-                        
+                        <!-- Columna de la tabla -->
+                        <div class="col-md-5 text-center tabla-col d-flex flex-column h-100" style="width: 846px; margin-left: -100px;">
+                            <h4>Listado de pasajeros</h4>
+                            <!-- Tabla de pasajeros usando DataTables -->
+                            <table id="tablaPasajeros" class="display border rounded shadow" style="width: 100%; margin-left: 65px;">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Los pasajeros se cargarán dinámicamente aquí -->
+                                </tbody>
+                            </table>
+                        </div>
 
-                        <!-- Barra de separación (línea vertical negra) -->
+                        <!-- Barra Vertical -->
                         <div class="col-md-1 d-flex justify-content-center align-items-center">
                             <div class="vr" style="height: 100%; border-left: 3px solid black;"></div>
                         </div>
 
-                        
+                        <!-- Columna de gestión -->
+                        <div class="col-md-5 text-center gestion-col d-flex flex-column h-100">
+                            <h4>Gestión menú por pasajero</h4>
+                            <!-- Formulario de gestión del menú del pasajero -->
+                            <div id="gestionMenuPasajero">
+                                <div class="loading-message">
+                                    <i class="fas fa-cogs fa-spin fa-3x"></i>
+                                    <p>Seleccione un pasajero para gestionar su menú.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
+                    <!-- Botón de guardar vuelo al final de la lista de pasajeros -->
+                    <div class="row mt-4 justify-content-center">
+                        <button class="btn btn-success w-25" id="guardarVueloBtn"><i class="me-1 fas fa-save"></i>Guardar
+                            vuelo</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Scripts de Bootstrap, jQuery y Chart.js -->
+        <!-- Scripts de Bootstrap y DataTables -->
         <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Chart.js -->
-        <script src="../node_modules/chart.js/dist/chart.umd.js"></script>
-        <!--<script src="../js/flightDetails.js"></script> Aquí iría tu lógica de Chart.js -->
+        <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
     </body>
-
-
     <div class="foot d-flex justify-content-center align-items-end mt-5">
         <footer class="fixed-bottom text-center">
             <p>© 2024 SkyCater. Todos los derechos reservados.</p>
@@ -149,6 +188,6 @@ if (isset($_GET['id'])) {
     <?php
 } else {
     header('Location: listaVuelos.php');
-    echo "No se ha especificado un vuelo.";
+    //echo "No se ha especificado un vuelo.";
 }
 ?>
