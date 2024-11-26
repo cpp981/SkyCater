@@ -2,10 +2,17 @@
 require_once '../src/session.php';
 require_once '../src/timeSince.php';
 
+
 if (!isset($_SESSION['nombre'])) {
     header('Location:login.html');
     exit();
 }
+// Si no hay parámetro id redirigimos
+if (!isset($_GET['id'])) {
+    header('Location:listaVuelos.php');
+    exit();
+}
+
 // Si no hay parámetro id redirigimos
 if (!isset($_GET['id'])) {
     header('Location:listaVuelos.php');
