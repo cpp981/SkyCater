@@ -126,36 +126,39 @@ if (isset($_GET['id'])) {
                     <!-- Contenedor dividido en dos y centrado -->
                     <div class="row justify-content-center">
                         <!-- Columna de la tabla -->
-                        <div class="col-md-5 text-center tabla-col d-flex flex-column h-100" style="width: 846px; margin-left: -100px;">
+                        <div class="col-md-5 text-center d-flex flex-column h-100">
                             <h4>Listado de pasajeros</h4>
-                            <!-- Tabla de pasajeros usando DataTables -->
-                            <table id="tablaPasajeros" class="display border rounded shadow" style="width: 100%; margin-left: 65px;">
+                            <table id="tablaPasajeros"
+                                class="table table-bordered table-hover table-striped rounded shadow">
                                 <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
+                                    <tr class="small">
+                                        <th>Pasajero</th>
+                                        <th>Intolerancias</th>
+                                        <th>Preferencias</th>
+                                        <th>Asiento</th>
+                                        <th>Plato 1</th>
+                                        <th>Plato 2</th>
+                                        <th>Bebida</th>
+                                        <th>Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- Los pasajeros se cargarán dinámicamente aquí -->
+                                    <!-- Los datos se cargarán dinámicamente aquí -->
                                 </tbody>
                             </table>
+                            <!-- Paginación de DataTables -->
+                            <div id="tablaPasajeros_pagination" class="d-flex justify-content-center mt-2"></div>
                         </div>
 
                         <!-- Barra Vertical -->
                         <div class="col-md-1 d-flex justify-content-center align-items-center">
-                            <div class="vr" style="height: 100%; border-left: 3px solid black;"></div>
+                            <div class="vr" style="height: 100%; border-left: 2px solid black;"></div>
                         </div>
 
                         <!-- Columna de gestión -->
                         <div class="col-md-5 text-center gestion-col d-flex flex-column h-100">
                             <h4>Gestión menú por pasajero</h4>
-                            <!-- Formulario de gestión del menú del pasajero -->
+                            <div id="fichaPasajero"></div>
                             <div id="gestionMenuPasajero">
                                 <div class="loading-message">
                                     <i class="fas fa-cogs fa-spin fa-3x"></i>
@@ -164,14 +167,14 @@ if (isset($_GET['id'])) {
                             </div>
                         </div>
                     </div>
-
                     <!-- Botón de guardar vuelo al final de la lista de pasajeros -->
                     <div class="row mt-4 justify-content-center">
-                        <button class="btn btn-success w-25" id="guardarVueloBtn"><i class="me-1 fas fa-save"></i>Guardar
+                        <button class="btn btn-success w-25 shadow rounded" id="guardarVueloBtn"><i class="me-1 fas fa-save"></i>Guardar
                             vuelo</button>
                     </div>
                 </div>
             </div>
+
         </div>
 
         <!-- Scripts de Bootstrap y DataTables -->

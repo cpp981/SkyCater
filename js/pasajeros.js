@@ -1,4 +1,6 @@
 $(document).ready(function () {
+
+
     // Configura el botón "Detalles" como activo al cargar la página
     $('#pasajerosBtn').addClass('active');
 
@@ -36,10 +38,10 @@ $(document).ready(function () {
     
     // Definimos la DataTable de Pasajeros
     const tableOptions = {
-        dom: 'frtip',
+        dom: 'rtip',
         responsive: true,
         autoWidth: false,
-        pageLength: 7,
+        pageLength: 5,
         ajax: {
             url: "../src/detalleVuelos.php",  // URL que devuelve los datos
             type: "POST",
@@ -117,10 +119,10 @@ $(document).ready(function () {
         destroy: true,  // Permitir reinicializar la tabla
         language: {
             paginate: {
-               // first: '<button class="btn btn-sm">Primero</button>',
-               // previous: '<button class="btn btn-sm">Anterior</button>',
-               // next: '<button class="btn btn-sm">Siguiente</button>',
-               // last: '<button class="btn btn-sm">Último</button>'
+                first: '<button class="btn btn-sm">Primero</button>',
+                previous: '<button class="btn btn-sm">Anterior</button>',
+                next: '<button class="btn btn-sm">Siguiente</button>',
+                last: '<button class="btn btn-sm">Último</button>'
             },
             search: "Buscar: ",
             zeroRecords: "No se encontraron pasajeros",
@@ -130,24 +132,50 @@ $(document).ready(function () {
     };
     
     const tablaPasajeros = $('#tablaPasajeros').DataTable(tableOptions);
-    
+
+
     
 
-    $('#tablaPasajeros').on('click', 'tr', function () {
-        // Muestra el spinner
+    $('#tablaPasajeros').on('click', '.edit', function () {
+        // Muestra el spinner mientras cargamos los datos
         $('#gestionMenuPasajero .loading-message').show();
     
-        // Lógica para cargar el contenido de gestión del menú
-        const pasajeroId = $(this).data('id'); // O cualquier otro atributo para identificar al pasajero
+        // Obtener los datos de la fila correspondiente
+        const row = $(this).closest('tr');  // Obtener la fila más cercana al botón
+        const nombre = row.find('td').eq(0).text();  // Obtener el nombre del pasajero (primer columna)
+        const intolerancias = row.find('td').eq(1).text();  // Obtener las intolerancias (segunda columna)
+        
+        // Crear el HTML de las intolerancias (como badges)
+        let intoleranciasHTML = '';
+        if (intolerancias && intolerancias !== "Ninguna") {
+            const intoleranciasArray = intolerancias.split(',');  // Separar intolerancias por coma
+            intoleranciasHTML = intoleranciasArray.map(function(intolerancia) {
+                return `<span class="badge badge-warning">${intolerancia.trim()}</span>`;  // Crear un badge por cada intolerancia
+            }).join(' ');  // Unir todos los badges en un solo string
+        } else {
+            intoleranciasHTML = '<span class="badge badge-success">Ninguna</span>';
+        }
     
         // Simulamos un retraso en la carga para mostrar el spinner
         setTimeout(function() {
             // Ocultamos el spinner
             $('#gestionMenuPasajero .loading-message').hide();
-            
-            // Aquí puedes insertar el contenido real de la gestión del menú
-            $('#gestionMenuPasajero').html('<p>Contenido de gestión del menú del pasajero ' + pasajeroId + '</p>');
-        }, 2000);  // Simulando un retraso de 2 segundos, puedes ajustarlo según sea necesario
+            $('#gestionMenuPasajero .loading-message').html(`
+                <p><i class="fas fa-spinner me-1"></i>Cargando pasajero...</p>
+                `)
+            // Insertamos el nombre y las intolerancias justo debajo del título
+            $('#fichaPasajero').html(`
+                <div class="mb-3 div-arriba-abajo">
+                    <strong>Pasajero: </strong>${nombre}
+                </div>
+                <div class="mb-3 div-arriba-abajo">
+                    <strong>Intolerancias: </strong>${intoleranciasHTML}
+                </div>
+            `);
+        }, 800);  // Simulando un retraso de 800 ms
     });
+    
+    
+    
     
 });

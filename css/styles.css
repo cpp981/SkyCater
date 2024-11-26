@@ -291,6 +291,24 @@ body.dark-mode .login-container {
     align-items: center;
 }
 
+.div-arriba-abajo {
+    display: block;
+    margin-bottom: 10px;
+}
+
+#tablaPasajeros td, #tablaPasajeros th {
+    font-size: 14px; /* Tamaño texto tabla */
+}
+
+/* Barra vertical con tamaño fijo */
+.col-md-1 .vr {
+    height: 100%; /* Asegura que la barra ocupe toda la altura disponible dentro de la columna */
+    width: 2px;  /* Ajusta el grosor de la barra */
+    background-color: black; /* Color de la barra */
+}
+    
+
+
 
 /* ESTILO NOTIFICACIONES NOTYF */
 .notyf > .notyf__toast {
