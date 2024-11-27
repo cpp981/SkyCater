@@ -150,4 +150,63 @@ class Producto
         }
 
     }
+
+    // Recupera los primeros platos
+    public function getPrimerosPlatos()
+    {
+        $primerPlato = 'Primer Plato';
+        $entrante = 'Entrante';
+        $query = "SELECT Nombre, Alergenos FROM `Producto` WHERE Categoria = ? OR Categoria = ?";
+        try
+        {
+            $stmt = $this->pdo->prepare($query);
+            $stmt->bindParam(1, $primerPlato);
+            $stmt->bindParam(2, $entrante);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+           
+        }
+        catch(PDOException $e)
+        {
+            throw new Exception(Messages::LOAD_DATA_ERROR);
+        }
+    }
+
+    // Recupera los segundos platos
+    public function getSegundosPlatos()
+    {
+        $segundoPlato = 'Segundo Plato';
+        $query = "SELECT Nombre, Alergenos FROM `Producto` WHERE Categoria = ?";
+        try
+        {
+            $stmt = $this->pdo->prepare($query);
+            $stmt->bindParam(1, $segundoPlato);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+           
+        }
+        catch(PDOException $e)
+        {
+            throw new Exception(Messages::LOAD_DATA_ERROR);
+        }
+    }
+
+    // Recupera las bebidas
+    public function getBebidas()
+    {
+        $bebida = 'Bebida';
+        $query = "SELECT Nombre, Alergenos FROM `Producto` WHERE Categoria = ?";
+        try
+        {
+            $stmt = $this->pdo->prepare($query);
+            $stmt->bindParam(1, $bebida);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+           
+        }
+        catch(PDOException $e)
+        {
+            throw new Exception(Messages::LOAD_DATA_ERROR);
+        }
+    }
 }

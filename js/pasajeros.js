@@ -1,4 +1,73 @@
 $(document).ready(function () {
+    let primerPlato = [];
+    let segundoPlato = [];
+    let postre = [];
+
+    // Realizar la llamada AJAX al cargar la página
+    $.ajax({
+        url: '../src/menuPasajeros.php', // Cambia esta URL a la ruta de tu archivo PHP
+        method: 'GET',
+        success: function (response) {
+            console.log('Respuesta de la API:', response);
+
+            // Verificamos la estructura de la respuesta
+            if (response.status === 'success' && response.data) {
+                primerPlato = response.data.primerPlato;
+                segundoPlato = response.data.segundoPlato;
+                postre = response.data.postre;
+
+                console.log('Datos cargados al inicio:');
+                console.log('Primer Plato:', primerPlato);
+                console.log('Segundo Plato:', segundoPlato);
+                console.log('Postre:', postre);
+            } else {
+                console.error('Estructura inesperada en la respuesta de la API:', response);
+                alert('Error al cargar los datos. Por favor, inténtelo más tarde.');
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error('Error de comunicación con el servidor:', error);
+            alert('No se pudo conectar al servidor. Por favor, verifique su conexión.');
+        }
+    });
+
+// Función para rellenar los selects con opciones
+function llenarSelect(idSelect, opciones) {
+    const select = $(`#${idSelect}`);
+
+    if (!select.length) {
+        console.error(`No se encontró el select con ID ${idSelect}`);
+        return;
+    }
+
+    select.empty(); // Limpiar opciones existentes
+
+    if (!opciones || opciones.length === 0) {
+        select.append('<option value="" disabled>No hay opciones disponibles</option>');
+        return;
+    }
+
+    select.append('<option value="" disabled selected>Seleccione...</option>'); // Opción por defecto
+
+    opciones.forEach(opcion => {
+        const nombre = opcion.Nombre || 'Sin nombre';
+        const alergenos = opcion.Alergenos || 'Ninguno';
+
+        // Si no hay alérgenos, mostrar "Ninguno", si hay, mostrar los alérgenos
+        const alergenosTexto = alergenos !== 'Ninguno'
+            ? alergenos.split(',').map(a => a.trim()).join(', ')
+            : 'Ninguno';  // Cuando no hay alérgenos
+
+        // Agregar cada opción como un <option> dentro del <select>
+        select.append(`
+            <option value="${nombre}" data-alergenos="${alergenos}">
+                ${nombre} (${alergenosTexto})
+            </option>
+        `);
+    });
+}
+
+
 
 
     // Configura el botón "Detalles" como activo al cargar la página
@@ -35,7 +104,7 @@ $(document).ready(function () {
     $('#volverBtn').on('click', function () {
         window.location.href = 'http://localhost/SkyCater/public/listaVuelos.php';
     });
-    
+
     // Definimos la DataTable de Pasajeros
     const tableOptions = {
         dom: 'rtip',
@@ -43,43 +112,38 @@ $(document).ready(function () {
         autoWidth: false,
         pageLength: 5,
         ajax: {
-            url: "../src/detalleVuelos.php",  // URL que devuelve los datos
+            url: "../src/detalleVuelos.php", // URL que devuelve los datos
             type: "POST",
             dataSrc: function (json) {
-                // Verificar si la respuesta fue exitosa
                 if (json.status === "success") {
-                    return json.data;  // Retornar solo el array de datos
+                    return json.data;
                 } else {
-                    return [];  // Retornar vacío si hay error
+                    return [];
                 }
             },
             data: function (d) {
-                d.idVuelo = idVuelo;  // Agregar parámetro idVuelo
-                d.action = "obtener_pasajero";  // Agregar acción
+                d.idVuelo = idVuelo;
+                d.action = "obtener_pasajero";
             }
         },
         columns: [
             {
                 title: "Pasajero",
                 render: function (data, type, row) {
-                    // Combina Nombre y Apellido
                     return `${row.Nombre} ${row.Apellido}`;
                 }
             },
-            { title: "Intolerancias", 
+            {
+                title: "Intolerancias",
                 render: function (data, type, row) {
-                    // Verificar si el campo 'Intolerancias' tiene algún valor
                     let intolerancias = row.Intolerancias;
-    
                     if (!intolerancias || intolerancias === "Ninguna") {
-                        // Si no hay intolerancias o es "Ninguna", asignar un badge verde
                         return '<span class="badge badge-success">Ninguna</span>';
                     } else {
-                        // Si tiene más de una intolerancia, las separamos por coma y las convertimos en badges
-                        const intoleranciasArray = intolerancias.split(',');  // Separa las intolerancias
-                        return intoleranciasArray.map(function(intolerancia) {
-                            return `<span class="badge badge-warning">${intolerancia.trim()}</span>`; // Genera un badge por cada intolerancia
-                        }).join(' '); // Unir todos los badges en un string
+                        const intoleranciasArray = intolerancias.split(',');
+                        return intoleranciasArray.map(function (intolerancia) {
+                            return `<span class="badge badge-warning">${intolerancia.trim()}</span>`;
+                        }).join(' ');
                     }
                 }
             },
@@ -102,21 +166,12 @@ $(document).ready(function () {
             }
         ],
         columnDefs: [
-            {
-                width: "15%",
-                targets: [1,2]
-            },
-            {
-                width: "20%",
-                targets: 0
-            },
-            {
-                width: "25%",
-                targets: [4,5,6]
-            },
+            { width: "15%", targets: [1, 2] },
+            { width: "20%", targets: 0 },
+            { width: "25%", targets: [4, 5, 6] },
         ],
-        lengthChange: false,  // No mostrar opción para cambiar la cantidad de registros visibles
-        destroy: true,  // Permitir reinicializar la tabla
+        lengthChange: false,
+        destroy: true,
         language: {
             paginate: {
                 first: '<button class="btn btn-sm">Primero</button>',
@@ -130,20 +185,17 @@ $(document).ready(function () {
             infoFiltered: "(filtrados desde _MAX_ registros totales)"
         }
     };
-    
+
     const tablaPasajeros = $('#tablaPasajeros').DataTable(tableOptions);
 
-
-    
-
+    // Clic en el botón "Editar" de la tabla para abrir los selects
     $('#tablaPasajeros').on('click', '.edit', function () {
-       // $('#gestionMenuPasajero').hide();
         $('#gestionMenuPasajero .loading-message').show();
-    
+
         const row = $(this).closest('tr');
         const nombre = row.find('td').eq(0).text();
         const intolerancias = row.find('td').eq(1).text();
-    
+
         let intoleranciasHTML = '';
         if (intolerancias && intolerancias !== "Ninguna") {
             const intoleranciasArray = intolerancias.split(',');
@@ -153,10 +205,10 @@ $(document).ready(function () {
         } else {
             intoleranciasHTML = '<span class="badge badge-success">Ninguna</span>';
         }
-    
+
         setTimeout(function () {
             $('#gestionMenuPasajero .loading-message').hide();
-    
+
             $('#fichaPasajero').addClass('card shadow rounded text-center');
             $('#fichaPasajero').html(`
                 <div class="mb-3 div-arriba-abajo">
@@ -166,45 +218,33 @@ $(document).ready(function () {
                     <strong>Intolerancias: </strong>${intoleranciasHTML}
                 </div>
             `);
-    
+
             $('#gestionMenuPasajero').addClass('card shadow rounded menu-pasajero');
             $('#gestionMenuPasajero').html(`
                 <form id="gestionForm" class="p-3">
                     <div class="mb-3">
-                        <label for="primerPlato" class="form-label w-100"><strong>Primer Plato</strong></label>
-                        <select class="form-select w-100" id="primerPlato" name="primerPlato">
-                            <option value="" disabled selected>Seleccione...</option>
-                        </select>
+                        <label for="selectPrimerPlato" class="form-label w-100"><strong>Primer Plato</strong></label>
+                        <select id="selectPrimerPlato" class="form-select w-100" name="primerPlato"></select>
                     </div>
                     <div class="mb-3">
-                        <label for="segundoPlato" class="form-label w-100"><strong>Segundo Plato</strong></label>
-                        <select class="form-select w-100" id="segundoPlato" name="segundoPlato">
-                            <option value="" disabled selected>Seleccione...</option>
-                        </select>
+                        <label for="selectSegundoPlato" class="form-label w-100"><strong>Segundo Plato</strong></label>
+                        <select id="selectSegundoPlato" class="form-select w-100" name="segundoPlato"></select>
                     </div>
                     <div class="mb-3">
-                        <label for="postre" class="form-label w-100"><strong>Bebida</strong></label>
-                        <select class="form-select w-100" id="postre" name="postre">
-                            <option value="" disabled selected>Seleccione...</option>
-                        </select>
+                        <label for="selectPostre" class="form-label w-100"><strong>Bebida</strong></label>
+                        <select id="selectPostre" class="form-select w-100" name="postre"></select>
                     </div>
                     <div class="text-center mt-4">
                         <button type="button" class="btn btn-primary w-100" id="enviarMenu"><i class="fas fa-paper-plane me-1"></i>Enviar</button>
                     </div>
                 </form>
             `);
-    
-            //cargarOpcionesSelect('#primerPlato', ['Ensalada', 'Sopa', 'Fruta']);
-            //cargarOpcionesSelect('#segundoPlato', ['Pollo', 'Carne', 'Pescado']);
-            //cargarOpcionesSelect('#postre', ['Helado', 'Tarta', 'Fruta']);
-        }, 800);
+
+            // Llenar los selects después de generar el contenido
+            llenarSelect('selectPrimerPlato', primerPlato);
+            llenarSelect('selectSegundoPlato', segundoPlato);
+            llenarSelect('selectPostre', postre);
+        }, 1000);
     });
-    
-    function cargarOpcionesSelect(selector, opciones) {
-        const select = $(selector);
-        select.empty();
-        opciones.forEach(opcion => {
-            select.append(`<option value="${opcion}">${opcion}</option>`);
-        });
-    }
-});    
+});
+
