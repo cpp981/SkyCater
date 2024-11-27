@@ -300,6 +300,10 @@ body.dark-mode .login-container {
     font-size: 14px; /* Tamaño texto tabla */
 }
 
+#gestionMenuPasajero.menu-pasajero{
+    height: 40vh;
+}
+
 /* Barra vertical con tamaño fijo */
 .col-md-1 .vr {
     height: 100%; /* Asegura que la barra ocupe toda la altura disponible dentro de la columna */

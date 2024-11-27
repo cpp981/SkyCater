@@ -137,33 +137,27 @@ $(document).ready(function () {
     
 
     $('#tablaPasajeros').on('click', '.edit', function () {
-        // Muestra el spinner mientras cargamos los datos
+       // $('#gestionMenuPasajero').hide();
         $('#gestionMenuPasajero .loading-message').show();
     
-        // Obtener los datos de la fila correspondiente
-        const row = $(this).closest('tr');  // Obtener la fila más cercana al botón
-        const nombre = row.find('td').eq(0).text();  // Obtener el nombre del pasajero (primer columna)
-        const intolerancias = row.find('td').eq(1).text();  // Obtener las intolerancias (segunda columna)
-        
-        // Crear el HTML de las intolerancias (como badges)
+        const row = $(this).closest('tr');
+        const nombre = row.find('td').eq(0).text();
+        const intolerancias = row.find('td').eq(1).text();
+    
         let intoleranciasHTML = '';
         if (intolerancias && intolerancias !== "Ninguna") {
-            const intoleranciasArray = intolerancias.split(',');  // Separar intolerancias por coma
-            intoleranciasHTML = intoleranciasArray.map(function(intolerancia) {
-                return `<span class="badge badge-warning">${intolerancia.trim()}</span>`;  // Crear un badge por cada intolerancia
-            }).join(' ');  // Unir todos los badges en un solo string
+            const intoleranciasArray = intolerancias.split(',');
+            intoleranciasHTML = intoleranciasArray.map(function (intolerancia) {
+                return `<span class="badge badge-warning">${intolerancia.trim()}</span>`;
+            }).join(' ');
         } else {
             intoleranciasHTML = '<span class="badge badge-success">Ninguna</span>';
         }
     
-        // Simulamos un retraso en la carga para mostrar el spinner
-        setTimeout(function() {
-            // Ocultamos el spinner
+        setTimeout(function () {
             $('#gestionMenuPasajero .loading-message').hide();
-            $('#gestionMenuPasajero .loading-message').html(`
-                <p><i class="fas fa-spinner me-1"></i>Cargando pasajero...</p>
-                `)
-            // Insertamos el nombre y las intolerancias justo debajo del título
+    
+            $('#fichaPasajero').addClass('card shadow rounded text-center');
             $('#fichaPasajero').html(`
                 <div class="mb-3 div-arriba-abajo">
                     <strong>Pasajero: </strong>${nombre}
@@ -172,10 +166,45 @@ $(document).ready(function () {
                     <strong>Intolerancias: </strong>${intoleranciasHTML}
                 </div>
             `);
-        }, 800);  // Simulando un retraso de 800 ms
+    
+            $('#gestionMenuPasajero').addClass('card shadow rounded menu-pasajero');
+            $('#gestionMenuPasajero').html(`
+                <form id="gestionForm" class="p-3">
+                    <div class="mb-3">
+                        <label for="primerPlato" class="form-label w-100"><strong>Primer Plato</strong></label>
+                        <select class="form-select w-100" id="primerPlato" name="primerPlato">
+                            <option value="" disabled selected>Seleccione...</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="segundoPlato" class="form-label w-100"><strong>Segundo Plato</strong></label>
+                        <select class="form-select w-100" id="segundoPlato" name="segundoPlato">
+                            <option value="" disabled selected>Seleccione...</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="postre" class="form-label w-100"><strong>Bebida</strong></label>
+                        <select class="form-select w-100" id="postre" name="postre">
+                            <option value="" disabled selected>Seleccione...</option>
+                        </select>
+                    </div>
+                    <div class="text-center mt-4">
+                        <button type="button" class="btn btn-primary w-100" id="enviarMenu"><i class="fas fa-paper-plane me-1"></i>Enviar</button>
+                    </div>
+                </form>
+            `);
+    
+            //cargarOpcionesSelect('#primerPlato', ['Ensalada', 'Sopa', 'Fruta']);
+            //cargarOpcionesSelect('#segundoPlato', ['Pollo', 'Carne', 'Pescado']);
+            //cargarOpcionesSelect('#postre', ['Helado', 'Tarta', 'Fruta']);
+        }, 800);
     });
     
-    
-    
-    
-});
+    function cargarOpcionesSelect(selector, opciones) {
+        const select = $(selector);
+        select.empty();
+        opciones.forEach(opcion => {
+            select.append(`<option value="${opcion}">${opcion}</option>`);
+        });
+    }
+});    
