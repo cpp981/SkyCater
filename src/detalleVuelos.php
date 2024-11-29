@@ -60,7 +60,7 @@ try {
 
             // Obtener datos del pasajero
             $datosPasajero = $pasajero->getPasajerosVueloById($idVuelo);
-
+            //var_dump($datosPasajero);
             // Verificar si se obtuvo algún dato
             if (empty($datosPasajero)) {
                 echo json_encode(['status' => 'error', 'message' => Messages::PASSENGER_LIST_LOAD_ERROR]);
