@@ -20,4 +20,9 @@ class Messages{
     const MISSING_ARGUMENTS = 'Faltan parámetros.';
     const PASSENGER_LIST_LOAD_ERROR = 'Error al cargar la lista de pasajeros';
     const INVALID_PARAMS = 'Parámetros no válidos';
+    const MENU_SUCCESS = 'Menú añadido correctamente al pasajero';
+    const MENU_ERROR = 'Error al intentar asignar el menú al pasajero';
+    const FLIGHT_MANAGEMENT_SUCCESS = 'El vuelo ha sido gestionado correctamente';
+    const FLIGHT_MANAGEMENT_ERROR = 'El vuelo ya está gestionado';
+    const FLIGHT_ID_REQUIRED = 'El id del vuelo es requerido';
 }

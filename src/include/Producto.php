@@ -107,27 +107,23 @@ class Producto
     public function getIdProveedorByProductName($nombre)
     {
         $query = "SELECT Id_Proveedor FROM Producto WHERE Nombre = ?";
-        try
-        {
+        try {
             $stmt = $this->pdo->prepare($query);
             $stmt->bindParam(1, $nombre);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        }
-        catch(PDOException $e)
-        {
+        } catch (PDOException $e) {
             throw new Exception(Messages::DELETE_DATA_ERROR);
         }
     }
 
     // Actualiza un producto a partir de su id
-    public function updateProductById($n,$cat,$aler,$vn,$desc,$id)
+    public function updateProductById($n, $cat, $aler, $vn, $desc, $id)
     {
         $query = "UPDATE Producto SET Nombre = ?, Descripcion = ?, Categoria = ?, Alergenos = ?,
                     Fecha_Actualizacion = NOW(), Valor_Nutricional = ? WHERE Id_Producto = ?";
 
-        try
-        {
+        try {
             $stmt = $this->pdo->prepare($query);
             $stmt->bindParam(1, $n);
             $stmt->bindParam(2, $desc);
@@ -143,11 +139,106 @@ class Producto
             } else {
                 return false; // No se encontró la fila 
             }
-        }
-        catch(PDOException $e)
-        {
+        } catch (PDOException $e) {
             throw new Exception(Messages::LOAD_DATA_ERROR);
         }
 
+    }
+
+    // Recupera los primeros platos
+    public function getPrimerosPlatos()
+    {
+        $primerPlato = 'Primer Plato';
+        $entrante = 'Entrante';
+        $query = "SELECT Nombre, Alergenos FROM `Producto` WHERE Categoria = ? OR Categoria = ? AND Stock_Disponible >= 1";
+        try {
+            $stmt = $this->pdo->prepare($query);
+            $stmt->bindParam(1, $primerPlato);
+            $stmt->bindParam(2, $entrante);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+            throw new Exception(Messages::LOAD_DATA_ERROR);
+        }
+    }
+
+    // Recupera los segundos platos
+    public function getSegundosPlatos()
+    {
+        $segundoPlato = 'Segundo Plato';
+        $query = "SELECT Nombre, Alergenos FROM `Producto` WHERE Categoria = ? AND Stock_Disponible >= 1";
+        try {
+            $stmt = $this->pdo->prepare($query);
+            $stmt->bindParam(1, $segundoPlato);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+            throw new Exception(Messages::LOAD_DATA_ERROR);
+        }
+    }
+
+    // Recupera las bebidas
+    public function getBebidas()
+    {
+        $bebida = 'Bebida';
+        $query = "SELECT Nombre, Alergenos FROM `Producto` WHERE Categoria = ? AND Stock_Disponible >= 1";
+        try {
+            $stmt = $this->pdo->prepare($query);
+            $stmt->bindParam(1, $bebida);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+            throw new Exception(Messages::LOAD_DATA_ERROR);
+        }
+    }
+
+    // Trata los 3 productos como una operación atómica
+    // Es decir, se registran los 3 productos (Primero, Segundo y Bebida) o no se registra ninguno
+    // Además, para cada Producto, trata como una operación atómica el insertar el producto y actualizar su stock
+    public function asignarProductos($idVuelo, $idPasajero, $productos)
+    {
+        try {
+            // Iniciar la transacción externa
+            $this->pdo->beginTransaction();
+
+            // Preparar consultas para el INSERT y el UPDATE
+            $sqlInsert = "INSERT INTO AsignacionProductos (Id_Vuelo, Id_Pasajero, Id_Producto) 
+                      VALUES (?, ?, ?)";
+            $stmtInsert = $this->pdo->prepare($sqlInsert);
+
+            $sqlUpdate = "UPDATE Producto SET Stock_Disponible = Stock_Disponible - 1 WHERE Id_Producto = ?";
+            $stmtUpdate = $this->pdo->prepare($sqlUpdate);
+
+            // Enlazar parámetros fijos para el INSERT
+            $stmtInsert->bindParam(1, $idVuelo);
+            $stmtInsert->bindParam(2, $idPasajero);
+
+            // Procesar cada producto individualmente
+            foreach ($productos as $idProducto) {
+                // Enlazar el parámetro del producto para el INSERT
+                $stmtInsert->bindParam(3, $idProducto);
+
+                // Enlazar el parámetro del producto para el UPDATE
+                $stmtUpdate->bindParam(1, $idProducto);
+
+                // Ejecutar el INSERT y el UPDATE
+                $stmtInsert->execute();
+                $stmtUpdate->execute();
+            }
+
+            // Confirmar la transacción externa si todo es exitoso
+            $this->pdo->commit();
+            return true;
+
+        } catch (Exception $e) {
+            // Revertir la transacción externa en caso de error
+            if ($this->pdo->inTransaction()) {
+                $this->pdo->rollBack();
+            }
+            throw new Exception("Error al asignar productos: " . $e->getMessage());
+        }
     }
 }
