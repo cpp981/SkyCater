@@ -26,6 +26,8 @@ if (!isset($_SESSION['nombre'])) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf/notyf.min.css">
     <!-- Script de Notyf -->
     <script src="https://cdn.jsdelivr.net/npm/notyf/notyf.min.js"></script>
+    <!-- Faker CDN -->
+    <script type="text/javascript" src="https://unpkg.com/faker@5.1.0/dist/faker.min.js"></script>
     <!-- css DataTables CDN -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" href="../css/styles.css">
@@ -44,10 +46,11 @@ if (!isset($_SESSION['nombre'])) {
                     <hr class="hr-custom w-75 mx-auto mt-3">
                 </a>
             </div>
-           <!-- Sección del usuario -->
-           <div class="user-info d-flex justify-content-center align-items-center">
-                <i class="fas fa-user text-white me-1 user-icon" data-bs-toggle="tooltip" data-bs-html="true" data-bs-placement="left"
-                    title="Usuario: <?php echo $_SESSION['nombre'];?> Conectado desde: <?php echo time_since($_SESSION['session_start_time']); ?>"></i>
+            <!-- Sección del usuario -->
+            <div class="user-info d-flex justify-content-center align-items-center">
+                <i class="fas fa-user text-white me-1 user-icon" data-bs-toggle="tooltip" data-bs-html="true"
+                    data-bs-placement="left"
+                    title="Usuario: <?php echo $_SESSION['nombre']; ?> Conectado desde: <?php echo time_since($_SESSION['session_start_time']); ?>"></i>
                 <p class="text-white text-center mt-2 mb-0 user-name"><?php echo $_SESSION['nombre']; ?></p>
             </div>
             <ul class="nav flex-column mt-5 justify-content-center align-content-between">
@@ -55,10 +58,12 @@ if (!isset($_SESSION['nombre'])) {
                     <a class="nav-link" href="index.php"><i class="fas fa-dashboard me-1"></i><span>Dashboard</span></a>
                 </li>
                 <li class="nav-item mt-3">
-                    <a class="nav-link" href="inventario.php"><i class="fas fa-clipboard-list me-1"></i><span>Inventario</span></a>
+                    <a class="nav-link" href="inventario.php"><i
+                            class="fas fa-clipboard-list me-1"></i><span>Inventario</span></a>
                 </li>
                 <li class="nav-item mt-3">
-                    <a class="nav-link" href="listaVuelos.php"><i class="fas fa-plane-departure me-1"></i><span>Vuelos</span></a>
+                    <a class="nav-link" href="listaVuelos.php"><i
+                            class="fas fa-plane-departure me-1"></i><span>Vuelos</span></a>
                 </li>
                 <li class="nav-item mt-3">
                     <a class="nav-link" href="pedido.php"><i class="fas fa-truck-fast me-1"></i><span>Pedidos</span></a>
@@ -83,21 +88,38 @@ if (!isset($_SESSION['nombre'])) {
                     </button>
                 </div>
             </nav>
+            <!-- Contenedor de fondo con imagen -->
+            <div class="position-relative">
+                <img src="../img/SkyCaterPlane.png" class="custom-bg-image w-100"
+                    style="height: 300px; object-fit: cover;">
+                <div class="overlay"></div>
+            </div>
             <div class="d-flex flex-column align-items-center">
                 <!-- Título principal -->
                 <div class="text-center mb-5" style="color: #003262;">
                     <h2>Gestión de Pedidos</h2>
                 </div>
-
-                <!-- Primer contenedor de tarjetas (pedidos completados y pendientes) -->
-                <div class="d-flex align-items-center justify-content-center mb-4">
-                    <div class="card bg-success me-2  mb-5 indi-pedidos text-center rounded shadow">
-                        <p><i class="fas fa-truck-fast me-1"></i>Pedidos Completados</p>
-                        <p class="text-center fw-bold valor-indi-pedido">50</p>
+                <!-- Contenedor de los indicadores -->
+                <div class="d-flex justify-content-between mb-4">
+                    <!-- Card Indicador de Pedidos completados -->
+                    <div class="card shadow text-center me-5" style="width: 35vh">
+                        <div class="card-body">
+                            <h5 class="card-title text-success">
+                                <i class="fas fa-check-to-slot fa-lg"></i> Pedidos completados
+                            </h5>
+                            <p id="card-entregados" class="card-text fs-4 fw-bold text-dark"></p>
+                        </div>
                     </div>
-                    <div class="card bg-warning me-2 mb-5 indi-pedidos text-center rounded shadow">
-                        <p><i class="fas fa-circle-exclamation me-1"></i>Total Pedidos Pendientes</p>
-                        <p class="text-center fw-bold valor-indi-pedido">20</p>
+
+                    <!-- Card Indicador de Pedidos pendientes de entrega -->
+                    <div class="card shadow text-center" style="width: 35vh">
+                        <div class="card-body">
+                            <h5 class="card-title text-warning">
+                                <i class="fas fa-truck-fast fa-lg"></i> Pedidos pendientes
+                            </h5>
+                            </h5>
+                            <p id="card-sin-entregar" class="card-text fs-4 fw-bold text-dark"></p>
+                        </div>
                     </div>
                 </div>
 
@@ -122,6 +144,7 @@ if (!isset($_SESSION['nombre'])) {
                                     <th class="centered cabecera"></th>
                                     <th class="centered cabecera"></th>
                                     <th class="centered cabecera"></th>
+                                    <th class="centered cabecera"></th>
                                 </tr>
                             </thead>
                             <tbody id="tBodyPedidos">
@@ -135,21 +158,25 @@ if (!isset($_SESSION['nombre'])) {
     </div>
     <!-- Modal para añadir pedido -->
     <div class="modal fade" id="modalPedido" tabindex="-1" aria-labelledby="modalPedidoLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-md">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalPedidoLabel">Añadir Pedido</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form id="formPedido">
                         <div class="mb-3">
                             <label for="pedidoNombre" class="form-label">Nº de Pedido</label>
-                            <input type="text" class="form-control" id="pedidoNum" placeholder="Número de Pedido" disabled>
+                            <input type="text" class="form-control" id="pedidoNum" placeholder="Número de Pedido"
+                                disabled>
                         </div>
                         <div class="mb-3">
+                            <?php
+                            // Generamos la fecha actual en formato YYYY-MM-DD
+                            $fechaHoy = date('Y-m-d'); ?>
                             <label for="pedidoFecha" class="form-label">Fecha de Entrega</label>
-                            <input type="date" class="form-control" id="pedidoFecha">
+                            <input type="date" class="form-control" id="pedidoFecha" min=<?php echo $fechaHoy ?>>
                         </div>
                         <div class="mb-3">
                             <label for="proveedor" class="form-label">Proveedor</label>
@@ -169,25 +196,31 @@ if (!isset($_SESSION['nombre'])) {
                         </div>
                         <div class="mb-3">
                             <label for="pedidoObservaciones" class="form-label">Observaciones</label>
-                            <textarea class="form-control" id="pedidoObservaciones" rows="3" style="resize: none;"></textarea>
+                            <textarea class="form-control" id="pedidoObservaciones" rows="3"
+                                style="resize: none;"></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal"></i>Cerrar</button>
+                            <button type="submit" id="guardarEditProducto" class="btn btn-success"><i
+                                    class="fas fa-save me-1"></i>Grabar Pedido</button>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
+    </div>
 
 
-        <div class="foot d-flex justify-content-center align-items-end mt-5">
-            <footer class="fixed-bottom text-center">
-                <p>© 2024 SkyCater. Todos los derechos reservados.</p>
-            </footer>
-        </div>
-        <!-- JavaScript de Bootstrap -->
-        <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- JS DataTables CDN -->
-        <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
+    <div class="foot d-flex justify-content-center align-items-end mt-5">
+        <footer class="fixed-bottom text-center">
+            <p>© 2024 SkyCater. Todos los derechos reservados.</p>
+        </footer>
+    </div>
+    <!-- JavaScript de Bootstrap -->
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- JS DataTables CDN -->
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
 </body>
 
 </html>

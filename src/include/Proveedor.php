@@ -35,7 +35,7 @@ class Proveedor
    // Recupera nombre de producto a partir del Id del proveedor
    public function getProdByIdProveedor($id)
    {
-        $query = "SELECT Nombre FROM Producto WHERE Id_Proveedor = ?";
+        $query = "SELECT Nombre, Id_Producto, Categoria FROM Producto WHERE Id_Proveedor = ?";
         try
         {
             $stmt = $this->pdo->prepare($query);

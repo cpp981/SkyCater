@@ -41,4 +41,24 @@ class Usuario
             throw new Exception(Messages::LOAD_DATA_ERROR);
         }
     }
+
+    // Obtiene el Id del Usuario conectado
+    public function getIdUsuarioByName()
+    {
+        $query = "SELECT Id_Usuario FROM Usuario_Registrado WHERE Nombre = ?";
+        try 
+        {
+            $stmt = $this->pdo->prepare($query);
+            $stmt->bindParam(1, $this->usuario);
+            $stmt->execute();
+            $resul = $stmt->fetch(PDO::FETCH_ASSOC);
+            $id = $resul['Id_Usuario'];
+            return $id;
+        } 
+        catch (Exception $e) 
+        {
+            throw new Exception(Messages::LOAD_DATA_ERROR);
+        }
+
+    }
 }

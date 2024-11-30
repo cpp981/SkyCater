@@ -88,6 +88,12 @@ if (!isset($_SESSION['nombre'])) {
                     </button>
                 </div>
             </nav>
+             <!-- Contenedor de fondo con imagen -->
+             <div class="position-relative">
+                <img src="../img/SkyCaterPlane.png" class="custom-bg-image w-100"
+                    style="height: 300px; object-fit: cover;">
+                <div class="overlay"></div>
+            </div>
             <div class="dash text-center mb-3" style="color: #003262;">
                 <h2>Dashboard</h2>
             </div>

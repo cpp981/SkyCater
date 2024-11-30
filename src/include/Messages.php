@@ -25,4 +25,10 @@ class Messages{
     const FLIGHT_MANAGEMENT_SUCCESS = 'El vuelo ha sido gestionado correctamente';
     const FLIGHT_MANAGEMENT_ERROR = 'El vuelo ya está gestionado';
     const FLIGHT_ID_REQUIRED = 'El id del vuelo es requerido';
+    const NUM_ORDER_NOT_VALID = 'Número de pedido no válido';
+    const DATE_ORDER_NOT_VALID = 'Fecha de entrega no válida';
+    const NOT_VALID_QUANTITY = 'Cantidad no válida';
+    const PRODUCT_PRICE_NOT_VALID = 'Precio del producto no válido';
+    const ORDER_CREATED_SUCCESSFULLY = 'Pedido creado correctamente';
+    const ORDER_CREATED_ERROR = 'Hubo un error al crear el pedido.';
 }
