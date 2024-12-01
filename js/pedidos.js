@@ -27,11 +27,11 @@ document.addEventListener('DOMContentLoaded', function () {
     // Configuración de DataTable con AJAX
     const tableOptions = {
         responsive: true,
+        pageLength: 6,
         ajax: {
             url: "../src/listaPedidos.php",
             type: "POST",
             dataSrc: "",
-            pageLength: 6,
             data: function (d) {
                 d.action = "obtener_pedidos";
             }
@@ -338,11 +338,13 @@ document.addEventListener('DOMContentLoaded', function () {
                     Swal.showLoading(); // Iniciamos el spinner
                 }
             });
+
             // Añadir retraso para simular el proceso de generación del pedido
             setTimeout(() => {
                 $.ajax({
                     url: '../src/insertaPedido.php',
                     method: 'POST',
+                    dataType: 'json', // Especificamos el tipo de dato de la respuesta
                     data: {
                         numeroDePedido: numeroDePedido,
                         fechaEntrega: fechaEntrega,
@@ -372,7 +374,9 @@ document.addEventListener('DOMContentLoaded', function () {
                         notyf.error("Error al guardar el pedido");
                     }
                 });
-            }, 1000);
+            }, 1000); // Simula un retraso de 1 segundo antes de la llamada AJAX
         });
+
     });
 });
+
