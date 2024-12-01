@@ -32,5 +32,4 @@
 ## Uso
 
 1. Inicia el servidor web y accede a la aplicación a través de tu navegador.
-2. Regístrate como trabajador de la aerolínea o proveedor según sea necesario.
-3. Navega a través de las diferentes secciones de la aplicación según tu rol.
+2. Navega a través de las diferentes secciones de la aplicación.
