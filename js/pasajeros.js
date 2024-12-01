@@ -333,7 +333,7 @@ $(document).ready(function () {
             // Verificamos si alguno de los campos está vacío
             if (!plato1 || !plato2 || !bebida) {
                 camposCompletos = false;
-                mensajeError += `La fila del pasajero ${data.Nombre} ${data.Apellido} no tiene el menú completo.\n`;
+                mensajeError += `${data.Nombre} ${data.Apellido}\n`;
             }
         });
 
@@ -341,7 +341,7 @@ $(document).ready(function () {
         if (!camposCompletos) {
             Swal.fire({
                 title: 'Error',
-                text: mensajeError,
+                text: "No podemos procesar el vuelo.\n Hay pasajeros todavía sin menú",
                 icon: 'error',
                 confirmButtonText: 'Aceptar',
                 confirmButtonColor: '#5cb85c'

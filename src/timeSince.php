@@ -1,6 +1,6 @@
 <?php
 
-// Función que coge el tiempo que lleva el usuario conectado
+// Función que obtiene el tiempo que lleva el usuario conectado
 function time_since($timestamp) {
     $time_difference = time() - $timestamp;
     

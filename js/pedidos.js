@@ -77,7 +77,16 @@ document.addEventListener('DOMContentLoaded', function () {
                     return `<span class="badge ${badgeClass}">${badgeText}</span>`;
                 }
             },
-            { title: "Coste" },
+            { title: "Nombre Producto" },
+            {
+                title: "Coste", data: 3, render: function (data, type, row) {
+                    // Comprobar si es tipo 'display' para mostrar el simbolo en la tabla
+                    if (type === 'display') {
+                        return data + ' €';  // Añadir el símbolo de euro
+                    }
+                    return data;
+                }
+            },
             { title: "Proveedor" },
             {
                 title: "Fecha Pedido",
@@ -118,12 +127,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 orderable: false, // Deshabilitamos el orden en esta columna
                 searchable: false, // Deshabilitamos la búsqueda en esta columna
                 render: function (data, type, row) {
-                    // Botón con icono de Font Awesome
+
                     return `<button class="btn btn-danger btn-sm delete-row" data-id="${row[0]}">
                                 <i class="fas fa-trash-can"></i>
                             </button>
-                            <button class="btn btn-warning btn-sm text-white" data-id="${row[0]}">
-                                <i class="fas fa-pencil"></i>
+                            <button class="btn btn-primary btn-sm text-white view-detail" data-id="${row[0]}">
+                                <i class="fas fa-eye"></i>
                             </button>`;
                 }
             }
@@ -145,20 +154,9 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     // Inicializar DataTable con la configuración definida
-    var table = $('#tablaPedidos').DataTable(tableOptions);
-
-    // Vincular botón de Exportar PDF al Datatables
-    $('#exportPdf').on('click', function () {
-        console.log("Exportando a PDF...");
-        table.button(0).trigger(); // Usa el índice del botón PDF configurado en el array de botones
-    });
-    // Event listener para el botón de refresco
-    $('#refrescarTabla').click(function () {
-        table.ajax.reload(); // Refrescar la tabla al hacer clic en el botón
-    });
+    const table = $('#tablaPedidos').DataTable(tableOptions);   
 
     // Función para traer los nombres e ids de los proveedores
-
     $.ajax({
         url: '../src/proveedores.php',
         method: 'GET',
@@ -361,10 +359,23 @@ document.addEventListener('DOMContentLoaded', function () {
                         Swal.close(); // Cerramos el spinner
 
                         if (response.status === 'success') {
+                            // Notificar que el pedido se ha guardado correctamente
                             notyf.success(response.message);
-                            $('#tablaPedidos').DataTable().ajax.reload();
-                            $('form')[0].reset();
-                            $('#formPedido').modal('hide');
+
+                            // Mostrar un segundo SweetAlert con el número de pedido
+                            Swal.fire({
+                                title: 'Pedido creado correctamente',
+                                text: 'El número de pedido es: ' + numeroDePedido,
+                                icon: 'success',
+                                confirmButtonText: 'Aceptar',
+                                confirmButtonColor: '#5cb85c'
+                            }).then(() => {
+                                // Recargar la tabla de pedidos y resetear el formulario
+                                $('#tablaPedidos').DataTable().ajax.reload();
+                                $('#formPedido')[0].reset();
+                                $('#modalPedido').modal('hide');
+                            });
+
                         } else {
                             notyf.error(response.message || "Error al guardar el pedido.");
                         }
@@ -374,9 +385,148 @@ document.addEventListener('DOMContentLoaded', function () {
                         notyf.error("Error al guardar el pedido");
                     }
                 });
-            }, 1000); // Simula un retraso de 1 segundo antes de la llamada AJAX
+            }, 1000); // Simulamos el proceso de creación del pedido con un retraso
+
+        });
+
+    });
+
+    $(document).on('click', '.delete-row', function () {
+        const notyf = new Notyf({
+            position: {
+                x: 'right',  // Alineación horizontal
+                y: 'top'      // Alineación vertical en la parte superior
+            },
+        });
+        // Obtener el número de pedido desde el atributo data-id
+        const numPedido = $(this).data('id');
+
+        // Confirmar la acción con el usuario
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: `Esta acción cancelará el pedido número ${numPedido}.`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Aceptar',
+            cancelButtonText: 'Cancelar',
+            confirmButtonColor: '#5cb85c',
+            cancelButtonColor: '#d33'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Realizar la petición AJAX
+                $.ajax({
+                    url: '../src/detallePedido.php', // Archivo PHP que maneja la cancelación
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        action: 'cancelar',
+                        numPedido: numPedido
+                    },
+                    beforeSend: function () {
+                        // Mostrar un spinner mientras se procesa
+                        Swal.fire({
+                            title: 'Procesando...',
+                            text: 'Por favor, espera.',
+                            allowOutsideClick: false,
+                            showConfirmButton: false,
+                            didOpen: () => {
+                                Swal.showLoading();
+                            },
+                        });
+                    },
+                    success: function (response) {
+                        Swal.close(); // Cerrar el spinner
+
+                        // Verificar la respuesta y mostrar el mensaje correspondiente
+                        if (response.status === 'success') {
+                            // Mostrar un mensaje de éxito y recargar la tabla
+                            notyf.success(response.message);
+                            $('#tablaPedidos').DataTable().ajax.reload(null, false); // Recargar la tabla sin reiniciar la paginación
+                        } else {
+                            // Mostrar un mensaje de error
+                            notyf.error(response.message);
+                        }
+                    },
+                    error: function () {
+                        Swal.close(); // Cerrar el spinner
+                        // Mostrar un mensaje genérico en caso de error
+                        notyf.error('Ocurrió un error al intentar cancelar el pedido.');
+                    },
+                });
+            }
+        });
+    });
+
+    $(document).on('click', '.view-detail', function () {
+        // Obtener el número de pedido desde el atributo data-id
+        const numPedido = $(this).data('id');
+
+        $.ajax({
+            url: '../src/detallePedido.php', // Archivo PHP que manejará la acción
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                action: 'detalles',
+                numPedido: numPedido
+            },
+            success: function (response) {
+                if (response.status === 'success' && response.data.length > 0) {
+                    // Construir el contenido del pop-up
+                    let detalles = response.data[0]; // Acceder al primer (y único) elemento del array
+                    let estadoClass = '';
+
+                    // Determinar la clase de estado según el valor de Estado_Pedido
+                    switch (detalles.Estado_Pedido) {
+                        case 'Completado':
+                            estadoClass = 'badge-success';
+                            break;
+                        case 'Pendiente':
+                            estadoClass = 'badge-warning';
+                            break;
+                        case 'Cancelado':
+                            estadoClass = 'badge-danger';
+                            break;
+                        default:
+                            estadoClass = 'badge-secondary'; // Clase por defecto para estados desconocidos
+                            break;
+                    }
+
+                    Swal.fire({
+                        title: `Detalles del Pedido Nº ${detalles.Numero_Pedido}`,
+                        html: `
+                            <p><strong>Proveedor:</strong> ${detalles.Nombre_Empresa}</p>
+                            <p><strong>Fecha de Pedido:</strong> ${detalles.Fecha_Pedido}</p>
+                            <p><strong>Fecha de Entrega:</strong> ${detalles.Fecha_Entrega}</p>
+                            <p><strong>Nombre del Producto:</strong> ${detalles.Nombre_Producto}</p>
+                            <p><strong>Cantidad:</strong> ${detalles.Cantidad}</p>
+                            <p><strong>Precio del Producto:</strong> €${detalles.Precio_Producto.toFixed(2)}</p>
+                            <p><strong>Coste Total:</strong> €${detalles.Coste_Total.toFixed(2)}</p>
+                            <p><strong>Estado:</strong> <span class="badge ${estadoClass}">${detalles.Estado_Pedido}</span></p>
+                        `,
+                        icon: 'info',
+                        confirmButtonText: 'Cerrar',
+                        confirmButtonColor: '#d33'
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'No se encontraron detalles para el pedido.',
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar',
+                        confirmButtonColor: '#d33'
+                    });
+                }
+            },
+            error: function () {
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Ocurrió un error al intentar cargar los detalles del pedido.',
+                    icon: 'error',
+                    confirmButtonText: 'Cerrar',
+                    cancelButtonColor: '#d33'
+                });
+            }
         });
 
     });
 });
-
