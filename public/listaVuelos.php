@@ -109,7 +109,7 @@ if (!isset($_SESSION['nombre'])) {
                     <div class="card shadow text-center me-5" style="width: 35vh">
                         <div class="card-body">
                             <h5 class="card-title text-success">
-                                <i class="fas fa-plane-departure fa-lg"></i> Vuelos gestionados
+                                <i class="fas fa-plane-circle-check fa-lg"></i> Vuelos gestionados
                             </h5>
                             <p id="card-gestionados" class="card-text fs-4 fw-bold text-dark"></p>
                         </div>

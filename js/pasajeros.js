@@ -24,10 +24,6 @@ $(document).ready(function () {
                 segundoPlato = response.data.segundoPlato;
                 postre = response.data.postre;
 
-                console.log('Datos cargados al inicio:');
-                console.log('Primer Plato:', primerPlato);
-                console.log('Segundo Plato:', segundoPlato);
-                console.log('Postre:', postre);
             } else {
                 console.error('Estructura inesperada en la respuesta de la API:', response);
                 alert('Error al cargar los datos. Por favor, inténtelo más tarde.');
@@ -168,7 +164,7 @@ $(document).ready(function () {
                     // Verificamos si los campos Plato1, Plato2 y Bebida están completos
                     if (row.Plato1 && row.Plato2 && row.Plato3) {
                         // Si ya están completos, mostramos un check verde
-                        return `<i class="fas fa-check-circle text-success"></i>`;
+                        return `<i class="fas fa-check-circle text-success fa-2x"></i>`;
                     } else {
                         // Si no están completos, mostramos el botón de edición
                         return `<button class="edit btn btn-sm btn-primary" data-dni="${row.Dni}"><i class="fas fa-gear"></i></button>`;
@@ -303,7 +299,8 @@ $(document).ready(function () {
                                     notyf.success(response.message);
                                     $('#gestionMenuPasajero').hide();
                                     $('#fichaPasajero').hide();
-                                    $('#gestionMenuPasajero .loading-message').show();
+                    
+                                    //$('#gestionMenuPasajero .loading-message').show();
                                     tablaPasajeros.ajax.reload();
                                 } else {
                                     notyf.error(response.message);

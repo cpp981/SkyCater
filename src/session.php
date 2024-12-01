@@ -11,6 +11,7 @@ if (session_status() == PHP_SESSION_NONE)
                     'cookie_path' => '/',   // Disponible en toda la aplicación
                     'cookie_domain' => '' // Lo dejamos en blanco para aplicarlo al dominio actual
         ]);
+
 }
 
 // Regenerar el ID de sesión después de que el usuario inicie sesión
