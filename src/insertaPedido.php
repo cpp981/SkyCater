@@ -68,7 +68,7 @@ try {
     $pedido = new Pedido();
 
     // Intentamos crear el pedido
-    $resultado = $pedido->crearPedido($numeroDePedido, $fechaActual, $costeTotal, $observaciones, $proveedorId, $idUser, $nombreProducto, $cantidad, $precioProducto, $fechaEntrega, $proveedorId);
+    $resultado = $pedido->crearPedido($numeroDePedido, $fechaActual, $costeTotal, $observaciones, $proveedorId, $idUser, $nombreProducto, $cantidad, $precioProducto, $fechaEntrega, $productoId);
 
     // Verificamos el resultado
     if ($resultado) {

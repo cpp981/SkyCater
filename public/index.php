@@ -48,8 +48,9 @@ if (!isset($_SESSION['nombre'])) {
             </div>
             <!-- Sección del usuario -->
             <div class="user-info d-flex justify-content-center align-items-center">
-                <i class="fas fa-user text-white me-1 user-icon" data-bs-toggle="tooltip" data-bs-html="true" data-bs-placement="left"
-                    title="Usuario: <?php echo $_SESSION['nombre'];?> Conectado desde: <?php echo time_since($_SESSION['session_start_time']); ?>"></i>
+                <i class="fas fa-user text-white me-1 user-icon" data-bs-toggle="tooltip" data-bs-html="true"
+                    data-bs-placement="left"
+                    title="Usuario: <?php echo $_SESSION['nombre']; ?> Conectado desde: <?php echo time_since($_SESSION['session_start_time']); ?>"></i>
                 <p class="text-white text-center mt-2 mb-0 user-name"><?php echo $_SESSION['nombre']; ?></p>
             </div>
             <ul class="nav flex-column mt-5 justify-content-center align-content-between">
@@ -88,8 +89,8 @@ if (!isset($_SESSION['nombre'])) {
                     </button>
                 </div>
             </nav>
-             <!-- Contenedor de fondo con imagen -->
-             <div class="position-relative">
+            <!-- Contenedor de fondo con imagen -->
+            <div class="position-relative">
                 <img src="../img/SkyCaterPlane.png" class="custom-bg-image w-100"
                     style="height: 300px; object-fit: cover;">
                 <div class="overlay"></div>
@@ -103,13 +104,16 @@ if (!isset($_SESSION['nombre'])) {
 
                         <div class="card shadow" style="height: 184px; width: 334px; margin-top: -27px;">
                             <div class="indi card-body">
-                                <p class="text-center"><i class="fas fa-utensils me-2"></i></i>Productos sin alérgenos
-                                    en stock</p>
-                                <h1 class="text-center" id="prodNoAlergenos" style="font-size: 4.5em;"></h1>
-                                <p class="text-end"><?php echo strftime('%d %b %Y'); ?></p>
+                                <p class="text-center h4"><i class="fas fa-utensils me-2"></i></i>Productos sin
+                                    alérgenos</p>
+                                <h1 class="text-center" id="prodNoAlergenos" style="font-size: 3.5em;"></h1>
+                                <p class="text-end mt-4"><?php echo strftime('%d %b %Y'); ?></p>
                             </div>
                         </div>
-                        <div class="card shadow" style="height: 334px;">
+                        <div class="card shadow">
+                            <div class="indi card-header text-center">
+                                Evolución vuelos por mes
+                            </div>
                             <div class="card-body">
                                 <canvas id="chart5" style="height: 300px; width: 300px;"></canvas>
                             </div>
@@ -117,13 +121,20 @@ if (!isset($_SESSION['nombre'])) {
 
                     </div>
                     <div class="d-flex flex-column">
-                        <div class="card shadow">
-                            <div class="card-body ">
-                                <canvas id="chart3"></canvas>
+                        <div class="card shadow" style="height: 184px;">
+                            <div class=" indi card-body ">
+                                <p class="text-center h4"><i class="fas fa-bowl-food me-2"></i></i>Productos en
+                                    Inventario
+                                </p>
+                                <h1 class="text-center" id="totalProd" style="font-size: 3.5em;"></h1>
+                                <p class="text-end mt-4"><?php echo strftime('%d %b %Y'); ?></p>
                             </div>
                         </div>
 
                         <div class="card shadow">
+                            <div class="indi card-header text-center">
+                                Productos por categoría
+                            </div>
                             <div class="card-body ">
                                 <canvas id="chart1"></canvas>
                             </div>
@@ -132,13 +143,19 @@ if (!isset($_SESSION['nombre'])) {
                     </div>
                     <div class="d-flex flex-wrap">
                         <div class="d-flex flex-column">
-                            <div class="card shadow">
-                                <div class="card-body ">
-                                    <canvas id="chart4"></canvas>
+                            <div class="card shadow" style="height: 184px;">
+                                <div class="indi card-body ">
+                                    <p class="text-center h4"><i class="fas fa-plane-departure me-2"></i></i>Vuelos este
+                                        mes</p>
+                                    <h1 class="text-center" id="indicadorVuelosMes" style="font-size: 3.5em;"></h1>
+                                    <p class="text-end mt-4"><?php echo strftime('%d %b %Y'); ?></p>
                                 </div>
                             </div>
 
                             <div class="card shadow">
+                                <div class="indi card-header text-center">
+                                    Pasajeros por tipo de asiento
+                                </div>
                                 <div class="card-body ">
                                     <canvas id="chart2"></canvas>
                                 </div>
@@ -149,13 +166,16 @@ if (!isset($_SESSION['nombre'])) {
                     <div class="d-flex flex-column mb-5" style="margin-top: 37px;">
                         <div class="card shadow" style="height: 184px; width: 334px; margin-top: -27px;">
                             <div class="indi card-body ">
-                                <p class="text-center"><i class="fas fa-users me-2"></i>Personas con
-                                    intolerancias este mes</p>
-                                <h1 class="text-center" id="intolerancias" style="font-size: 4.5em;"></h1>
-                                <p class="text-end"><?php echo date('d M Y'); ?></p>
+                                <p class="text-center h5"><i class="fas fa-users me-2"></i>Personas con
+                                    intolerancias </p>
+                                <h1 class="text-center" id="intolerancias" style="font-size: 3.5em;"></h1>
+                                <p class="text-end mt-4"><?php echo date('d M Y'); ?></p>
                             </div>
                         </div>
-                        <div class="card shadow mb-5" style="height: 334px;">
+                        <div class="card shadow mb-5">
+                            <div class="indi card-header text-center">
+                                Evolución pedidos por mes
+                            </div>
                             <div class="card-body" style="margin-top: -5px;">
                                 <canvas id="chart6" style="height: 280px; width: 275px;"></canvas>
                             </div>

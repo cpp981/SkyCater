@@ -128,10 +128,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 searchable: false, // Deshabilitamos la búsqueda en esta columna
                 render: function (data, type, row) {
 
-                    return `<button class="btn btn-danger btn-sm delete-row" data-id="${row[0]}">
-                                <i class="fas fa-trash-can"></i>
+                    return `<button class="btn btn-danger btn-sm delete-row" data-id="${row[0]}"
+                              data-bs-toggle="tooltip" data-bs-html="true" data-bs-placement="left" title="Cancelar pedido"">
+                                <i class="fas fa-xmark"></i>
                             </button>
-                            <button class="btn btn-primary btn-sm text-white view-detail" data-id="${row[0]}">
+                            <button class="btn btn-primary btn-sm text-white view-detail" data-id="${row[0]}"
+                                data-bs-toggle="tooltip" data-bs-html="true" data-bs-placement="left" title="Ver detalles"">
                                 <i class="fas fa-eye"></i>
                             </button>`;
                 }
@@ -204,7 +206,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         const categoria = item.Categoria; // Categoría del producto
 
                         // Añadimos el option con el ID del producto como value y la categoría como data-attribute
-                        selectProductos.append(`<option value="${idProducto}" data-categoria="${categoria}">${nombre}</option>`);
+                        selectProductos.append(`<option class="prodId" value="${idProducto}" data-categoria="${categoria}">${nombre}</option>`);
                     });
                 },
                 error: function (xhr, status, error) {
@@ -296,28 +298,29 @@ document.addEventListener('DOMContentLoaded', function () {
             // Obtener los datos del formulario
             const numeroDePedido = $('#pedidoNum').val();
             const fechaEntrega = $('#pedidoFecha').val();
-            const productoId = $('#producto').val();
+            //const productoId = $('.prodId').val();
             const cantidad = parseInt($('#pedidoCantidad').val(), 10); // Asegurarnos de que es un número
             const observaciones = $('#pedidoObservaciones').val();
             const proveedorId = $('#proveedor').val();
-
+            //console.log(productoId);
             // Verificación de campos obligatorios (sin contar las observaciones)
-            if (!numeroDePedido || !fechaEntrega || !productoId || !cantidad || !proveedorId) {
+            if (!numeroDePedido || !fechaEntrega  || !cantidad || !proveedorId) {
                 notyf.error("Por favor, completa todos los campos obligatorios.");
                 return; // Detenemos el proceso si falta algún campo obligatorio
             }
 
             // Verificamos si se ha seleccionado un producto
-            if (!productoId) {
+           /*if (!productoId) {
                 notyf.error("Por favor, selecciona un producto.");
                 return; // Detenemos el proceso si no hay producto seleccionado
-            }
+            }*/
 
             // Obtener el producto seleccionado y su categoría
             const productoSeleccionado = $('#producto option:selected');
             const nombreProducto = productoSeleccionado.text(); // Obtener el nombre del producto seleccionado
             const categoriaProducto = productoSeleccionado.data('categoria'); // Obtener la categoría del producto seleccionado
-
+            const productoId = productoSeleccionado.val();
+            //console.log("Id-PROD: " + productoId);
             // Obtener el precio del producto basándonos en la categoría
             const precioProducto = obtenerPrecioProducto(categoriaProducto);
 
@@ -477,7 +480,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     // Determinar la clase de estado según el valor de Estado_Pedido
                     switch (detalles.Estado_Pedido) {
-                        case 'Completado':
+                        case 'Entregado':
                             estadoClass = 'badge-success';
                             break;
                         case 'Pendiente':

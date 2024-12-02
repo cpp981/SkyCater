@@ -36,6 +36,7 @@ class Pedido
     }
 
     // Función para crear el pedido
+
     public function crearPedido($numPedido, $fecha, $coste, $obs, $idProv, $idUser, $nombreProd, $cantidad, $precioUnidad, $fechaEntrega, $idProd)
     {
         // Inicia una transacción para asegurar la atomicidad de las operaciones
@@ -162,7 +163,14 @@ class Pedido
         $stmt = $this->pdo->prepare($query);
         $stmt->bindParam(1, $cantidad);
         $stmt->bindParam(2, $productoId);
-        $stmt->execute();
+        if ($stmt->execute()) {
+            error_log("Stock actualizado para producto ID $productoId, cantidad añadida: $cantidad");
+        } else {
+            // Log si hubo algún error
+            $errorInfo = $stmt->errorInfo();
+            error_log("Error al actualizar el stock para producto ID $productoId. Error: " . implode(", ", $errorInfo));
+        }
+
     }
 
     // Método para cambiar el estado de un pedido a 'Entregado'
@@ -219,6 +227,71 @@ class Pedido
             }
         } else {
             echo "No hay pedidos pendientes para actualizar.";
+        }
+    }
+
+    // Cuenta los pedidos por mes
+    public function contadorPedidosPorMes()
+    {
+        $query = "SELECT DATE_FORMAT(fecha_pedido, '%Y-%m') AS mes, 
+                  COUNT(*) AS total_pedidos FROM Pedido GROUP BY mes
+                  ORDER BY mes";
+        try {
+            $stmt = $this->pdo->prepare($query);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception(Messages::LOAD_DATA_ERROR);
+        }
+    }
+
+    // Borra los pedidos Cancelados
+    public function borraPedidosCancelados()
+    {
+        try {
+                        
+            // Consulta para obtener los Id_Pedido de los pedidos cancelados con fecha de entrega pasada
+            $query = "
+            SELECT p.Id_Pedido
+            FROM Pedido p
+            INNER JOIN Pedido_Producto pp ON p.Id_Pedido = pp.Id_Pedido
+            WHERE pp.Fecha_Entrega <= NOW()
+            AND p.Estado_Pedido = 3
+        ";
+
+            $stmt = $this->pdo->prepare($query);
+            $stmt->execute();
+            $pedidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            if ($pedidos) {
+                // Dividir los pedidos en lotes pequeños para evitar grandes consultas
+                $pedidosPorLote = 1000;
+                $totalPedidos = count($pedidos);
+                $pedidosBorrados = 0;
+
+                for ($i = 0; $i < $totalPedidos; $i += $pedidosPorLote) {
+                    // Obtener un lote de pedidos
+                    $lote = array_slice($pedidos, $i, $pedidosPorLote);
+                    $idsPedidos = array_column($lote, 'Id_Pedido');
+
+                    // Eliminar los pedidos en un solo DELETE por lote
+                    $deletePedidoQuery = "
+                    DELETE FROM Pedido
+                    WHERE Estado_Pedido = 3 AND Id_Pedido IN (" . implode(',', array_map('intval', $idsPedidos)) . ")
+                ";
+                    $deletePedidoStmt = $this->pdo->prepare($deletePedidoQuery);
+                    $deletePedidoStmt->execute();
+
+                    // Contabilizar los pedidos eliminados
+                    $pedidosBorrados += count($idsPedidos);
+                }
+
+                echo "Se han eliminado $pedidosBorrados pedidos cancelados correctamente.";
+            } else {
+                echo "No hay pedidos cancelados para eliminar.";
+            }
+        } catch (Exception $e) {
+            echo "Error al obtener los pedidos: " . $e->getMessage();
         }
     }
 }

@@ -241,4 +241,32 @@ class Producto
             throw new Exception("Error al asignar productos: " . $e->getMessage());
         }
     }
+
+    // Contador categorias de platos
+    public function contadorCategoriasProductos()
+    {
+        $query="SELECT Categoria, COUNT(Categoria) FROM Producto WHERE Categoria = 'Primer Plato' OR Categoria = 'Segundo Plato' OR Categoria = 'Bebida' GROUP BY Categoria ORDER BY Categoria DESC";
+        try {
+            $stmt = $this->pdo->prepare($query);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+            throw new Exception(Messages::LOAD_DATA_ERROR);
+        }
+    }
+
+    // Contador de productos (total)
+    public function getTotalProductos()
+    {
+        $query = "SELECT COUNT(*) AS Platos_Disponibles FROM Producto";
+        try {
+            $stmt = $this->pdo->prepare($query);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+            throw new Exception(Messages::LOAD_DATA_ERROR);
+        }
+    }
 }

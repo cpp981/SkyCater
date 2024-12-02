@@ -61,4 +61,20 @@ class Usuario
         }
 
     }
+
+    // Añade un log al Registro de Logs
+    public function addLogRegistro($idUser)
+    {
+        $query = "INSERT INTO Registro_Log (Fecha, Id_Usuario) VALUES (NOW(),?)";
+        try 
+        {
+            $stmt = $this->pdo->prepare($query);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } 
+        catch (Exception $e) 
+        {
+            throw new Exception(Messages::LOAD_DATA_ERROR);
+        }
+    }
 }

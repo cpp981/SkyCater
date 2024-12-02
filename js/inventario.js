@@ -36,7 +36,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 targets: 6,
                 searchable: false,
                 orderable: false,
-                targets: 2,
             },
         ],
         "columns": [

@@ -43,6 +43,7 @@ try {
         
         if ($userId) {
             $_SESSION['user_id'] = $userId; // Guardamos el ID en la sesión
+            //$valid_user->addLogRegistro($_SESSION['user_id']);
         } else {
             // Si no se encuentra el usuario, muestra un mensaje de error
             echo json_encode(['status' => 'error', 'message' => 'Usuario no encontrado']);

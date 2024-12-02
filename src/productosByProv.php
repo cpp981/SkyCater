@@ -13,7 +13,7 @@ try {
 
     $proveedor = new Proveedor();
     $productos = $proveedor->getProdByIdProveedor($id);
-
+    //var_dump($productos);
     // Creamos un array para almacenar los datos en formato adecuado
     $productosArray = [];
 

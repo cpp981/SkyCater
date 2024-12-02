@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const tableOptions = {
         dom: 'frtip',  // Estructura de los elementos (filtro, tabla, paginación)
         responsive: true,
+        pageLength: 7,
         ajax: {
             url: "../src/listaVuelos2.php",  // URL del archivo que devuelve los datos
             type: "GET",
@@ -17,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
         columnDefs: [
             {
                 className: "centered",
-                targets: [0, 1, 2, 3, 4, 5], // Define qué columnas deben ser centradas
+                targets: [1, 2, 3, 4, 5, 6], // Define qué columnas deben ser centradas
                 searchable: true,
                 orderable: true
             },
