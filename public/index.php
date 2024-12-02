@@ -4,7 +4,7 @@ require_once '../src/timeSince.php';
 setlocale(LC_TIME, 'es_ES.UTF-8');
 
 if (!isset($_SESSION['nombre'])) {
-    header('Location: login.html');
+    header('Location: index.html');
     exit();
 }
 ?>

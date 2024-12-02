@@ -4,7 +4,7 @@ require_once '../src/timeSince.php';
 
 
 if (!isset($_SESSION['nombre'])) {
-    header('Location:login.html');
+    header('Location:index.html');
     exit();
 }
 // Si no hay parámetro id redirigimos
