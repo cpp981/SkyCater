@@ -2,7 +2,7 @@
 require_once '../src/session.php';
 require_once '../src/timeSince.php';
 if (!isset($_SESSION['nombre'])) {
-    header('Location:login.html');
+    header('Location:index.html');
     exit();
 }
 ?>
@@ -100,7 +100,7 @@ if (!isset($_SESSION['nombre'])) {
                     <h2>Gestión de Pedidos</h2>
                 </div>
                 <!-- Contenedor de los indicadores -->
-                <div class="d-flex justify-content-between mb-4">
+                <div class="d-flex justify-content-between mb-5">
                     <!-- Card Indicador de Pedidos completados -->
                     <div class="card shadow text-center me-5" style="width: 35vh">
                         <div class="card-body">
@@ -122,19 +122,19 @@ if (!isset($_SESSION['nombre'])) {
                         </div>
                     </div>
                 </div>
-
                 <!-- DATATABLE -->
                 <div id="contenedorDataTable" class="flex-grow-1 w-75 mb-3">
-                    <a id="addPedido" class="btn btn-success me-2">
-                        <i class="fas fa-plus me-1"></i>Añadir Pedido
-                    </a>
-                    <a class="btn btn-danger me-2">
-                        <i class="fas fa-file-pdf me-1"></i>Exportar PDF
-                    </a>
-                    <a class="btn btn-primary ms-2">
-                        <i class="fas fa-redo me-1"></i>Refrescar
-                    </a>
-                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 ">
+                    <div class="d-flex align-items-center">
+                        <!-- Contenedor con Flexbox para alinear los botones -->
+                        <a id="addPedido" class="btn btn-success me-2">
+                            <i class="fas fa-plus me-1"></i>Añadir Pedido
+                        </a>
+                        <a id="refreshPedido" class="btn btn-primary ms-2 me-2">
+                            <i class="fas fa-redo me-1"></i>
+                        </a>
+                    </div>
+
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                         <table id="tablaPedidos" class="table table-striped rounded shadow" style="100%;">
                             <thead>
                                 <tr>
@@ -145,14 +145,16 @@ if (!isset($_SESSION['nombre'])) {
                                     <th class="centered cabecera"></th>
                                     <th class="centered cabecera"></th>
                                     <th class="centered cabecera"></th>
+                                    <th class="centered cabecera"></th>
                                 </tr>
                             </thead>
                             <tbody id="tBodyPedidos">
-                                <!-- Datos de ejemplo -->
+                                <!-- Aquí se llenará la tabla con los pedidos -->
                             </tbody>
                         </table>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>

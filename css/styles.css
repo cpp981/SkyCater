@@ -181,7 +181,7 @@ html, body {
     height: 100%;          /* Asegura que el html y body ocupen toda la altura de la ventana */
     margin: 0;             /* Elimina los márgenes por defecto */
     padding: 0;            /* Elimina el padding por defecto */
-    overflow: auto;        /* Permite el scroll global en la página */
+    overflow: none;        /* Permite el scroll global en la página */
 }
 
 body {
@@ -304,14 +304,41 @@ body.dark-mode .login-container {
     height: 40vh;
 }
 
-/* Barra vertical con tamaño fijo */
-.col-md-1 .vr {
-    height: 100%; /* Asegura que la barra ocupe toda la altura disponible dentro de la columna */
-    width: 2px;  /* Ajusta el grosor de la barra */
+/* Aseguramos que la fila ocupe al menos toda la altura de la ventana */
+.custom-row {
+    min-height: 60vh; /* La altura mínima será igual a la altura de la ventana */
+}
+
+/* Aseguramos que las columnas izquierda y derecha (contenedores) tengan la misma altura */
+.custom-left-container,
+.custom-right-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Distribuye el contenido verticalmente */
+    height: 100%; /* Asegura que ambas columnas ocupen toda la altura disponible */
+}
+
+
+/* Estilo para la barra vertical */
+.custom-vertical-bar {
+    display: flex;
+    justify-content: stretch; /* La barra ocupará toda la altura disponible */
+    align-items: stretch;
+}
+
+/* Estilo de la barra vertical */
+.custom-vertical-bar .vr {
+    height: 100%;  /* Asegura que la barra ocupe toda la altura del contenedor */
+    width: 2px;    /* Ajusta el grosor de la barra */
     background-color: black; /* Color de la barra */
 }
-    
 
+
+    
+.badge-danger {
+    background-color: #dc3545 !important;
+    color: #fff !important;
+}
 
 
 /* ESTILO NOTIFICACIONES NOTYF */
@@ -387,7 +414,6 @@ body.dark-mode .login-container {
 
 .badge {
     display: inline-block !important;
-    background-color: initial !important;
     border-radius: 0.25rem !important;
     padding: 0.6em 0.8em !important;
     font-size: 75% !important;

@@ -126,4 +126,34 @@ class Vuelo
         }
     }
 
+    // Cuenta la evolución del número de Vuelos
+    public function evolucionNumVuelos()
+    {
+        $query = "SELECT DATE_FORMAT(VP.Fecha_Salida, '%Y-%m') AS mes, COUNT(DISTINCT V.Id_Vuelo) AS Total_Vuelos FROM Vuelo_Pasajero VP 
+                  JOIN Vuelo V ON VP.Id_Vuelo = V.Id_Vuelo
+                  GROUP BY DATE_FORMAT(VP.Fecha_Salida, '%Y-%m')ORDER BY mes";
+        try {
+            $stmt = $this->pdo->prepare($query);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception(Messages::LOAD_DATA_ERROR);
+        }
+
+    }
+
+    // Contador de Vuelos en el mes actual
+    public function contadorVuelosMesActual()
+    {
+        $query = "SELECT COUNT(DISTINCT V.Id_Vuelo) AS Vuelos_Mes_Actual FROM Vuelo_Pasajero VP
+                  JOIN Vuelo V ON VP.Id_Vuelo = V.Id_Vuelo
+                  WHERE MONTH(VP.Fecha_Salida) = MONTH(CURDATE()) AND YEAR(VP.Fecha_Salida) = YEAR(CURDATE())";
+                  try {
+                    $stmt = $this->pdo->prepare($query);
+                    $stmt->execute();
+                    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+                } catch (PDOException $e) {
+                    throw new Exception(Messages::LOAD_DATA_ERROR);
+                }        
+    }
 }

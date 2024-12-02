@@ -1,8 +1,6 @@
 <?php
 
-// Incluimos autoload de Composer para utilizar la librería vlucas/phpdotenv
-// para poder cargar las variables de entorno del fichero .env
-require '../vendor/autoload.php';
+require '../vendor/autoload.php'; // Asegúrate de que 'vendor/autoload.php' esté en la ruta correcta
 
 use Dotenv\Dotenv;
 
@@ -18,11 +16,11 @@ class Conexion
     public function __construct() 
     {
         // Cargamos el archivo .env
-        $dotenv = Dotenv::createImmutable(__DIR__);
+        $dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
         $dotenv->load();
 
         // Cargamos las variables de entorno desde el archivo .env
-        $this->host = $_ENV['DB_HOST'];
+        $this->host = $this->getHost(); // Determinamos el host dinámicamente
         $this->db = $_ENV['DB_DATABASE'];
         $this->user = $_ENV['DB_USERNAME'];
         $this->pass = $_ENV['DB_PASSWORD'];
@@ -30,6 +28,13 @@ class Conexion
 
         // Intentamos realizar la conexión
         $this->connect();
+    }
+
+    // Función para determinar el host según el entorno
+    private function getHost() 
+    {
+        // Si estamos dentro de Docker, el host debe ser "mysql", si estamos en local debe ser "localhost"
+        return ($_ENV['APP_ENV'] === 'docker') ? 'mysql' : 'localhost';
     }
 
     private function connect() 

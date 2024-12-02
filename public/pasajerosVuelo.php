@@ -4,7 +4,7 @@ require_once '../src/timeSince.php';
 
 
 if (!isset($_SESSION['nombre'])) {
-    header('Location:login.html');
+    header('Location:index.html');
     exit();
 }
 // Si no hay parámetro id redirigimos
@@ -116,7 +116,7 @@ if (isset($_GET['id'])) {
                 </nav>
 
                 <!-- Contenido principal -->
-                <div class="container-fluid mt-4">
+                <div class="container-fluid">
                     <!-- Título y botones -->
                     <div class="text-center mb-4">
                         <h2>Gestión del Vuelo <?php echo $_GET['id']; ?></h2>
@@ -129,11 +129,10 @@ if (isset($_GET['id'])) {
                                     class="fas fa-arrow-left-long me-2"></i>Volver</a>
                         </div>
                     </div>
-
                     <!-- Contenedor dividido en dos y centrado -->
-                    <div class="row justify-content-center">
-                        <!-- Columna de la tabla -->
-                        <div class="col-md-5 text-center d-flex flex-column h-100">
+                    <div class="row justify-content-center custom-row">
+                        <!-- Columna de la tabla (contenedor izquierdo) -->
+                        <div class="col-md-5 text-center d-flex flex-column custom-left-container">
                             <h4>Listado de pasajeros</h4>
                             <table id="tablaPasajeros"
                                 class="table table-bordered table-hover table-striped rounded shadow">
@@ -153,17 +152,15 @@ if (isset($_GET['id'])) {
                                     <!-- Los datos se cargarán dinámicamente aquí -->
                                 </tbody>
                             </table>
-                            <!-- Paginación de DataTables -->
-                            <div id="tablaPasajeros_pagination" class="d-flex justify-content-center mt-2"></div>
                         </div>
 
                         <!-- Barra Vertical -->
-                        <div class="col-md-1 d-flex justify-content-center align-items-center">
-                            <div class="vr" style="height: 100%; border-left: 2px solid black;"></div>
+                        <div class="col-md-1 d-flex justify-content-center align-items-center custom-vertical-bar">
+                            <div class="vr"></div>
                         </div>
 
-                        <!-- Columna de gestión -->
-                        <div class="col-md-5 text-center gestion-col d-flex flex-column h-100">
+                        <!-- Columna de gestión (contenedor derecho) -->
+                        <div class="col-md-5 text-center gestion-col d-flex flex-column custom-right-container">
                             <h4>Gestión menú por pasajero</h4>
                             <div id="fichaPasajero"></div>
                             <div id="gestionMenuPasajero">
@@ -174,20 +171,19 @@ if (isset($_GET['id'])) {
                             </div>
                         </div>
                     </div>
+
                     <!-- Botón de guardar vuelo al final de la lista de pasajeros -->
-                    <div class="row mt-4 justify-content-center">
-                        <button class="btn btn-success w-25 shadow rounded" id="guardarVueloBtn"><i class="me-1 fas fa-save"></i>Guardar
-                            vuelo</button>
+                    <div class="row justify-content-center guarda-vuelo mt-3">
+                        <button class="btn btn-success w-25 shadow rounded" id="guardarVueloBtn">
+                            <i class="me-1 fas fa-save"></i>Guardar vuelo
+                        </button>
                     </div>
                 </div>
-            </div>
 
-        </div>
-
-        <!-- Scripts de Bootstrap y DataTables -->
-        <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
+                <!-- Scripts de Bootstrap y DataTables -->
+                <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+                <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+                <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
     </body>
     <div class="foot d-flex justify-content-center align-items-end mt-5">
         <footer class="fixed-bottom text-center">

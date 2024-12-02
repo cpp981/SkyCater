@@ -42,6 +42,7 @@ class Proveedor
             $stmt->bindParam(1, $id);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
         }catch(Exception $e)
         {
             throw new Exception(Messages::LOAD_DATA_ERROR);

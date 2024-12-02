@@ -3,7 +3,7 @@ require_once './include/Proveedor.php';
 require_once './include/Pedido.php';
 require_once './include/Producto.php';
 require_once './include/Messages.php';
-//header('Content-Type: application/json');
+header('Content-Type: application/json');
 session_start();
 
 try {
@@ -68,7 +68,7 @@ try {
     $pedido = new Pedido();
 
     // Intentamos crear el pedido
-    $resultado = $pedido->crearPedido($numeroDePedido, $fechaActual, $costeTotal, $observaciones, $proveedorId, $idUser, $nombreProducto, $cantidad, $precioProducto, $fechaEntrega, $proveedorId);
+    $resultado = $pedido->crearPedido($numeroDePedido, $fechaActual, $costeTotal, $observaciones, $proveedorId, $idUser, $nombreProducto, $cantidad, $precioProducto, $fechaEntrega, $productoId);
 
     // Verificamos el resultado
     if ($resultado) {

@@ -30,5 +30,8 @@ class Messages{
     const NOT_VALID_QUANTITY = 'Cantidad no válida';
     const PRODUCT_PRICE_NOT_VALID = 'Precio del producto no válido';
     const ORDER_CREATED_SUCCESSFULLY = 'Pedido creado correctamente';
-    const ORDER_CREATED_ERROR = 'Hubo un error al crear el pedido.';
+    const ORDER_CREATED_ERROR = 'Hubo un error al crear el pedido';
+    const ORDER_CANCELLED = 'Pedido cancelado correctamente';
+    const ORDER_CANCEL_FAILURE = 'El pedido no pudo ser cancelado debido a un error';
+    const ACTION_NOT_FOUND = 'Orden no encontrada';
 }
