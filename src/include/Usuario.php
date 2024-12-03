@@ -69,6 +69,7 @@ class Usuario
         try 
         {
             $stmt = $this->pdo->prepare($query);
+            $stmt->bindParam(1, $idUser);
             $stmt->execute();
             return $stmt->fetch(PDO::FETCH_ASSOC);
         } 

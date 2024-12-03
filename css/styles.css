@@ -386,6 +386,10 @@ body.dark-mode .login-container {
     color:#003262  !important;
 }
 
+.pagination,#tablaPedidos_filter,#tablaPedidos_info{
+    color:#003262  !important;
+}
+
 #tablaProductos_paginate > .pagination > #tablaProductos_previous > .page-link{
     background-color:#003262 !important;
     color:#ffffff !important; 
@@ -393,11 +397,30 @@ body.dark-mode .login-container {
 
 .pagination,#tablaVuelos_filter,#tablaVuelos_info{
     color:#003262  !important;
+    margin-right: 5vh;
 }
 
 #tablaVuelos_paginate > .pagination > #tablaVuelos_previous > .page-link{
     background-color:#003262 !important;
-    color:#ffffff !important; 
+    color:#ffffff !important;
+}
+
+#tablaProductos_paginate > .pagination{
+    margin-top: -2vh !important;
+}
+
+#tablaVuelos_paginate > .pagination{
+    margin-top: -2vh !important;
+    margin-right: 4vh !important;
+}
+
+#tablaVuelos_info {
+    margin-left: 5.5vh !important;
+}
+
+#tablaPedidos_paginate > .pagination {
+    margin-top: 2vh !important;
+    margin-right: -1vh !important;
 }
 
 .pagination > li > .page-link {

@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Configuración de DataTable con AJAX
     const tableOptions = {
         responsive: true,
-        pageLength: 6,
+        pageLength: 7,
         ajax: {
             url: "../src/listaPedidos.php",
             type: "POST",

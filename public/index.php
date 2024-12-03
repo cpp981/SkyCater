@@ -111,7 +111,7 @@ if (!isset($_SESSION['nombre'])) {
                             </div>
                         </div>
                         <div class="card shadow">
-                            <div class="indi card-header text-center">
+                            <div class="indi card-header text-center h5">
                                 Evolución vuelos por mes
                             </div>
                             <div class="card-body">
@@ -132,7 +132,7 @@ if (!isset($_SESSION['nombre'])) {
                         </div>
 
                         <div class="card shadow">
-                            <div class="indi card-header text-center">
+                            <div class="indi card-header text-center h5">
                                 Productos por categoría
                             </div>
                             <div class="card-body ">
@@ -153,7 +153,7 @@ if (!isset($_SESSION['nombre'])) {
                             </div>
 
                             <div class="card shadow">
-                                <div class="indi card-header text-center">
+                                <div class="indi card-header text-center h5">
                                     Pasajeros por tipo de asiento
                                 </div>
                                 <div class="card-body ">
@@ -173,7 +173,7 @@ if (!isset($_SESSION['nombre'])) {
                             </div>
                         </div>
                         <div class="card shadow mb-5">
-                            <div class="indi card-header text-center">
+                            <div class="indi card-header text-center h5">
                                 Evolución pedidos por mes
                             </div>
                             <div class="card-body" style="margin-top: -5px;">
