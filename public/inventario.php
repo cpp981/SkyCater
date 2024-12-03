@@ -94,7 +94,7 @@ if (!isset($_SESSION['nombre'])) {
             </div>
             <div id="containerTablaProducto"
                 class="container-fluid flex-grow-1 d-flex flex-column justify-content-center mt-4">
-                <div class="text-center mb-5" style="color: #003262;">
+                <div class="text-center mb-5" style="color: #003262; margin-top: -5vh;">
                     <h2>Gestión de Productos</h2>
                 </div>
                 <div class="flex-grow-1 contenedorDataTable">

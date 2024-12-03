@@ -123,19 +123,19 @@ if (!isset($_SESSION['nombre'])) {
                     </div>
                 </div>
                 <!-- DATATABLE -->
-                <div id="contenedorDataTable" class="flex-grow-1 w-75 mb-3">
-                    <div class="d-flex align-items-center">
+                <div id="contenedorDataTable" class="d-flex flex-column w-100" style="margin-top: -3vh;">
+                    <div class="d-flex align-items-center" style="margin-left: 10.5vh; margin-top: -3vh;">
                         <!-- Contenedor con Flexbox para alinear los botones -->
-                        <a id="addPedido" class="btn btn-success me-2">
+                        <a id="addPedido" class="btn btn-success me-2 shadow">
                             <i class="fas fa-plus me-1"></i>Añadir Pedido
                         </a>
-                        <a id="refreshPedido" class="btn btn-primary ms-2 me-2">
+                        <a id="refreshPedido" class="btn btn-primary ms-2 me-2 shadow">
                             <i class="fas fa-redo me-1"></i>
                         </a>
                     </div>
 
-                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                        <table id="tablaPedidos" class="table table-striped rounded shadow" style="100%;">
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" style="width: 90%; margin-left: 10vh;">
+                        <table id="tablaPedidos" class="table table-striped rounded shadow">
                             <thead>
                                 <tr>
                                     <th class="centered cabecera"></th>

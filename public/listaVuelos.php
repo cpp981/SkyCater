@@ -99,12 +99,12 @@ if (!isset($_SESSION['nombre'])) {
             </div>
 
             <div id="containerTablaVuelos" class="d-flex flex-column align-items-center p-4"
-                style="width: 95%; margin: 0 auto;">
+                style="width: 100%; margin: 0 auto;">
                 <!-- Título -->
-                <h1 class="text-center mb-4">Listado de Vuelos</h1>
+                <h2 class="text-center mb-4" style="color: #003262;margin-top: -3vh;">Listado de Vuelos</h2>
 
                 <!-- Contenedor de los indicadores -->
-                <div class="d-flex justify-content-between mb-4">
+                <div class="d-flex justify-content-between mb-4 mt-4">
                     <!-- Card Indicador de Vuelos gestionados -->
                     <div class="card shadow text-center me-5" style="width: 35vh">
                         <div class="card-body">
