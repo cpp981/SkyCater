@@ -299,8 +299,10 @@ $(document).ready(function () {
                                     notyf.success(response.message);
                                     $('#gestionMenuPasajero').hide();
                                     $('#fichaPasajero').hide();
-                    
-                                    //$('#gestionMenuPasajero .loading-message').show();
+                                    setTimeout(function (){
+                                        location.reload(true);
+                                        $('#gestionMenuPasajero .loading-message').show();
+                                    }, 1300);
                                     tablaPasajeros.ajax.reload();
                                 } else {
                                     notyf.error(response.message);
