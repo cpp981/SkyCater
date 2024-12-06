@@ -190,13 +190,6 @@ if (isset($_GET['id'])) {
         <!--<script src="../js/flightDetails.js"></script> Aquí iría tu lógica de Chart.js -->
     </body>
 
-
-    <div class="foot d-flex justify-content-center align-items-end mt-5">
-        <footer class="fixed-bottom text-center">
-            <p>© 2024 SkyCater. Todos los derechos reservados.</p>
-        </footer>
-    </div>
-
     <?php
 } else {
     header('Location: listaVuelos.php');

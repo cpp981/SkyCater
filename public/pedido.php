@@ -212,12 +212,6 @@ if (!isset($_SESSION['nombre'])) {
         </div>
     </div>
 
-
-    <div class="foot d-flex justify-content-center align-items-end mt-5">
-        <footer class="fixed-bottom text-center">
-            <p>© 2024 SkyCater. Todos los derechos reservados.</p>
-        </footer>
-    </div>
     <!-- JavaScript de Bootstrap -->
     <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <!-- JS DataTables CDN -->

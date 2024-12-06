@@ -185,11 +185,6 @@ if (isset($_GET['id'])) {
                 <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
                 <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
     </body>
-    <div class="foot d-flex justify-content-center align-items-end mt-5">
-        <footer class="fixed-bottom text-center">
-            <p>© 2024 SkyCater. Todos los derechos reservados.</p>
-        </footer>
-    </div>
 
     <?php
 } else {

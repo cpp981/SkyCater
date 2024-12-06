@@ -151,11 +151,6 @@ if (!isset($_SESSION['nombre'])) {
 
         </div>
     </div>
-
-    <footer class="fixed-bottom text-center">
-        <p>© 2024 SkyCater. Todos los derechos reservados.</p>
-    </footer>
-
     <!-- JavaScript -->
     <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>

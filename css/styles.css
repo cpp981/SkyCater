@@ -124,6 +124,214 @@
 }
 
 
+/* Media querys para instancia de AWS, para local dejar comentada la de min-width: 1800px */
+/*@media(min-width: 1800px){
+    #gestionMenuPasajero.menu-pasajero{
+      height: 40vh;
+      max-width: 500px !important;
+      margin-left: 75px;
+    }
+   
+    #tablaProductos_wrapper {
+      min-height: 950px !important;
+      min-width: 1500px !important;
+    }
+  
+   .container-prod{
+      margin-top: 70px !important;
+   }
+  
+    #tablaVuelos_filter{
+       margin-bottom: 85px !important;
+    }
+  
+    #tablaPasajeros_wrapper{
+      margin-left: -55px !important;
+    }
+    #tablaPasajeros_wrapper .dataTables_info{
+       display: none !important;
+    }
+  
+    #fichaPasajero{
+      max-width: 500px;
+      margin-left: 75px;
+    }*/
+
+    /* Fondo blanco y texto negro para el enlace activo */
+ /* .nav-item.active > .nav-link {
+    background-color: white !important; /* Fondo blanco */
+  /*  color: #000000 !important; /* Texto negro */
+   /* padding-left: 20px !important;
+    padding-right: 45px !important;
+    border-radius: 0.5em !important;
+    width: 100% !important;
+    display: block !important;
+  }*/
+
+ /* Iconos en negro para el enlace activo */
+ /*.nav-item.active > .nav-link i {
+    color: #000000 !important; /* Icono negro */
+/*  }
+}*/
+
+@media (max-height: 780px) {
+    #tablaProductos_wrapper {
+       font-size: 12px !important; /* Tamaño mínimo para pantallas más pequeñas */
+       min-height: 600px !important;
+       min-width: 1200px !important;
+       margin-bottom: 20px !important;
+   }
+
+    .container-prod{
+      margin-top: 1px;
+    }
+
+    #tablaVuelos_wrapper{
+       font-size: 12px !important;
+       min-height: 500px !important;
+       min-width: 1200px !important;
+       margin-bottom: 20px !important;
+   }
+
+  #tablaVuelos_filter{
+     margin-bottom: 80px;
+     margin-top: -75px;
+  }
+
+ #tablaPedidos_wrapper{
+   font-size: 12px !important;
+   min-height: 500px !important;
+   min-width: 1200px !important;
+   margin-bottom: 120px !important;
+}
+   #addProd{
+     margin-top: 50px;
+   }
+  
+ #refrescarTabla{
+   margin-top:50px;
+ }
+ #exportPdf{
+    margin-top: 50px;
+ }
+
+
+#tablaPasajeros_wrapper{
+ max-height: 250px !important;
+ font-size: 10px !important;
+}
+
+ #tablaPasajeros{
+   font-size: 10px !important;
+   max-height: 250px !important;
+ }
+ #tablaPasajeros_wrapper table.dataTable {
+    font-size: 10px !important; /* Ajusta al tamaño deseado */
+ }
+
+#tablaPasajeros_wrapper .dataTables_paginate {
+    margin-right: 190px !important;
+    margin-top: 5px !important;
+}  
+
+#tablaPasajeros_wrapper .dataTables_info {
+  margin-right: 950px !important;
+  display: none !important;
+}
+  #ŧablaPasajeros > ul.pagination{
+    margin-right: 220px;
+  }
+
+ .titulo-menu{
+   margin-left: 150px;
+ }
+ .guarda-vuelo{
+  margin-bottom: 35px !important;
+}
+  div #tablaPasajeros_info .dataTables_info{
+    margin-left: -275px !important;
+  }
+
+  .custom-left-container{
+    margin-left: -350px;
+    margin-right: 75px;
+ }
+  .custom-right-container{
+     margin-left: 95px;
+     margin-right: -320px;
+  }
+ #fichaPasajero{
+  margin-left: 110px;
+  margin-top: -5px;
+  min-width: 450px;
+}
+
+#gestionMenuPasajero{
+ margin-left: 110px;
+ max-height: 315px;
+ margin-top: -9px;
+ min-width: 450px;
+}
+   .card {
+     max-height: 400px;
+     max-width: 300px;    
+  }
+
+  .indi-container{
+    margin-top: -55px;
+  }
+  .pc-card{
+    max-height: 100px;
+    min-width: 300px;
+ }
+  
+ .pp-card{
+    max-height: 100px;
+    min-width: 300px;
+  }
+ #mapa{
+   min-width: 530px;
+ }
+
+ .flight-card{
+    min-width: 530px;
+    max-height: 265px;
+   }
+  
+  #flightChart{
+   max-height: 200px;
+   }
+  
+  .mapa-card{
+    min-width: 530px;
+   }
+  
+   .vuelo-card{
+      max-height: 100px;
+      min-width: 300px;
+    }
+  
+     .nav-item.active .nav-link {
+      background-color: white !important;
+      color: #000000 !important;
+      display: block !important;
+      padding-left: 20px !important;
+      padding-right: 45px !important;
+      border-radius: 0.5em !important;
+      width: 100% !important;
+    }
+    
+    /* Iconos en negro para el enlace activo */
+    .nav-item.active > .nav-link i {
+      color: #000000 !important; /* Icono negro */
+    } 
+  
+  }
+  
+  /* Fin @media */
+
+
+
 /* Logo */
 .logo {
     width: 200px;  /* Ajusta el ancho del logo */
