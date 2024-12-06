@@ -61,7 +61,7 @@
 
 6. **Accede a la aplicación:**
 
-    Abre tu navegador web y ve a http://'<tu-ip>'/SkyCater.
+    Abre tu navegador web y ve a http://'tu-ip'/SkyCater.
 
 ##Uso de la Aplicación
 
