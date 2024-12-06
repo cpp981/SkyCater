@@ -66,7 +66,9 @@
 ##Uso de la Aplicación
 
 Inicio de sesión: Utiliza el sistema de autenticación para iniciar sesión y acceder a las funcionalidades.
+
 Navegación: Utiliza la barra lateral para navegar entre las diferentes secciones de la aplicación.
+
 Interacción: Las acciones como crear pedidos, gestionar productos y asignar vuelos se realizan a través de formularios y botones interactivos.
 
 ## Creación de Usuario Manual
