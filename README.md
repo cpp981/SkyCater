@@ -2,7 +2,7 @@
 
 ## Descripción
 
-**SkyCater** es una aplicación web diseñada para la gestión del catering de una aerolínea, teniendo en cuenta las intolerancias alimentarias de los pasajeros a bordo de los vuelos. Esta aplicación optimiza la eficiencia en la gestión de comidas y reduce el desperdicio de alimentos.
+**SkyCater** es una aplicación web diseñada para la gestión del catering de una aerolínea teniendo en cuenta las intolerancias alimentarias de los pasajeros a bordo de los vuelos. También se centra en el control total del inventario y stock además de la automatización de pedidos a proveedores y sus entregas actualizando stock. Esta aplicación optimiza la eficiencia en la gestión de comidas y reduce el desperdicio de alimentos.
 
 ## Funcionalidades
 
