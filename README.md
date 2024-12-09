@@ -73,42 +73,40 @@ Interacción: Las acciones como crear pedidos, gestionar productos y asignar vue
 
 ## Creación de Usuario Manual
 
-La aplicación **SkyCater** ha sido diseñada para ser utilizada exclusivamente por los trabajadores de la aerolínea. El proceso de creación de cuentas de usuario se gestiona a través de un departamento diferente, específicamente en el momento del alta del empleado cuando se formaliza su contrato con la aerolínea. Esto significa que:
+La aplicación **SkyCater** ha sido diseñada para ser utilizada exclusivamente por los trabajadores de la aerolínea. El proceso de creación de cuentas de usuario se gestiona a través de un departamento diferente, específicamente en el momento del alta del empleado cuando se formaliza su contrato con la aerolínea.
 
-- **Los usuarios no se registran directamente desde la aplicación**: No se ha implementado un formulario de registro de usuario en la interfaz de la aplicación porque la creación de cuentas se realiza a nivel interno por el departamento de recursos humanos de la aerolínea, fuera del alcance de la aplicación.
+Para facilitar las pruebas y evaluaciones de la aplicación durante el desarrollo o demostraciones, hemos implementado una ruta manual que permite registrar usuarios. Esta funcionalidad está pensada exclusivamente para entornos de prueba y no debe ser utilizada en producción.
 
-- **Seguridad y control**: Esta metodología de alta de usuarios garantiza que solo los empleados autorizados tengan acceso a la plataforma, manteniendo un control centralizado y seguro sobre quién tiene acceso al sistema.
+### URL de Registro
 
-- **Uso previsto de la aplicación**: La aplicación está pensada para facilitar la gestión de pedidos y operaciones de catering de los vuelos de la aerolínea, por lo que la gestión de usuarios se centra en la autenticación y autorización de empleados ya dados de alta.
+La URL para registrar usuarios manualmente es:
 
-Por lo tanto, no se ha incluido un mecanismo de registro en la aplicación, ya que esta tarea es realizada externamente por el departamento encargado de gestionar los recursos humanos de la aerolínea.
-Aún así hemos incluido un registro manual que se detalla a continuación:
+http://<DOMINIO_O_IP_DEL_SERVIDOR>/public/register.php?nombre=<NOMBRE_USUARIO>&password=<CONTRASEÑA>
 
-### Pasos para usar `register.php`:
+Parámetros
 
-1. **Accede al archivo `register.php`** en tu servidor o entorno local.
-2. **Modifica los parámetros de la llamada al método `registrarUsuario()`** con el nombre y la contraseña deseada. Por ejemplo:
-    ```php
-    $usuario = new Usuario();
-    $usuario->registrarUsuario('nombre', 'pass');
-    ```
+nombre: Nombre de usuario que se desea registrar.
 
-    - Cambia `'nombre'` por el nombre del usuario que quieras crear.
-    - Cambia `'pass'` por la contraseña que desees para el usuario.
+password: Contraseña del usuario.
 
-3. **Ejecuta el script**. Puedes hacerlo accediendo a la URL correspondiente en tu navegador (ejemplo: `http://localhost/SkyCater/register.php`) o ejecutando el script desde la línea de comandos si estás en un entorno de desarrollo.
+Comportamiento
 
-4. **Verifica el resultado**. Si el script se ejecuta correctamente, deberías ver el mensaje:
-    ```
-    Usuario registrado exitosamente.
-    ```
-   Si hay algún error, el mensaje será:
-    ```
-    Error al registrar el usuario.
-    ```
+Si el registro es exitoso:
 
-### Ejemplo de uso:
+Se mostrará un mensaje en una card con fondo verde indicando que el usuario fue registrado correctamente.
 
-```php
-$usuario = new Usuario();
-$usuario->registrarUsuario('admin', 'admin123');
+Si ocurre algún error:
+
+Se mostrará un mensaje en una card con fondo rojo indicando el motivo del fallo.
+
+Si no se incluyen los parámetros nombre o password en la URL:
+
+Se mostrará un mensaje indicando que faltan los parámetros requeridos.
+
+Notas Adicionales
+
+Seguridad: Asegúrate de eliminar o deshabilitar esta funcionalidad antes de subir la aplicación a producción para evitar riesgos de seguridad.
+
+Pruebas: Se recomienda usar este método solo en entornos controlados, como servidores locales o de staging.
+
+Formato de Contraseña: Considera implementar validaciones para asegurar que las contraseñas cumplen con los requisitos mínimos de seguridad, como longitud y complejidad.
