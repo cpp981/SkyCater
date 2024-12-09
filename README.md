@@ -83,30 +83,25 @@ La URL para registrar usuarios manualmente es:
 
 http://<DOMINIO_O_IP_DEL_SERVIDOR>/public/register.php?nombre=<NOMBRE_USUARIO>&password=<CONTRASEÑA>
 
-Parámetros
 
-nombre: Nombre de usuario que se desea registrar.
+### Parámetros
 
-password: Contraseña del usuario.
+- **`nombre`**: Nombre de usuario que se desea registrar.
+- **`password`**: Contraseña del usuario.
 
-Comportamiento
+## Comportamiento
 
-Si el registro es exitoso:
+### Si el registro es exitoso:
+- Se mostrará un mensaje en una card con fondo verde indicando que el usuario fue registrado correctamente.
 
-Se mostrará un mensaje en una card con fondo verde indicando que el usuario fue registrado correctamente.
+### Si ocurre algún error:
+- Se mostrará un mensaje en una card con fondo rojo indicando el motivo del fallo.
 
-Si ocurre algún error:
+### Si no se incluyen los parámetros `nombre` o `password` en la URL:
+- Se mostrará un mensaje indicando que faltan los parámetros requeridos.
 
-Se mostrará un mensaje en una card con fondo rojo indicando el motivo del fallo.
+## Notas Adicionales
 
-Si no se incluyen los parámetros nombre o password en la URL:
-
-Se mostrará un mensaje indicando que faltan los parámetros requeridos.
-
-Notas Adicionales
-
-Seguridad: Asegúrate de eliminar o deshabilitar esta funcionalidad antes de subir la aplicación a producción para evitar riesgos de seguridad.
-
-Pruebas: Se recomienda usar este método solo en entornos controlados, como servidores locales o de staging.
-
-Formato de Contraseña: Considera implementar validaciones para asegurar que las contraseñas cumplen con los requisitos mínimos de seguridad, como longitud y complejidad.
+- **Seguridad:** Asegúrate de **eliminar o deshabilitar esta funcionalidad antes de subir la aplicación a producción** para evitar riesgos de seguridad.
+- **Pruebas:** Se recomienda usar este método solo en entornos controlados, como servidores locales o de staging.
+- **Formato de Contraseña:** Implementa validaciones para garantizar que las contraseñas cumplen con requisitos mínimos de seguridad, como longitud y complejidad.
