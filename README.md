@@ -102,6 +102,7 @@ http://<DOMINIO_O_IP_DEL_SERVIDOR>/public/register.php?nombre=<NOMBRE_USUARIO>&p
 
 ## Notas Adicionales
 
-- **Seguridad:** Asegúrate de **eliminar o deshabilitar esta funcionalidad antes de subir la aplicación a producción** para evitar riesgos de seguridad.
+- **Seguridad:** Asegúrate de eliminar o deshabilitar esta funcionalidad antes de subir la aplicación a producción para evitar riesgos de seguridad.
 - **Pruebas:** Se recomienda usar este método solo en entornos controlados, como servidores locales o de staging.
-- **Formato de Contraseña:** Implementa validaciones para garantizar que las contraseñas cumplen con requisitos mínimos de seguridad, como longitud y complejidad.
+- **Cifrado de Contraseñas:** Las contraseñas proporcionadas durante el registro se almacenan encriptadas, garantizando un nivel de seguridad en caso de accesos no autorizados.
+
